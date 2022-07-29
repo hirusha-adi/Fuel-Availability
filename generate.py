@@ -16,7 +16,6 @@ at end of body
 import folium
 import os
 import json
-from bs4 import BeautifulSoup
 
 
 class Colors:
@@ -69,10 +68,10 @@ class GenerateMap:
         with open(self._save_path, 'w', encoding='utf-8') as _file:
             _file.write(html)
 
-    def run(self):
+    def run(self, path='map.html'):
         self.loadData()
         self.addMarkers()
-        self.save(path='map.html')
+        self.save(path=path)
         self.fixHtml()
 
 
