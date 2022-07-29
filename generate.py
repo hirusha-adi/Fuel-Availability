@@ -63,6 +63,15 @@ class GenerateMap:
             html = str(_file.read()).replace(
                 "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css",
                 "https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+            ).replace(
+                "height: 100.0%;",
+                "height: 93.0%;"
+            ).replace(
+                "</body>",
+                '<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script></body>'
+            ).replace(
+                "<body>",
+                """<nav class="navbar navbar-expand-lg navbar-light bg-light"><a class="navbar-brand" href="/">Fuel Availability</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav mr-auto"><li class="nav-item active"><a class="nav-link" href="/map">Home <span class="sr-only">(current)</span></a></li><li class="nav-item"><a class="nav-link" href="/map">Reload</a></li><li class="nav-item"><a class="nav-link" href="/about">About Us</a></li></ul><div class="form-inline my-2 my-lg-0"><button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a href="/login">Login</a></button></div></div></nav>"""
             )
 
         with open(self._save_path, 'w', encoding='utf-8') as _file:
