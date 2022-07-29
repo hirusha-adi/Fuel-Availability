@@ -1,6 +1,7 @@
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, g, session
 from generate import GenerateMap
+from database.mongo import Users
 
 app = Flask(__name__)
 
@@ -8,6 +9,14 @@ app = Flask(__name__)
 def makeMap():
     obj = GenerateMap()
     obj.run(path=os.path.join(os.getcwd(), 'templates', 'map.html'))
+
+
+@app.before_request
+def before_request():
+    g.user = None
+    if 'user_id' in session:
+        user = Users.getUserByID(id=session['user_id'])
+        g.user = user
 
 
 @app.route("/")
