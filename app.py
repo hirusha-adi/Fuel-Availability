@@ -1,5 +1,6 @@
+import email
 import os
-from flask import Flask, render_template, g, session
+from flask import Flask, render_template, g, session, request, redirect, url_for
 from generate import GenerateMap
 from database.mongo import Users
 
@@ -25,9 +26,23 @@ def index():
     return render_template("map.html")
 
 
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
-    return render_template("login.html")
+    if request.method == 'POST':
+        session.pop('user_id', None)
+        email = request.form['email']
+        password = request.form['password']
+        user = Users.getUserByEmail(email=email)
+        try:
+            if user and user['password'] == password:
+                session['user_id'] = user['id']
+                return redirect(url_for('profile'))
+            else:
+                return redirect(url_for('login'))
+        except:
+            return redirect(url_for('login'))
+    else:
+        return render_template("login.html")
 
 
 @app.route("/signup")
