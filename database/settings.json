@@ -1,0 +1,7 @@
+{
+    "mongodb": {
+        "ip": "",
+        "username": "",
+        "password": ""
+    }
+}
