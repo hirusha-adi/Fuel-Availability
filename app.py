@@ -26,6 +26,11 @@ def signup():
     return render_template("signup.html")
 
 
+@app.route("/panel")
+def panel():
+    return render_template("panel.html")
+
+
 if __name__ == "__main__":
     makeMap()
     app.run("0.0.0.0", port=8090, debug=True)
