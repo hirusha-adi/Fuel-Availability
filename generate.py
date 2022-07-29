@@ -45,7 +45,9 @@ class GenerateMap:
                 tooltip=item['name']
             ).add_to(self._map)
 
-    def save(self, path='map.html'):
+    def save(self, path=None):
+        if path is None:
+            path = 'map.html'
         self._save_path = str(path)
         if not self._save_path.endswith('html'):
             self._save_path += '.html'
@@ -57,26 +59,21 @@ class GenerateMap:
             print('ERROR:', e)
             return True
 
-    def fixHtml(self, html):
-        pass
-
-    def reformatHtml(self, path=None):
-        if path is None:
-            self._save_path = str(path)
-
-        if not self._save_path.endswith('html'):
-            self._save_path += '.html'
-
+    def fixHtml(self):
         with open(self._save_path, 'r', encoding='utf-8') as _file:
-            soup = BeautifulSoup(str(_file.read()), 'html.parser').prettify()
+            html = str(_file.read()).replace(
+                "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css",
+                "https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+            )
 
         with open(self._save_path, 'w', encoding='utf-8') as _file:
-            _file.write(soup)
+            _file.write(html)
 
     def run(self):
         self.loadData()
         self.addMarkers()
-        self.save()
+        self.save(path='map.html')
+        self.fixHtml()
 
 
 obj = GenerateMap()
