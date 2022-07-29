@@ -11,5 +11,31 @@
             "petrol": true,
             "diesel": false
         }
+    },
+    {
+        "id": 2,
+        "name": "Laugfs Gas Auto Lanka Filling Station",
+        "coordinates": [
+            7.4740667,
+            80.3515016
+        ],
+        "city": "Kurunegala",
+        "availablitiy": {
+            "petrol": false,
+            "diesel": true
+        }
+    },
+    {
+        "id": 3,
+        "name": "Lanka Filling Station",
+        "coordinates": [
+            7.4892377,
+            80.3573381
+        ],
+        "city": "Kurunegala",
+        "availablitiy": {
+            "petrol": false,
+            "diesel": false
+        }
     }
 ]
