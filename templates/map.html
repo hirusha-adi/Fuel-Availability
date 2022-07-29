@@ -23,25 +23,25 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_be8f80f4888d08fa3e68b61a1804f776 {
+                #map_e69e930dc2aed09241d1651521ea1460 {
                     position: relative;
                     width: 100.0%;
-                    height: 100.0%;
+                    height: 93.0%;
                     left: 0.0%;
                     top: 0.0%;
                 }
             </style>
         
 </head>
-<body>    
+<nav class="navbar navbar-expand-lg navbar-light bg-light"><a class="navbar-brand" href="/">Fuel Availability</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav mr-auto"><li class="nav-item active"><a class="nav-link" href="/map">Home <span class="sr-only">(current)</span></a></li><li class="nav-item"><a class="nav-link" href="/map">Reload</a></li><li class="nav-item"><a class="nav-link" href="/about">About Us</a></li></ul><div class="form-inline my-2 my-lg-0"><button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a href="/login">Login</a></button></div></div></nav>    
     
-            <div class="folium-map" id="map_be8f80f4888d08fa3e68b61a1804f776" ></div>
+            <div class="folium-map" id="map_e69e930dc2aed09241d1651521ea1460" ></div>
         
-</body>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script></body>
 <script>    
     
-            var map_be8f80f4888d08fa3e68b61a1804f776 = L.map(
-                "map_be8f80f4888d08fa3e68b61a1804f776",
+            var map_e69e930dc2aed09241d1651521ea1460 = L.map(
+                "map_e69e930dc2aed09241d1651521ea1460",
                 {
                     center: [7.4887197, 80.3597918],
                     crs: L.CRS.EPSG3857,
@@ -55,32 +55,32 @@
 
         
     
-            var tile_layer_c3c8c7915fe90324e453d5d1dffecd79 = L.tileLayer(
+            var tile_layer_ff060ab4d0a541f8ea8e1660c4ede61e = L.tileLayer(
                 "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_be8f80f4888d08fa3e68b61a1804f776);
+            ).addTo(map_e69e930dc2aed09241d1651521ea1460);
         
     
-            var marker_a6424db307e9ddeb04cb39a85c504246 = L.marker(
+            var marker_be3f7707ba1f6236a70ee6cd6a37ba3b = L.marker(
                 [7.494112, 80.3679604],
                 {}
-            ).addTo(map_be8f80f4888d08fa3e68b61a1804f776);
+            ).addTo(map_e69e930dc2aed09241d1651521ea1460);
         
     
-        var popup_6666f4c8cebda05e68fc8dc36fc90d37 = L.popup({"maxWidth": "100%"});
+        var popup_7e60ea536a1ed26bf48dccbb90215fc7 = L.popup({"maxWidth": "100%"});
 
         
-            var html_3eeb22e8f665b242b81a46e932ad0ad2 = $(`<div id="html_3eeb22e8f665b242b81a46e932ad0ad2" style="width: 100.0%; height: 100.0%;">Petrol: <strong style="color: #228B22">Available</strong><br><br>Diesel: <strong style="color: #8B0000">Not Available</strong></div>`)[0];
-            popup_6666f4c8cebda05e68fc8dc36fc90d37.setContent(html_3eeb22e8f665b242b81a46e932ad0ad2);
+            var html_f03e9b0e224c876d182fb89c331508c2 = $(`<div id="html_f03e9b0e224c876d182fb89c331508c2" style="width: 100.0%; height: 93.0%;">Petrol: <strong style="color: #228B22">Available</strong><br><br>Diesel: <strong style="color: #8B0000">Not Available</strong></div>`)[0];
+            popup_7e60ea536a1ed26bf48dccbb90215fc7.setContent(html_f03e9b0e224c876d182fb89c331508c2);
         
 
-        marker_a6424db307e9ddeb04cb39a85c504246.bindPopup(popup_6666f4c8cebda05e68fc8dc36fc90d37)
+        marker_be3f7707ba1f6236a70ee6cd6a37ba3b.bindPopup(popup_7e60ea536a1ed26bf48dccbb90215fc7)
         ;
 
         
     
     
-            marker_a6424db307e9ddeb04cb39a85c504246.bindTooltip(
+            marker_be3f7707ba1f6236a70ee6cd6a37ba3b.bindTooltip(
                 `<div>
                      Dhammika Filling Station
                  </div>`,
