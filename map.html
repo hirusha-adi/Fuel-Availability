@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_5b80313b68831c5324be005463690629 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_5b80313b68831c5324be005463690629" ></div>
+        
+</body>
+<script>    
+    
+            var map_5b80313b68831c5324be005463690629 = L.map(
+                "map_5b80313b68831c5324be005463690629",
+                {
+                    center: [7.4887197, 80.3597918],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 15,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f02efec19ef1537ee142bf4157e01318 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_5b80313b68831c5324be005463690629);
+        
+    
+            var marker_972ca916307d109e2a2f27a3a0cb1141 = L.marker(
+                [7.494112, 80.3679604],
+                {}
+            ).addTo(map_5b80313b68831c5324be005463690629);
+        
+    
+        var popup_d0d09f6ed733bb839c97c2fe3aa2db98 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0bfc3d3847605aa9575e7e8312e28e02 = $(`<div id="html_0bfc3d3847605aa9575e7e8312e28e02" style="width: 100.0%; height: 100.0%;">Petrol: <strong style="color: #228B22">Available</strong><br><br>Diesel: <strong style="color: #8B0000">Not Available</strong></div>`)[0];
+            popup_d0d09f6ed733bb839c97c2fe3aa2db98.setContent(html_0bfc3d3847605aa9575e7e8312e28e02);
+        
+
+        marker_972ca916307d109e2a2f27a3a0cb1141.bindPopup(popup_d0d09f6ed733bb839c97c2fe3aa2db98)
+        ;
+
+        
+    
+    
+            marker_972ca916307d109e2a2f27a3a0cb1141.bindTooltip(
+                `<div>
+                     Dhammika Filling Station
+                 </div>`,
+                {"sticky": true}
+            );
+        
+</script>

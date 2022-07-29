@@ -1,0 +1,15 @@
+[
+    {
+        "id": 1,
+        "name": "Dhammika Filling Station",
+        "coordinates": [
+            7.494112,
+            80.3679604
+        ],
+        "city": "Kurunegala",
+        "availablitiy": {
+            "petrol": true,
+            "diesel": false
+        }
+    }
+]
