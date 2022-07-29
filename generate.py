@@ -85,4 +85,4 @@ class GenerateMap:
 
 
 obj = GenerateMap()
-obj.run()
+obj.run(path=os.path.join(os.getcwd(), 'templates', 'map.html'))
