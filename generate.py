@@ -84,5 +84,6 @@ class GenerateMap:
         self.fixHtml()
 
 
-obj = GenerateMap()
-obj.run(path=os.path.join(os.getcwd(), 'templates', 'map.html'))
+if __name__ == "__main__":
+    obj = GenerateMap()
+    obj.run(path=os.path.join(os.getcwd(), 'templates', 'map.html'))
