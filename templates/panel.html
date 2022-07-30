@@ -163,14 +163,14 @@
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <div class="input-group">
-                                                            <input type="password" name="exp" id="exp" placeholder=""
+                                                            <input type="text" name="exp" id="exp" placeholder=""
                                                                 name="npassword" id="npassword">
                                                             <label>New Password</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
                                                         <div class="input-group">
-                                                            <input type="password" name="vpassword" id="vpassword"
+                                                            <input type="text" name="vpassword" id="vpassword"
                                                                 placeholder="" class="placeicon">
                                                             <label>Verify Password</label>
                                                         </div>
@@ -224,6 +224,7 @@
 
 {%block endbody%}
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
@@ -256,12 +257,23 @@
         // save account details
         $("#account_details_form").submit(function () {
             alert('submitting')
-            const newPassword = $("#npassword").text()
-            alert(newPassword)
-            const verifyPassword = $("#vpassword").text()
+            const newPassword = $("#npassword")
+            const verifyPassword = $("#vpassword")
             $.post(
                 '{{ url_for("panel_edit_user") }}',
-                {}
+                {
+                    npassword: newPassword.val(),
+                    vpassword: verifyPassword.val()
+                },
+                function (data) {
+                    if (data == "nomatch") {
+
+                    } else if (data == "done") {
+
+                    } else {
+
+                    }
+                }
             )
         })
     })
