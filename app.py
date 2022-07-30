@@ -30,13 +30,13 @@ def index():
 def login():
     if request.method == 'POST':
         session.pop('user_id', None)
-        email = request.form['email']
-        password = request.form['password']
+        email = request.form.get('email')
+        password = request.form.get('password')
         user = Users.getUserByEmail(email=email)
         try:
             if user and user['password'] == password:
                 session['user_id'] = user['id']
-                return redirect(url_for('profile'))
+                return redirect(url_for('panel'))
             else:
                 return redirect(url_for('login'))
         except:
@@ -47,7 +47,21 @@ def login():
 
 @app.route("/signup")
 def signup():
-    return render_template("signup.html")
+    if request.method == 'POST':
+        session.pop('user_id', None)
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        Users.addUser(
+            password=password,
+            name=name,
+            email=email
+        )
+        user = Users.getUserByEmail(email=email)
+        session['user_id'] = user['id']
+        return redirect(url_for('panel'))
+    else:
+        return render_template("signup.html")
 
 
 @app.route("/logout")
