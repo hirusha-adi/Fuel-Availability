@@ -1,0 +1,21 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" href="">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    {% block head %}{% endblock %}
+</head>
+
+<body class="text-center">
+    {% block body %}{% endblock %}
+
+    {%block endbody%}{% endblock %}
+</body>
+
+</html>
