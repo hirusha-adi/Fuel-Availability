@@ -80,8 +80,15 @@ def panel():
 
 @app.route("/panel/edit/user", methods=['GET', 'POST'])
 def panel_edit_user():
+    """
+    fullname
+    email
+    npassword
+    vpassword
+    """
     if not g.user:
         return redirect(url_for('login'))
+
     if request.method == 'POST':
         pass
     else:
