@@ -71,6 +71,9 @@ def logout():
 
 @app.route("/panel")
 def panel():
+    if not g.user:
+        return redirect(url_for('login'))
+
     return render_template("panel.html")
 
 
