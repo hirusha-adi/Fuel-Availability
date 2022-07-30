@@ -30,6 +30,12 @@ def map():
     return render_template("map.html")
 
 
+@app.route("/about")
+@app.route("/contact")
+def contact_us():
+    return render_template("index.html")
+
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
