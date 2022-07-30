@@ -137,12 +137,12 @@
                                             <h3 class="mt-0 mb-4 text-center">
                                                 Edit Account Details
                                             </h3>
-                                            <form onsubmit="event.preventDefault()">
+                                            <form onsubmit="event.preventDefault()" id="account_details_form">
 
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="input-group">
-                                                            <input type="text" id="cr_no" name="fullname"
+                                                            <input type="text" id="fullname" name="fullname"
                                                                 placeholder="{{ user.name }}" disabled>
                                                             <label>Full Name</label>
                                                         </div>
@@ -153,7 +153,7 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="input-group">
-                                                            <input type="text" id="cr_no" name="email"
+                                                            <input type="text" id="email" name="email"
                                                                 placeholder="{{ user.email }}" disabled>
                                                             <label>Email</label>
                                                         </div>
@@ -164,14 +164,14 @@
                                                     <div class="col-6">
                                                         <div class="input-group">
                                                             <input type="password" name="exp" id="exp" placeholder=""
-                                                                name="npassword">
+                                                                name="npassword" id="npassword">
                                                             <label>New Password</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
                                                         <div class="input-group">
-                                                            <input type="password" name="vpassword" placeholder=""
-                                                                class="placeicon">
+                                                            <input type="password" name="vpassword" id="vpassword"
+                                                                placeholder="" class="placeicon">
                                                             <label>Verify Password</label>
                                                         </div>
                                                     </div>
@@ -241,15 +241,29 @@
             $("#tab1").addClass("active1");
             $("#tab1").removeClass("bg-light");
         });
+
         $("#tab2").click(function () {
             $(".tabs").removeClass("active1");
             $(".tabs").addClass("bg-light");
             $("#tab2").addClass("active1");
             $("#tab2").removeClass("bg-light");
         });
+
         $("#tab4").click(function () {
             window.location.href = window.location.origin + '/logout'
         });
+
+        // save account details
+        $("#account_details_form").submit(function () {
+            alert('submitting')
+            const newPassword = $("#npassword").text()
+            alert(newPassword)
+            const verifyPassword = $("#vpassword").text()
+            $.post(
+                '{{ url_for("panel_edit_user") }}',
+                {}
+            )
+        })
     })
 </script>
 {% endblock %}
