@@ -74,8 +74,8 @@ def logout():
 def panel():
     if not g.user:
         return redirect(url_for('login'))
-
-    return render_template("panel.html")
+    user = Users.getUserByEmail(email=g.user['email'])
+    return render_template("panel.html", user=user)
 
 
 if __name__ == "__main__":
