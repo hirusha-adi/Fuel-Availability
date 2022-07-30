@@ -23,22 +23,45 @@
 
                         <!-- Sidebar -->
                         <div class="bg-light border-right" id="sidebar-wrapper">
-                            <div class="sidebar-heading pt-5 pb-4"><strong>PANEL</strong></div>
-                            <div class="list-group list-group-flush"> <a data-toggle="tab" href="#menu1" id="tab1"
+                            <div class="sidebar-heading pt-5 pb-4">
+                                <strong>
+                                    PANEL
+                                </strong>
+                            </div>
+                            <div class="list-group list-group-flush">
+                                <a data-toggle="tab" href="#menu1" id="tab1" class="tabs list-group-item bg-light">
+                                    <div class="list-div my-2">
+                                        <div class="fa fa-home"></div>
+                                        &nbsp;&nbsp; Filling Stations
+                                    </div>
+                                </a>
+                                <a data-toggle="tab" href="#menu2" id="tab2" class="tabs list-group-item active1">
+                                    <div class="list-div my-2">
+                                        <div class="fa fa-credit-card"></div>
+                                        &nbsp;&nbsp; Account Settings
+                                    </div>
+                                </a>
+
+                                <a data-toggle="tab" href="{{ url_for('logout') }}" id="tab4"
                                     class="tabs list-group-item bg-light">
                                     <div class="list-div my-2">
-                                        <div class="fa fa-home"></div> &nbsp;&nbsp; Filling Stations
+                                        <div class="fa fa-credit-card"></div>
+                                        &nbsp;&nbsp; Log Out
                                     </div>
-                                </a> <a data-toggle="tab" href="#menu2" id="tab2" class="tabs list-group-item active1">
+                                </a>
+
+                                <a data-toggle="tab" href="{{ url_for('logout') }}" id="tab5"
+                                    class="tabs list-group-item bg-light">
                                     <div class="list-div my-2">
-                                        <div class="fa fa-credit-card"></div> &nbsp;&nbsp; Account Settings
+                                        <div class="fa fa-credit-card"></div>
+                                        &nbsp;&nbsp;
+                                        <span id="new-label">
+                                            Go back to home
+                                        </span>
                                     </div>
-                                </a> <a data-toggle="tab" href="#menu3" id="tab3" class="tabs list-group-item bg-light">
-                                    <div class="list-div my-2">
-                                        <div class="fa fa-qrcode"></div> &nbsp;&nbsp;&nbsp; Log <span
-                                            id="new-label">Coming Soon!</span>
-                                    </div>
-                                </a> </div>
+                                </a>
+
+                            </div>
                         </div>
 
                         <!-- Page Content -->
@@ -152,6 +175,7 @@
                                     </div>
                                 </div>
 
+                                <!-- Deleted -->
                                 <div id="menu3" class="tab-pane">
                                     <div class="row justify-content-center">
                                         <div class="col-11">
@@ -197,11 +221,8 @@
                 $("#tab2").addClass("active1");
                 $("#tab2").removeClass("bg-light");
             });
-            $("#tab3").click(function () {
-                $(".tabs").removeClass("active1");
-                $(".tabs").addClass("bg-light");
-                $("#tab3").addClass("active1");
-                $("#tab3").removeClass("bg-light");
+            $("#tab4").click(function () {
+                window.location.href = window.location.origin + '/logout'
             });
         })
     </script>
