@@ -74,7 +74,22 @@
     </footer>
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-    <script src='https://rawgit.com/Jesus-E-Rodriguez/cityscapes-landing-page/master/js/menu.js'></script>
+    <script>
+        $('#menu-button').click(function () {
+            $(this).toggleClass('change');
+            $('.nav-links').toggleClass('nav-open');
+        });
+
+        $(window).resize(function () {
+            if ($(window).width() > 768) {
+                console.log($(window).width());
+                if ($('.nav-links').hasClass('nav-open')) {
+                    $('#menu-button').toggleClass('change');
+                    $('.nav-links').toggleClass('nav-open');
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
