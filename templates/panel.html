@@ -43,7 +43,7 @@
                                 </div>
                             </a>
 
-                            <a data-toggle="tab" href="{{ url_for('logout') }}" id="tab5"
+                            <a data-toggle="tab" href="{{ url_for('index') }}" id="tab5"
                                 class="tabs list-group-item bg-light">
                                 <div class="list-div my-2">
                                     <div class="fa fa-credit-card"></div>
@@ -134,61 +134,62 @@
                                 <div class="row justify-content-center">
                                     <div class="col-11">
                                         <div class="form-card">
-                                            <h3 class="mt-0 mb-4 text-center">Enter your card details to pay</h3>
+                                            <h3 class="mt-0 mb-4 text-center">
+                                                Edit Account Details
+                                            </h3>
                                             <form onsubmit="event.preventDefault()">
 
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="input-group">
-                                                            <input type="text" id="cr_no" placeholder="{{ user.name }}">
+                                                            <input type="text" id="cr_no" name="fullname"
+                                                                placeholder="{{ user.name }}" disabled>
                                                             <label>Full Name</label>
                                                         </div>
                                                     </div>
                                                 </div>
 
+
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="input-group">
-                                                            <input type="text" id="cr_no" placeholder="{{ user.name }}">
+                                                            <input type="text" id="cr_no" name="email"
+                                                                placeholder="{{ user.email }}" disabled>
                                                             <label>Email</label>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-4">
+                                                    <div class="col-6">
                                                         <div class="input-group">
-                                                            <input type="email" name="exp" id="exp"
-                                                                placeholder="{{ user.email }}">
-                                                            <label>Email Address</label>
+                                                            <input type="password" name="exp" id="exp" placeholder=""
+                                                                name="npassword">
+                                                            <label>New Password</label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-4">
+                                                    <div class="col-6">
                                                         <div class="input-group">
-                                                            <input type="password" name="cvcpwd"
-                                                                placeholder="&#9679;&#9679;&#9679;" class="placeicon"
-                                                                minlength="3" maxlength="3">
-                                                            <label>CVV</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <div class="input-group">
-                                                            <input type="password" name="cvcpwd"
-                                                                placeholder="&#9679;&#9679;&#9679;" class="placeicon"
-                                                                minlength="3" maxlength="3">
-                                                            <label>CVV</label>
+                                                            <input type="password" name="vpassword" placeholder=""
+                                                                class="placeicon">
+                                                            <label>Verify Password</label>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-md-12"> <input type="submit" value="Pay $ 100"
-                                                            class="btn btn-success placeicon"> </div>
+                                                    <div class="col-md-12">
+                                                        <input type="submit" value="Save"
+                                                            class="btn btn-success placeicon">
+                                                    </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <p class="text-center mb-5" id="below-btn"><a href="#">Use a
-                                                                test card</a></p>
+                                                        <p class="text-center mb-5" id="below-btn">
+                                                            <a href="{{ url_for('logout') }}">
+                                                                Log Out
+                                                            </a>
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </form>
