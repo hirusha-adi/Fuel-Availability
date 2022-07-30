@@ -12,23 +12,34 @@
     <a href="{{ url_for('index') }}">
         <img class="mb-4" src="{{ url_for('static', filename='images/logo.png') }}" alt="" width="72" height="72">
     </a>
-    <h1 class="h3 mb-3 font-weight-normal">Please Sign Up</h1>
-    <label for="name" class="sr-only">Full Name</label>
+    <h1 class="h3 mb-3 font-weight-normal">
+        Please Sign Up
+    </h1>
+    <label for="name" class="sr-only">
+        Full Name
+    </label>
     <input type="text" id="name" name="name" class="form-control" placeholder="Full Name" required="" autofocus="">
-    <label for="email" class="sr-only">Email address</label>
+    <label for="email" class="sr-only">
+        Email address
+    </label>
     <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required=""
         autofocus="">
-    <label for="password" class="sr-only">Password</label>
+    <label for="password" class="sr-only">
+        Password
+    </label>
     <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
-
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">
+        Sign Up
+    </button>
     <br>
     <label>
         <a href="{{ url_for('login') }}">
             Already have an account? Login
         </a>
     </label>
-    <p class="mt-5 mb-3 text-muted">Made with ♥ by @hirushaadi</p>
+    <p class="mt-5 mb-3 text-muted">
+        Made with ♥ by @hirushaadi
+    </p>
 </form>
 
 {% endblock %}
