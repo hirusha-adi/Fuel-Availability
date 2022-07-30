@@ -119,17 +119,21 @@ def panel_edit_user():
         return redirect(url_for('panel'))
 
 
-@app.route("/edit/user", methods=['GET', 'POST'])
+@app.route("/edit/station", methods=['GET', 'POST'])
 def add_new_station():
     """
     EASY ---->
         fsname -> Fillion Station's Name
         fsgoogleurl -> Google Maps URL
-        petroAvailability -> 1|2 -> Petrol
+        petrolAvailability -> 1|2 -> Petrol
         dieselAvailability -> 1|2 -> Diesel
 
     HARD ---->
-
+        fsname -> Fillion Station's Name
+        fslat -> latitudes
+        fslong -> longitudes
+        petrolAvailability -> 1|2 -> Petrol
+        dieselAvailability -> 1|2 -> Diesel
     """
     return "hi"
 
