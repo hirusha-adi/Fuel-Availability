@@ -81,8 +81,8 @@ def panel():
 @app.route("/panel/edit/user", methods=['GET', 'POST'])
 def panel_edit_user():
     """
-    fullname
-    email
+    fullname (disabled)
+    email (disabled)
     npassword
     vpassword
     """
