@@ -163,8 +163,8 @@
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <div class="input-group">
-                                                            <input type="text" name="exp" id="exp" placeholder=""
-                                                                name="npassword" id="npassword">
+                                                            <input type="text" placeholder="" name="npassword"
+                                                                id="npassword">
                                                             <label>New Password</label>
                                                         </div>
                                                     </div>
@@ -178,11 +178,23 @@
                                                 </div>
 
                                                 <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="alert alert-success" role="alert"
+                                                            id="account_successmsg" style="display:none;">
+                                                        </div>
+                                                        <div class="alert alert-danger" role="alert"
+                                                            id="account_errormsg" style="display:none;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
                                                     <div class="col-md-12">
                                                         <input type="submit" value="Save"
                                                             class="btn btn-success placeicon">
                                                     </div>
                                                 </div>
+
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <p class="text-center mb-5" id="below-btn">
@@ -244,6 +256,8 @@
         });
 
         $("#tab2").click(function () {
+            $("#account_successmsg").hide();
+            $("#account_errormsg").hide();
             $(".tabs").removeClass("active1");
             $(".tabs").addClass("bg-light");
             $("#tab2").addClass("active1");
@@ -266,12 +280,20 @@
                     vpassword: verifyPassword.val()
                 },
                 function (data) {
-                    if (data == "nomatch") {
-
-                    } else if (data == "done") {
-
+                    $("#account_successmsg").hide();
+                    $("#account_errormsg").hide();
+                    if (data['status'] == "done") {
+                        $("#account_errormsg").hide();
+                        $("#account_successmsg").text("Changed password successfully!")
+                        $("#account_successmsg").show();
+                    } else if (data['status'] == "nomatch") {
+                        $("#account_successmsg").hide();
+                        $("#account_errormsg").text("Password doesn't match each other! Please try again!")
+                        $("#account_errormsg").show();
                     } else {
-
+                        $("#account_successmsg").hide();
+                        $("#account_errormsg").text(`${data['status']}`)
+                        $("#account_errormsg").show();
                     }
                 }
             )
