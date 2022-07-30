@@ -50,6 +50,12 @@ def signup():
     return render_template("signup.html")
 
 
+@app.route("/logout")
+def logout():
+    session.pop('user_id', None)
+    return redirect(url_for('index'))
+
+
 @app.route("/panel")
 def panel():
     return render_template("panel.html")
