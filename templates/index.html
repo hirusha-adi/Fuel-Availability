@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home | Fuel Availability</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
+    <link rel='stylesheet' href='{{ url_for("static", filename="css/home.css") }}'>
+    <style>
+        footer {
+            display: flex;
+            position: fixed;
+            background-color: rgb(17, 17, 17);
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone {
+            color: white;
+            font-size: 14px;
+            margin: auto;
+        }
+
+        .address {
+            color: white;
+            font-size: 14px;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="main-nav" id="main-nav">
+        <div class="content-wrapper-sm">
+            <a href="#" class="navbar-brand">Fuel Availability</a>
+            <div id="menu-button">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('map') }}">Map</a></li>
+                <li><a href="#reserve">Contact Us</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <img class="img-absolute" src="{{ url_for('static', filename='images/background3.jpg') }}" alt="City 1">
+        <div class="wrapper astonish animated fadeInDown">
+            <h1><strong>Fuel </strong>Availability</h1>
+            <h2>
+                Sri Lanka's filling station's fuel availability
+            </h2>
+        </div>
+    </header>
+
+    <footer>
+        <div class="phone">
+            Phone: (###) ###-####(###) ###-####
+        </div>
+        <div class="address">
+            Address: 1234 Road Name Hwy City, State 12345
+        </div>
+    </footer>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src='https://rawgit.com/Jesus-E-Rodriguez/cityscapes-landing-page/master/js/menu.js'></script>
+</body>
+
+</html>
