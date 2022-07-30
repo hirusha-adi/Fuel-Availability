@@ -78,7 +78,7 @@ def panel():
     return render_template("panel.html", user=user)
 
 
-@app.route("/panel/edit/user", methods=['GET', 'POST'])
+@app.route("/edit/user", methods=['GET', 'POST'])
 def panel_edit_user():
     """
     fullname (disabled)
@@ -92,7 +92,7 @@ def panel_edit_user():
     if request.method == 'POST':
         npassword = request.form.get('npassword')
         vpassword = request.form.get('vpassword')
-
+        print(npassword, vpassword)
         try:
             if npassword == vpassword:
                 Users.updateUser(
