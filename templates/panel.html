@@ -314,6 +314,13 @@
             $("#tab2").removeClass("bg-light");
         });
 
+        $("#tab3").click(function () {
+            $(".tabs").removeClass("active1");
+            $(".tabs").addClass("bg-light");
+            $("#tab3").addClass("active1");
+            $("#tab3").removeClass("bg-light");
+        });
+
         $("#tab4").click(function () {
             window.location.href = window.location.origin + '/logout'
         });
