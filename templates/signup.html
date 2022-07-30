@@ -1,43 +1,34 @@
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="">
+{% block title %}Sign-Up | Fuel Availability{% endblock %}
 
-    <title>Sign-Up | Fuel Availability</title>
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}" />
+{% endblock %}
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}" />
-</head>
+{% block body %}
 
-<body class="text-center">
+<form class="form-signin">
+    <a href="{{ url_for('index') }}">
+        <img class="mb-4" src="{{ url_for('static', filename='images/logo.png') }}" alt="" width="72" height="72">
+    </a>
+    <h1 class="h3 mb-3 font-weight-normal">Please Sign Up</h1>
+    <label for="name" class="sr-only">Full Name</label>
+    <input type="text" id="name" name="name" class="form-control" placeholder="Full Name" required="" autofocus="">
+    <label for="email" class="sr-only">Email address</label>
+    <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required=""
+        autofocus="">
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
 
-    <form class="form-signin">
-        <a href="{{ url_for('index') }}">
-            <img class="mb-4" src="{{ url_for('static', filename='images/logo.png') }}" alt="" width="72" height="72">
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+    <br>
+    <label>
+        <a href="{{ url_for('login') }}">
+            Already have an account? Login
         </a>
-        <h1 class="h3 mb-3 font-weight-normal">Please Sign Up</h1>
-        <label for="name" class="sr-only">Full Name</label>
-        <input type="text" id="name" name="name" class="form-control" placeholder="Full Name" required="" autofocus="">
-        <label for="email" class="sr-only">Email address</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required=""
-            autofocus="">
-        <label for="password" class="sr-only">Password</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
+    </label>
+    <p class="mt-5 mb-3 text-muted">Made with ♥ by @hirushaadi</p>
+</form>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
-        <br>
-        <label>
-            <a href="{{ url_for('login') }}">
-                Already have an account? Login
-            </a>
-        </label>
-        <p class="mt-5 mb-3 text-muted">Made with ♥ by @hirushaadi</p>
-    </form>
-
-</body>
-
-</html>
+{% endblock %}
