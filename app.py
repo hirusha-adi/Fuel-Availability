@@ -90,7 +90,21 @@ def panel_edit_user():
         return redirect(url_for('login'))
 
     if request.method == 'POST':
-        pass
+        npassword = request.form.get('npassword')
+        vpassword = request.form.get('vpassword')
+
+        try:
+            if npassword == vpassword:
+                Users.updateUser(
+                    name=g.user['name'],
+                    email=g.user['email'],
+                    password=npassword
+                )
+                return "nomatch"
+            else:
+                return "done"
+        except Exception as e:
+            return f"error: {e}"
     else:
         return redirect(url_for('panel'))
 
