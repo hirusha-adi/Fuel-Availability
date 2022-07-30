@@ -22,12 +22,14 @@
                             </strong>
                         </div>
                         <div class="list-group list-group-flush">
+
                             <a data-toggle="tab" href="#menu1" id="tab1" class="tabs list-group-item bg-light">
                                 <div class="list-div my-2">
                                     <div class="fa fa-home"></div>
                                     &nbsp;&nbsp; Filling Stations
                                 </div>
                             </a>
+
                             <a data-toggle="tab" href="#menu2" id="tab2" class="tabs list-group-item active1">
                                 <div class="list-div my-2">
                                     <div class="fa fa-credit-card"></div>
@@ -35,24 +37,30 @@
                                 </div>
                             </a>
 
-                            <a data-toggle="tab" href="{{ url_for('logout') }}" id="tab4"
-                                class="tabs list-group-item bg-light">
+                            <a data-toggle="tab" href="#menu3" id="tab3" class="tabs list-group-item bg-light">
                                 <div class="list-div my-2">
-                                    <div class="fa fa-credit-card"></div>
-                                    &nbsp;&nbsp; Log Out
+                                    <div class="fa fa-home"></div>
+                                    &nbsp;&nbsp; New Station
                                 </div>
-                            </a>
 
-                            <a data-toggle="tab" href="{{ url_for('index') }}" id="tab5"
-                                class="tabs list-group-item bg-light">
-                                <div class="list-div my-2">
-                                    <div class="fa fa-credit-card"></div>
-                                    &nbsp;&nbsp;
-                                    <span id="new-label">
-                                        Go back to home
-                                    </span>
-                                </div>
-                            </a>
+                                <a data-toggle="tab" href="{{ url_for('logout') }}" id="tab4"
+                                    class="tabs list-group-item bg-light">
+                                    <div class="list-div my-2">
+                                        <div class="fa fa-credit-card"></div>
+                                        &nbsp;&nbsp; Log Out
+                                    </div>
+                                </a>
+
+                                <a data-toggle="tab" href="{{ url_for('index') }}" id="tab5"
+                                    class="tabs list-group-item bg-light">
+                                    <div class="list-div my-2">
+                                        <div class="fa fa-credit-card"></div>
+                                        &nbsp;&nbsp;
+                                        <span id="new-label">
+                                            Go back to home
+                                        </span>
+                                    </div>
+                                </a>
 
                         </div>
                     </div>
@@ -210,26 +218,68 @@
                                 </div>
                             </div>
 
-                            <!-- Deleted -->
                             <div id="menu3" class="tab-pane">
                                 <div class="row justify-content-center">
                                     <div class="col-11">
-                                        <h3 class="mt-0 mb-4 text-center">Scan the QR code to pay</h3>
-                                        <div class="row justify-content-center">
-                                            <div id="qr"> <img src="https://i.imgur.com/DD4Npfw.jpg" width="200px"
-                                                    height="200px"> </div>
+                                        <div class="form-card">
+                                            <h3 class="mt-0 mb-4 text-center">Add new Fuel Station</h3>
+                                            <form onsubmit="event.preventDefault()">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="input-group"> <input type="text" id="bk_nm"
+                                                                placeholder="BBB Bank"> <label>BANK NAME</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="input-group"> <input type="text" name="ben_nm"
+                                                                id="ben-nm" placeholder="John Smith">
+                                                            <label>BENEFICIARY NAME</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="input-group"> <input type="text" name="scode"
+                                                                placeholder="ABCDAB1S" class="placeicon" minlength="8"
+                                                                maxlength="11"> <label>SWIFT
+                                                                CODE</label> </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12"> <input type="submit" value="Pay $ 100"
+                                                            class="btn btn-success placeicon"> </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <p class="text-center mb-5" id="below-btn"><a href="#">Use a
+                                                                test card</a></p>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- Deleted -->
+                            <!-- <div class="row justify-content-center">
+                                <div class="col-11">
+                                    <h3 class="mt-0 mb-4 text-center">Scan the QR code to pay</h3>
+                                    <div class="row justify-content-center">
+                                        <div id="qr"> <img src="https://i.imgur.com/DD4Npfw.jpg" width="200px"
+                                                height="200px"> </div>
+                                    </div>
+                                </div>
+                            </div> -->
                         </div>
 
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 {% endblock %}
