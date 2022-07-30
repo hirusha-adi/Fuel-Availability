@@ -68,12 +68,16 @@
                             <div class="col-8">
                                 <div class="row justify-content-right">
                                     <div class="col-12">
-                                        <p class="mb-0 mr-4 mt-4 text-right">customer@email.com</p>
+                                        <p class="mb-0 mr-4 mt-4 text-right">Logged in as {{ user.email }}</p>
                                     </div>
                                 </div>
                                 <div class="row justify-content-right">
                                     <div class="col-12">
-                                        <p class="mb-0 mr-4 text-right">Pay <span class="top-highlight">$ 100</span>
+                                        <p class="mb-0 mr-4 text-right">
+                                            Welcome
+                                            <span class="top-highlight">
+                                                {{ user.name }}
+                                            </span>
                                         </p>
                                     </div>
                                 </div>
