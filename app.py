@@ -1,4 +1,3 @@
-import email
 import os
 from flask import Flask, render_template, g, session, request, redirect, url_for
 from generate import GenerateMap
@@ -45,7 +44,7 @@ def login():
         return render_template("login.html")
 
 
-@app.route("/signup")
+@app.route("/signup", methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
         session.pop('user_id', None)
