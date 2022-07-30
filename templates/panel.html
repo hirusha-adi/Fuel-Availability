@@ -11,11 +11,11 @@
 <div class="container-fluid px-0" id="bg-div">
     <div class="row justify-content-center">
         <div class="col-lg-9 col-12">
-            <div class="card card0">
+            <div class="card card0" style="border-radius: 2% !important;">
                 <div class="d-flex" id="wrapper">
 
                     <!-- Sidebar -->
-                    <div class="bg-light border-right" id="sidebar-wrapper">
+                    <div class="bg-light border-right" id="sidebar-wrapper" style="border-radius: 5% !important;">
                         <div class="sidebar-heading pt-5 pb-4">
                             <strong>
                                 PANEL
@@ -225,7 +225,7 @@
                                         <!-- Easy Method -->
                                         <div class="form-card">
                                             <h3 class="mt-0 mb-4 text-center">
-                                                Add new Fuel Station
+                                                Add new Filling Station
                                                 <br>
                                                 (Easy)
                                             </h3>
@@ -233,33 +233,53 @@
                                             <form onsubmit="event.preventDefault()" id="new_station_form_easy">
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <div class="input-group"> <input type="text" id="bk_nm"
-                                                                placeholder="BBB Bank"> <label>BANK NAME</label>
+                                                        <div class="input-group">
+                                                            <input type="text" id="fsname" name="fsname"
+                                                                placeholder="Fillion Station's Name">
+                                                            <label>Fillion Station's Name</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <div class="input-group"> <input type="text" name="ben_nm"
-                                                                id="ben-nm" placeholder="John Smith">
-                                                            <label>BENEFICIARY NAME</label>
+                                                        <div class="input-group">
+                                                            <input type="text" name="fsgoogleurl" id="fsgoogleurl"
+                                                                placeholder="Google Maps URL">
+                                                            <label>Google Maps URL</label>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <div class="input-group"> <input type="text" name="scode"
-                                                                placeholder="ABCDAB1S" class="placeicon" minlength="8"
-                                                                maxlength="11"> <label>SWIFT
-                                                                CODE</label> </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12"> <input type="submit" value="Pay $ 100"
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Petrol</label>
+                                                            <select class="form-control" id="petroAvailability">
+                                                                <option value="1">Avaibale</option>
+                                                                <option value="2">Not Avaibale</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Diesel</label>
+                                                            <select class="form-control" id="dieselAvailability">
+                                                                <option value="1">Avaibale</option>
+                                                                <option value="2">Not Avaibale</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12"> <input type="submit" value="Add"
                                                             class="btn btn-success placeicon"> </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <p class="text-center mb-5" id="below-btn"><a href="#">Use a
-                                                                test card</a></p>
+                                                        <p class="text-center mb-5" id="below-btn">
+                                                            <a href="#">
+                                                                Use hard method?
+                                                            </a>
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </form>
@@ -268,41 +288,68 @@
                                         <!-- Hard Method -->
                                         <div class="form-card">
                                             <h3 class="mt-0 mb-4 text-center">
-                                                Add new Fuel Station
+                                                Add new Filling Station
                                                 <br>
                                                 (Hard)
                                             </h3>
                                             <h3 class="mt-0 mb-4 text-center"></h3>
-                                            <form onsubmit="event.preventDefault()">
+                                            <form onsubmit="event.preventDefault()" id="new_station_form_hard">
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <div class="input-group"> <input type="text" id="bk_nm"
-                                                                placeholder="BBB Bank"> <label>BANK NAME</label>
+                                                        <div class="input-group">
+                                                            <input type="text" id="fsname" name="fsname"
+                                                                placeholder="Fillion Station's Name">
+                                                            <label>Fillion Station's Name</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="input-group"> <input type="text" name="ben_nm"
-                                                                id="ben-nm" placeholder="John Smith">
-                                                            <label>BENEFICIARY NAME</label>
+                                                    <div class="col-6">
+                                                        <div class="input-group">
+                                                            <input type="text" name="fslat" id="fslat"
+                                                                placeholder="Latitudes">
+                                                            <label>Latitudes</label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-12">
-                                                        <div class="input-group"> <input type="text" name="scode"
-                                                                placeholder="ABCDAB1S" class="placeicon" minlength="8"
-                                                                maxlength="11"> <label>SWIFT
-                                                                CODE</label> </div>
+                                                    <div class="col-6">
+                                                        <div class="input-group">
+                                                            <input type="text" name="fslong" id="fslong"
+                                                                placeholder="Longitues">
+                                                            <label>Longitues</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12"> <input type="submit" value="Pay $ 100"
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Petrol</label>
+                                                            <select class="form-control" id="petroAvailability">
+                                                                <option value="1">Avaibale</option>
+                                                                <option value="2">Not Avaibale</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Diesel</label>
+                                                            <select class="form-control" id="dieselAvailability">
+                                                                <option value="1">Avaibale</option>
+                                                                <option value="2">Not Avaibale</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12"> <input type="submit" value="Add"
                                                             class="btn btn-success placeicon"> </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <p class="text-center mb-5" id="below-btn"><a href="#">Use a
-                                                                test card</a></p>
+                                                        <p class="text-center mb-5" id="below-btn">
+                                                            <a href="#">
+                                                                Use hard method?
+                                                            </a>
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </form>
