@@ -71,14 +71,24 @@ class Users:
         return temp
 
     def addUser(name, email, password):
-        users.insert_one(
-            {
-                'id': int(Users.getLastUser()['id']) + 1,
-                'name': name,
-                'email': email,
-                'password': password
-            }
-        )
+        try:
+            users.insert_one(
+                {
+                    'id': int(Users.getLastUser()['id']) + 1,
+                    'name': name,
+                    'email': email,
+                    'password': password
+                }
+            )
+        except IndexError:
+            users.insert_one(
+                {
+                    'id': 1,
+                    'name': name,
+                    'email': email,
+                    'password': password
+                }
+            )
 
     def updateUser(name, email, password):
         users.find_one_and_update(
