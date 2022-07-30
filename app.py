@@ -78,6 +78,16 @@ def panel():
     return render_template("panel.html", user=user)
 
 
+@app.route("/panel/edit/user", methods=['GET', 'POST'])
+def panel_edit_user():
+    if not g.user:
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        pass
+    else:
+        return redirect(url_for('panel'))
+
+
 if __name__ == "__main__":
     makeMap()
     app.run("0.0.0.0", port=8090, debug=True)
