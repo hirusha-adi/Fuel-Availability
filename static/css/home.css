@@ -817,6 +817,7 @@ h6 {
     cursor: pointer;
     padding: 0.5rem;
     display: block;
+    border-bottom-left-radius: 50px 20px;
 }
 
 @media (min-width: 768px) {
@@ -937,6 +938,8 @@ h6 {
     display: block;
     height: auto;
     background: #111;
+    border-bottom-left-radius: 5%;
+    border-bottom-right-radius: 5%;
 }
 
 .main-nav .nav-open li {
