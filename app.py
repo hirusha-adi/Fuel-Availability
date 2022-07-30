@@ -4,6 +4,7 @@ from generate import GenerateMap
 from database.mongo import Users
 
 app = Flask(__name__)
+app.secret_key = 'the random string'
 
 
 def makeMap():
