@@ -129,34 +129,58 @@
                                 </div>
                             </div>
 
+                            <!-- Account Settings -->
                             <div id="menu2" class="tab-pane in active">
                                 <div class="row justify-content-center">
                                     <div class="col-11">
                                         <div class="form-card">
                                             <h3 class="mt-0 mb-4 text-center">Enter your card details to pay</h3>
                                             <form onsubmit="event.preventDefault()">
+
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <div class="input-group"> <input type="text" id="cr_no"
-                                                                placeholder="0000 0000 0000 0000" minlength="19"
-                                                                maxlength="19"> <label>CARD NUMBER</label> </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <div class="input-group"> <input type="text" name="exp" id="exp"
-                                                                placeholder="MM/YY" minlength="5" maxlength="5">
-                                                            <label>CARD EXPIRY</label>
+                                                        <div class="input-group">
+                                                            <input type="text" id="cr_no" placeholder="{{ user.name }}">
+                                                            <label>Full Name</label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-6">
-                                                        <div class="input-group"> <input type="password" name="cvcpwd"
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="input-group">
+                                                            <input type="text" id="cr_no" placeholder="{{ user.name }}">
+                                                            <label>Email</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <div class="input-group">
+                                                            <input type="email" name="exp" id="exp"
+                                                                placeholder="{{ user.email }}">
+                                                            <label>Email Address</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="input-group">
+                                                            <input type="password" name="cvcpwd"
+                                                                placeholder="&#9679;&#9679;&#9679;" class="placeicon"
+                                                                minlength="3" maxlength="3">
+                                                            <label>CVV</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="input-group">
+                                                            <input type="password" name="cvcpwd"
                                                                 placeholder="&#9679;&#9679;&#9679;" class="placeicon"
                                                                 minlength="3" maxlength="3">
                                                             <label>CVV</label>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="row">
                                                     <div class="col-md-12"> <input type="submit" value="Pay $ 100"
                                                             class="btn btn-success placeicon"> </div>
