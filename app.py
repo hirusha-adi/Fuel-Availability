@@ -21,8 +21,12 @@ def before_request():
 
 
 @app.route("/")
-@app.route("/map")
 def index():
+    return render_template("index.html")
+
+
+@app.route("/map")
+def map():
     return render_template("map.html")
 
 
@@ -107,6 +111,21 @@ def panel_edit_user():
             return jsonify({'status': f'ERROR: {e}'})
     else:
         return redirect(url_for('panel'))
+
+
+@app.route("/edit/user", methods=['GET', 'POST'])
+def add_new_station():
+    """
+    EASY ---->
+        fsname -> Fillion Station's Name
+        fsgoogleurl -> Google Maps URL
+        petroAvailability -> 1|2 -> Petrol
+        dieselAvailability -> 1|2 -> Diesel
+
+    HARD ---->
+
+    """
+    return "hi"
 
 
 if __name__ == "__main__":
