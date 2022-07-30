@@ -16,7 +16,7 @@
 <body class="text-center">
 
     <form class="form-signin" method="post" action="{{ url_for('login') }}">
-        <a href="/">
+        <a href="{{ url_for('index') }}">
             <img class="mb-4" src="{{ url_for('static', filename='images/logo.png') }}" alt="" width="72" height="72">
         </a>
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
@@ -25,11 +25,10 @@
             autofocus="">
         <label for="password" class="sr-only">Password</label>
         <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
-
         <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
         <br>
         <label>
-            <a href="/signup">
+            <a href="{{ url_for('signup') }}">
                 No Account? Sign Up
             </a>
         </label>
