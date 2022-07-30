@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, g, session, request, redirect, url_for
+from flask import Flask, render_template, g, session, request, redirect, url_for, jsonify
 from generate import GenerateMap
 from database.mongo import Users
 
@@ -100,11 +100,11 @@ def panel_edit_user():
                     email=g.user['email'],
                     password=npassword
                 )
-                return "nomatch"
+                return jsonify({'status': 'done'})
             else:
-                return "done"
+                return jsonify({'status': 'nomatch'})
         except Exception as e:
-            return f"error: {e}"
+            return jsonify({'status': f'ERROR: {e}'})
     else:
         return redirect(url_for('panel'))
 
