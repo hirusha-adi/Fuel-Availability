@@ -221,8 +221,58 @@
                             <div id="menu3" class="tab-pane">
                                 <div class="row justify-content-center">
                                     <div class="col-11">
+
+                                        <!-- Easy Method -->
                                         <div class="form-card">
-                                            <h3 class="mt-0 mb-4 text-center">Add new Fuel Station</h3>
+                                            <h3 class="mt-0 mb-4 text-center">
+                                                Add new Fuel Station
+                                                <br>
+                                                (Easy)
+                                            </h3>
+                                            <h3 class="mt-0 mb-4 text-center"></h3>
+                                            <form onsubmit="event.preventDefault()" id="new_station_form_easy">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="input-group"> <input type="text" id="bk_nm"
+                                                                placeholder="BBB Bank"> <label>BANK NAME</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="input-group"> <input type="text" name="ben_nm"
+                                                                id="ben-nm" placeholder="John Smith">
+                                                            <label>BENEFICIARY NAME</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="input-group"> <input type="text" name="scode"
+                                                                placeholder="ABCDAB1S" class="placeicon" minlength="8"
+                                                                maxlength="11"> <label>SWIFT
+                                                                CODE</label> </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12"> <input type="submit" value="Pay $ 100"
+                                                            class="btn btn-success placeicon"> </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <p class="text-center mb-5" id="below-btn"><a href="#">Use a
+                                                                test card</a></p>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <!-- Hard Method -->
+                                        <div class="form-card">
+                                            <h3 class="mt-0 mb-4 text-center">
+                                                Add new Fuel Station
+                                                <br>
+                                                (Hard)
+                                            </h3>
+                                            <h3 class="mt-0 mb-4 text-center"></h3>
                                             <form onsubmit="event.preventDefault()">
                                                 <div class="row">
                                                     <div class="col-12">
