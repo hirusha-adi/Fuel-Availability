@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, g, session, request, redirect, url_for, jsonify
 from generate import GenerateMap
-from database.mongo import Users, Pending
+from database.mongo import Users, Pending, Stations
 from datetime import datetime
 
 app = Flask(__name__)
@@ -85,8 +85,14 @@ def logout():
 def panel():
     if not g.user:
         return redirect(url_for('login'))
-    user = Users.getUserByEmail(email=g.user['email'])
-    return render_template("panel.html", user=user)
+
+    data = {}
+    data['user'] = Users.getUserByEmail(email=g.user['email'])
+    data['pending'] = Pending.getByEmail(email=g.user['email'])
+    data['pending_length'] = len(data['pending'])
+    data['stations'] = Stations.getByEmail(email=g.user['email'])
+    data['stations_length'] = len(data['stations'])
+    return render_template("panel.html", **data)
 
 
 @app.route("/edit/user", methods=['GET', 'POST'])
