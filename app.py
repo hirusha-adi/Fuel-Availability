@@ -1,7 +1,8 @@
 import os
 from flask import Flask, render_template, g, session, request, redirect, url_for, jsonify
 from generate import GenerateMap
-from database.mongo import Users
+from database.mongo import Users, Pending
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = 'the random string'
@@ -123,6 +124,7 @@ def panel_edit_user():
 def add_new_station():
     """
         fsname -> Fillion Station's Name
+        fscity -> City name
         fsgoogleurl -> Google Maps URL
         fsphone -> Phone Number
         petrolAvailability -> 1|2 -> Petrol
@@ -130,8 +132,12 @@ def add_new_station():
         bussinessRegistrationNumber -> Bussiness Registration Number
     """
 
+    if not g.user:
+        return redirect(url_for('login'))
+
     # always
     fsname = request.form.get('fsname')
+    fscity = request.form.get('fscity')
     fsgoogleurl = request.form.get('fsgoogleurl')
     fsphone = request.form.get('fsphone')
     petrolAvailability = request.form.get('petrolAvailability')
@@ -164,6 +170,18 @@ def add_new_station():
 
     if len(status['status']) >= 1:
         return jsonify(status)
+
+    Pending.addStation(
+        name=fsname,
+        registration=bussinessRegistrationNumber,
+        phone=fsphone,
+        email=g.user['email'],
+        coordinates=coordinates,
+        city=fscity,
+        petrol=True if petrolAvailability == '1' else False,
+        diesel=True if dieselAvailability == '1' else False,
+        lastupdated=str(datetime.now())
+    )
 
 
 if __name__ == "__main__":
