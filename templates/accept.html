@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Approve | Fuel Availability{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}" />
+{% endblock %}
+
+{% block body %}
+
+<form class="form-signin" method="post" action="{{ url_for('login') }}">
+    <a href="{{ url_for('index') }}">
+        <img class="mb-4" src="{{ url_for('static', filename='images/logo.png') }}" alt="" width="72" height="72">
+    </a>
+    <h1 class="h3 mb-3 font-weight-normal">
+        Please sign in
+    </h1>
+    <label for="email" class="sr-only">
+        Email address
+    </label>
+    <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required=""
+        autofocus="">
+    <label for="password" class="sr-only">
+        Password
+    </label>
+    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
+    <button class="btn btn-lg btn-primary btn-block" type="submit">
+        Log In
+    </button>
+    <br>
+    <label>
+        <a href="{{ url_for('signup') }}">
+            No Account? Sign Up
+        </a>
+    </label>
+    <p class="mt-5 mb-3 text-muted">
+        Made with ♥ by @hirushaadi
+    </p>
+</form>
+
+{% endblock %}
+
+{% block endbody %}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+</script>
+{% endblock %}
