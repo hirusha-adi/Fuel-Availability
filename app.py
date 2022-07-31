@@ -126,6 +126,11 @@ def panel_edit_user():
         return redirect(url_for('panel'))
 
 
+@app.route("/edit/station", methods=['GET', 'POST'])
+def panel_edit_user():
+    return jsonify({'status': 'success'})
+
+
 @app.route("/add/station", methods=['GET', 'POST'])
 def add_new_station():
     """
