@@ -120,7 +120,7 @@ def panel_edit_user():
         return redirect(url_for('panel'))
 
 
-@app.route("/edit/station", methods=['GET', 'POST'])
+@app.route("/add/station", methods=['GET', 'POST'])
 def add_new_station():
     """
         fsname -> Fillion Station's Name
