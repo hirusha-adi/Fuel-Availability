@@ -194,3 +194,12 @@ class Stations:
             return temp[0]
         except:
             return False
+
+    def getByPhone(phone: t.Union[str, bytes]):
+        temp = []
+        for station in stations.find({'phone': phone}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
