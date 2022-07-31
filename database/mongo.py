@@ -136,3 +136,45 @@ class Stations:
         for station in stations.find({}):
             temp.append(station)
         return temp
+
+    def getLastStation():
+        """
+        This is improvable and i dont know how to with pymongo
+            https://stackoverflow.com/questions/32076382/mongodb-how-to-get-max-value-from-collections
+        """
+        temp = []
+        for user in Stations.getAllStations():
+            temp.append(user)
+        return temp[-1]
+
+    def addStation(name, registration, coordinates, city, petrol, diesel, lastupdated):
+        try:
+            stations.insert_one(
+                {
+                    'id': int(Stations.getLastStation()['id']) + 1,
+                    "name": name,
+                    "registration": registration,
+                    "coordinates": coordinates,
+                    "city": city,
+                    "availablitiy": {
+                        "petrol": petrol,
+                        "diesel": diesel
+                    },
+                    "lastupdated": lastupdated
+                }
+            )
+        except IndexError:
+            stations.insert_one(
+                {
+                    'id': 1,
+                    "name": name,
+                    "registration": registration,
+                    "coordinates": coordinates,
+                    "city": city,
+                    "availablitiy": {
+                        "petrol": petrol,
+                        "diesel": diesel
+                    },
+                    "lastupdated": lastupdated
+                }
+            )
