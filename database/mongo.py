@@ -118,6 +118,8 @@ class Stations:
         },
         "id": 1,
         "name": "Dhammika Filling Station",
+        "phone": "0719999999",
+        "email": "hirusha@hirusha.xyz",
         "registration": "123",
         "coordinates": [
             7.494112,
@@ -183,3 +185,12 @@ class Stations:
                     "lastupdated": lastupdated
                 }
             )
+
+    def getByEmail(email: t.Union[str, bytes]):
+        temp = []
+        for station in stations.find({'email': email}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
