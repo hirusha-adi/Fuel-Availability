@@ -157,6 +157,11 @@ def add_new_station():
         status['status'].append(
             'Invalid Google Maps URL. make sure you have "maps.google.com" in the url')
 
+    coordinates = fsgoogleurl.split('@')[1].split(',')[0:2]
+
+    if len(coordinates) == 0:
+        status['status'].append('Error processing the Google Maps URL')
+
     if len(status['status']) >= 1:
         return jsonify(status)
 
