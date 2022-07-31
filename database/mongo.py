@@ -190,19 +190,13 @@ class Stations:
         temp = []
         for station in stations.find({'email': email}):
             temp.append(station)
-        try:
-            return temp[0]
-        except:
-            return False
+        return temp
 
     def getByPhone(phone: t.Union[str, bytes]):
         temp = []
         for station in stations.find({'phone': phone}):
             temp.append(station)
-        try:
-            return temp[0]
-        except:
-            return False
+        return temp
 
     def getByRegistration(registration: t.Union[str, bytes]):
         temp = []
@@ -300,19 +294,13 @@ class Pending:
         temp = []
         for station in pending.find({'email': email}):
             temp.append(station)
-        try:
-            return temp[0]
-        except:
-            return False
+        return temp
 
     def getByPhone(phone: t.Union[str, bytes]):
         temp = []
         for station in pending.find({'phone': phone}):
             temp.append(station)
-        try:
-            return temp[0]
-        except:
-            return False
+        return temp
 
     def getByRegistration(registration: t.Union[str, bytes]):
         temp = []
