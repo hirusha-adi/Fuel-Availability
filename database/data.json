@@ -2,6 +2,7 @@
     {
         "id": 1,
         "name": "Dhammika Filling Station",
+        "registration": "123",
         "coordinates": [
             7.494112,
             80.3679604
@@ -10,11 +11,13 @@
         "availablitiy": {
             "petrol": true,
             "diesel": false
-        }
+        },
+        "lastupdated": ""
     },
     {
         "id": 2,
         "name": "Laugfs Gas Auto Lanka Filling Station",
+        "registration": "abc",
         "coordinates": [
             7.4740667,
             80.3515016
@@ -23,11 +26,13 @@
         "availablitiy": {
             "petrol": false,
             "diesel": true
-        }
+        },
+        "lastupdated": ""
     },
     {
         "id": 3,
         "name": "Lanka Filling Station",
+        "registration": "qwe",
         "coordinates": [
             7.4892377,
             80.3573381
@@ -36,6 +41,7 @@
         "availablitiy": {
             "petrol": false,
             "diesel": false
-        }
+        },
+        "lastupdated": ""
     }
 ]
