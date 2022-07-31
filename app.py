@@ -122,7 +122,6 @@ def panel_edit_user():
 @app.route("/edit/station", methods=['GET', 'POST'])
 def add_new_station():
     """
-    EASY ---->
         fsname -> Fillion Station's Name
         fsgoogleurl -> Google Maps URL
         fsphone -> Phone Number
