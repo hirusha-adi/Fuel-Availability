@@ -16,6 +16,7 @@ at end of body
 import folium
 import os
 import json
+from database.mongo import Stations
 
 
 class Colors:
@@ -31,8 +32,12 @@ class GenerateMap:
         self._save_path = None
 
     def loadData(self):
-        with open(self._data_file_path, 'r', encoding='utf-8') as _file:
-            self._data = json.load(_file)
+        # Old Method (load from json)
+        # with open(self._data_file_path, 'r', encoding='utf-8') as _file:
+        # self._data = json.load(_file)
+
+        # New method (load from mongodb)
+        self._data = Stations.getAllStations()
 
     def addMarkers(self):
         if self._data is None:
