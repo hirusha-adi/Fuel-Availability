@@ -127,15 +127,32 @@ def add_new_station():
         fsgoogleurl -> Google Maps URL
         petrolAvailability -> 1|2 -> Petrol
         dieselAvailability -> 1|2 -> Diesel
-
-    HARD ---->
-        fsname -> Fillion Station's Name
-        fslat -> latitudes
-        fslong -> longitudes
-        petrolAvailability -> 1|2 -> Petrol
-        dieselAvailability -> 1|2 -> Diesel
+        bussinessRegistrationNumber -> 
     """
-    return "hi"
+
+    data = {}
+
+    # always
+    fsname = request.form.get('fsname')
+    petrolAvailability = request.form.get('petrolAvailability')
+    dieselAvailability = request.form.get('dieselAvailability')
+
+    data['fsname'] = fsname
+    data['petrolAvailability'] = petrolAvailability
+    data['dieselAvailability'] = dieselAvailability
+
+    # depending
+    fsgoogleurl = request.form.get('fsgoogleurl')
+    fslat = request.form.get('fslat')
+    fslong = request.form.get('fslong')
+
+    if fsgoogleurl is None:
+        if (fslat is None) or (fslong is None):
+            return jsonify({'status': 'error'})
+        else:
+            return jsonify({'status': 'added from lat and long'})
+    else:
+        return jsonify({'status': 'add from google url'})
 
 
 if __name__ == "__main__":
