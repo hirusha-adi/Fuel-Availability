@@ -81,6 +81,11 @@ def logout():
     return redirect(url_for('index'))
 
 
+@app.route("/admin/approve")
+def admin_approve():
+    return render_template('accept.html')
+
+
 @app.route("/panel")
 def panel():
     if not g.user:
