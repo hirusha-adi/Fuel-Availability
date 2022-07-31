@@ -3,40 +3,92 @@
 {% block title %}Approve | Fuel Availability{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/accept.css') }}" />
 {% endblock %}
 
 {% block body %}
 
-<form class="form-signin" method="post" action="{{ url_for('login') }}">
-    <a href="{{ url_for('index') }}">
-        <img class="mb-4" src="{{ url_for('static', filename='images/logo.png') }}" alt="" width="72" height="72">
-    </a>
-    <h1 class="h3 mb-3 font-weight-normal">
-        Please sign in
-    </h1>
-    <label for="email" class="sr-only">
-        Email address
-    </label>
-    <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required=""
-        autofocus="">
-    <label for="password" class="sr-only">
-        Password
-    </label>
-    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
-    <button class="btn btn-lg btn-primary btn-block" type="submit">
-        Log In
-    </button>
-    <br>
-    <label>
-        <a href="{{ url_for('signup') }}">
-            No Account? Sign Up
-        </a>
-    </label>
-    <p class="mt-5 mb-3 text-muted">
-        Made with ♥ by @hirushaadi
-    </p>
-</form>
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-8">
+            <div class="p-2">
+                <h4>Approve Filling Stations</h4>
+            </div>
+
+            <div class="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
+                <div class="mr-1">
+                    <h1>01</h1>
+                </div>
+
+                <div class="d-flex flex-column align-items-center product-details">
+                    <span class="font-weight-bold">Basic T-shirt</span>
+                    <div class="d-flex flex-row product-desc">
+                        <div class="size mr-1">
+                            <span class="text-black">Phone:</span>
+                            <span class="font-weight-bold">&nbsp;</span>
+                        </div>
+                        <div class="color">
+                            <span class="text-black">Color:</span>
+                            <span class="font-weight-bold">&nbsp;Grey</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row align-items-center qty">
+                    <h5 class="text-black mt-1 mr-1 ml-1">2</h5>
+                </div>
+                <div>
+                    <h5 class="text-black">$20.00</h5>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="fa fa-trash mb-1 text-danger"></i>
+                </div>
+            </div>
+
+            <!-- 
+            <div class="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
+                <div class="mr-1">
+                    <h1>01</h1>
+                </div>
+                <div class="d-flex flex-column align-items-center product-details">
+                    <span class="font-weight-bold">Basic T-shirt</span>
+                    <div class="d-flex flex-row product-desc">
+                        <div class="size mr-1">
+                            <span class="text-black">Size:</span>
+                            <span class="font-weight-bold">&nbsp;M</span>
+                        </div>
+                        <div class="color">
+                            <span class="text-black">Color:</span>
+                            <span class="font-weight-bold">&nbsp;Grey</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex flex-row align-items-center qty">
+                    <h5 class="text-black mt-1 mr-1 ml-1">2</h5>
+                </div>
+                <div>
+                    <h5 class="text-black">$20.00</h5>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="fa fa-trash mb-1 text-danger"></i>
+                </div>
+            </div>
+             -->
+
+            <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded">
+                <input type="text" class="form-control border-0 gift-card" placeholder="discount code/gift card">
+                <button class="btn btn-outline-warning btn-sm ml-2" type="button">
+                    Apply
+                </button>
+            </div>
+            <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded">
+                <button class="btn btn-warning btn-block btn-lg ml-2 pay-button" type="button">
+                    Proceed to Pay
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
 
