@@ -131,10 +131,10 @@ def add_new_station():
         bussinessRegistrationNumber -> Bussiness Registration Number
     """
 
-    data = {}
-
     # always
     fsname = request.form.get('fsname')
+    fsgoogleurl = request.form.get('fsgoogleurl')
+    fsphone = request.form.get('fsphone')
     petrolAvailability = request.form.get('petrolAvailability')
     dieselAvailability = request.form.get('dieselAvailability')
     bussinessRegistrationNumber = request.form.get(
@@ -147,17 +147,19 @@ def add_new_station():
     if not((petrolAvailability in ['1', '2']) or (dieselAvailability in ['1', '2'])):
         status['status'].append('Invalid values for fuel availability given')
 
+    if len(fsphone) < 9:
+        status['status'].append('Please enter a valid Phone Number')
+
     if len(bussinessRegistrationNumber) < 4:
         status['status'].append(
             'Please enter a valid Bussiness Registration Number')
 
+    if not('maps.google.com' in fsgoogleurl):
+        status['status'].append(
+            'Invalid Google Maps URL. make sure you have "maps.google.com" in the url')
+
     if len(status['status']) >= 1:
         return jsonify(status)
-
-    data['fsname'] = fsname
-    data['petrolAvailability'] = petrolAvailability
-    data['dieselAvailability'] = dieselAvailability
-    data['bussinessRegistrationNumber'] = bussinessRegistrationNumber
 
 
 if __name__ == "__main__":
