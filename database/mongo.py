@@ -4,6 +4,7 @@ from pymongo import MongoClient
 from bson import ObjectId
 from database.settings import MongoDB
 import typing as t
+from datetime import datetime
 
 client = MongoClient('mongodb://%s:%s@%s:27017/' % (
     urllib.parse.quote_plus(MongoDB.username),
@@ -212,6 +213,22 @@ class Stations:
         for station in stations.find({'city': city}):
             temp.append(station)
         return temp
+
+    def updateAvailability(id: int, petrol: bool, diesel: bool):
+        stations.find_one_and_update(
+            {
+                "id": id
+            },
+            {
+                "$set": {
+                    'name': petrol,
+                    'email': diesel,
+                    'lastupdated': datetime.now()
+                }
+            },
+            upsert=True
+        )
+        return True
 
 
 class Pending:
