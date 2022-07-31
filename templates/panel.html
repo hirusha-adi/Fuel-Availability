@@ -99,41 +99,64 @@
                                     <div class="col-11">
                                         <div class="form-card">
 
-                                            <!-- Pending for approval -->
+                                            <!-- Approved -->
                                             <div>
-                                                <h3 class="mt-0 mb-4 text-center">Pending for approval</h3>
-                                                {% if pending_length == 0 %}
+                                                <h3 class="mt-0 mb-4 text-center">Filling Stations Management</h3>
+                                                {% if stations_length == 0 %}
                                                 <div class="alert alert-dark" role="alert">
-                                                    You currently have nothing pending!
+                                                    You currently have NO approved stations
                                                 </div>
                                                 {% else %}
-                                                <div id="accordion">
-                                                    {% for item_dict in pending %}
-                                                    <div class="card">
-                                                        <div class="card-header"
-                                                            id="heading-{{ '-'.join(item_dict.registration.split(' ')) }}">
-                                                            <h5 class="mb-0">
-                                                                <button class="btn btn-link" data-toggle="collapse"
-                                                                    data-target="#collapse-{{ '-'.join(item_dict.registration.split(' ')) }}"
-                                                                    aria-expanded="false"
-                                                                    aria-controls="collapse-{{ '-'.join(item_dict.registration.split(' ')) }}">
-                                                                    {{ item_dict.name }} - {{ item_dict.city }}
-                                                                </button>
-                                                            </h5>
-                                                        </div>
-                                                        <div id="collapse-{{ '-'.join(item_dict.registration.split(' ')) }}"
-                                                            class="collapse"
-                                                            aria-labelledby="heading-{{ '-'.join(item_dict.registration.split(' ')) }}"
-                                                            data-parent="#accordion">
-                                                            <div class="card-body">
-                                                                <b>Registration:</b> {{ item_dict.registration }} <br>
-                                                                <b>Latitudes:</b> {{ item_dict.coordinates[0] }} <br>
-                                                                <b>Longitudes:</b> {{ item_dict.coordinates[1] }} <br>
-                                                                <b>Requested at </b> {{ item_dict.lastupdated }} <br>
+                                                <!-- Form with dropdown to select the station to change availability -->
+                                                <div>
+                                                    <form onsubmit="event.preventDefault()" id="new_station_form">
+
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="form-group">
+                                                                    <label for="sel1">Select Filling Station</label>
+                                                                    <select class="form-control"
+                                                                        id="fillingStationName">
+                                                                        {% for one_station in stations %}
+                                                                        <option value="{{ one_station.id }}">
+                                                                            {{ one_station.name }} -
+                                                                            {{ one_station.city }} -
+                                                                            {{ one_station.registration }}
+                                                                        </option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    {% endfor %}
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="sel1">Petrol</label>
+                                                                    <select class="form-control"
+                                                                        id="petrolAvailability">
+                                                                        <option value="1">Avaibale</option>
+                                                                        <option value="2">Not Avaibale</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="sel1">Diesel</label>
+                                                                    <select class="form-control"
+                                                                        id="dieselAvailability">
+                                                                        <option value="1">Avaibale</option>
+                                                                        <option value="2">Not Avaibale</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <input type="submit" value="Update"
+                                                                    class="btn btn-success placeicon">
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                                 {% endif %}
                                             </div>
@@ -265,6 +288,7 @@
                                 </div>
                             </div>
 
+                            <!-- Add New Station -->
                             <div id="menu3" class="tab-pane">
                                 <div class="row justify-content-center">
                                     <div class="col-11">
