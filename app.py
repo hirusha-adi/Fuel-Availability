@@ -145,6 +145,9 @@ def add_new_station():
     bussinessRegistrationNumber = request.form.get(
         'bussinessRegistrationNumber')
 
+    print(fsname, fscity, fsgoogleurl, fsphone, petrolAvailability,
+          dieselAvailability, bussinessRegistrationNumber)
+
     status = {'status': []}
     if len(fsname) < 5:
         status['status'].append('Please enter a valid filling station name')
@@ -159,7 +162,7 @@ def add_new_station():
         status['status'].append(
             'Please enter a valid Bussiness Registration Number')
 
-    if not('maps.google.com' in fsgoogleurl):
+    if not(('maps.google.com' in fsgoogleurl) or ('/maps')):
         status['status'].append(
             'Invalid Google Maps URL. make sure you have "maps.google.com" in the url')
 
@@ -168,7 +171,7 @@ def add_new_station():
     if len(coordinates) == 0:
         status['status'].append('Error processing the Google Maps URL')
 
-    if len(status['status']) >= 1:
+    if len(status['status']) != 0:
         return jsonify(status)
 
     Pending.addStation(
