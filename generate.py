@@ -32,11 +32,6 @@ class GenerateMap:
         self._save_path = None
 
     def loadData(self):
-        # Old Method (load from json)
-        # with open(self._data_file_path, 'r', encoding='utf-8') as _file:
-        # self._data = json.load(_file)
-
-        # New method (load from mongodb)
         self._data = Stations.getAllStations()
 
     def addMarkers(self):
