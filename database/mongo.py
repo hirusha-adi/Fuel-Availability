@@ -203,3 +203,18 @@ class Stations:
             return temp[0]
         except:
             return False
+
+    def getByRegistration(registration: t.Union[str, bytes]):
+        temp = []
+        for station in stations.find({'registration': registration}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
+
+    def getByCity(city: t.Union[str, bytes]):
+        temp = []
+        for station in stations.find({'city': city}):
+            temp.append(station)
+        return temp
