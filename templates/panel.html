@@ -527,11 +527,11 @@
         $("#filling_station_update").submit(function () {
             $("#newS_notices").empty()
             $("#newS_notices").show();
-            const fillingStationNameID = $("fillingStationName")
-            const petrolAvailability = $("petrolAvailability")
-            const dieselAvailability = $("dieselAvailability")
+            const fillingStationNameID = $("#fillingStationName")
+            const petrolAvailability = $("#petrolAvailability")
+            const dieselAvailability = $("#dieselAvailability")
             $.post(
-                '{{ url_for("add_new_station") }}',
+                '{{ url_for("panel_edit_station") }}',
                 {
                     fillingStationNameID: fillingStationNameID.val(),
                     petrolAvailability: petrolAvailability.val(),
@@ -548,6 +548,8 @@
                         $("#updateStationNotices").append(`
                         <div class="alert alert-danger" role="alert">
                            Something was wrong!
+                           <br>
+                           ${data['status']}
                         </div>
                         `)
                     }
