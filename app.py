@@ -183,6 +183,8 @@ def add_new_station():
         lastupdated=str(datetime.now())
     )
 
+    return jsonify({'status': 'success'})
+
 
 if __name__ == "__main__":
     makeMap()
