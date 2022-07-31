@@ -218,3 +218,113 @@ class Stations:
         for station in stations.find({'city': city}):
             temp.append(station)
         return temp
+
+
+class Pending:
+    """
+    {
+        "_id": {
+            "$oid": ""
+        },
+        "id": 1,
+        "name": "Dhammika Filling Station",
+        "phone": "0719999999",
+        "email": "hirusha@hirusha.xyz",
+        "registration": "123",
+        "coordinates": [
+            7.494112,
+            80.3679604
+        ],
+        "city": "Kurunegala",
+        "availablitiy": {
+            "petrol": true,
+            "diesel": false
+        },
+        "lastupdated": ""
+    }
+    """
+
+    def getAllStations():
+        temp = []
+        for station in pending.find({}):
+            temp.append(station)
+        return temp
+
+    def getLastStation():
+        """
+        This is improvable and i dont know how to with pymongo
+            https://stackoverflow.com/questions/32076382/mongodb-how-to-get-max-value-from-collections
+        """
+        temp = []
+        for user in Pending.getAllStations():
+            temp.append(user)
+        return temp[-1]
+
+    def addStation(name: t.Union[str, bytes], registration: t.Union[str, bytes], phone: t.Union[str, bytes], email: t.Union[str, bytes], coordinates: t.List[str], city: t.Union[str, bytes], petrol: bool, diesel: bool, lastupdated: t.Union[str, bytes]):
+        try:
+            pending.insert_one(
+                {
+                    'id': int(Pending.getLastStation()['id']) + 1,
+                    "name": name,
+                    "registration": registration,
+                    "phone": phone,
+                    "email": email,
+                    "coordinates": coordinates,
+                    "city": city,
+                    "availablitiy": {
+                        "petrol": petrol,
+                        "diesel": diesel
+                    },
+                    "lastupdated": lastupdated
+                }
+            )
+        except IndexError:
+            pending.insert_one(
+                {
+                    'id': 1,
+                    "name": name,
+                    "registration": registration,
+                    "phone": phone,
+                    "email": email,
+                    "coordinates": coordinates,
+                    "city": city,
+                    "availablitiy": {
+                        "petrol": petrol,
+                        "diesel": diesel
+                    },
+                    "lastupdated": lastupdated
+                }
+            )
+
+    def getByEmail(email: t.Union[str, bytes]):
+        temp = []
+        for station in pending.find({'email': email}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
+
+    def getByPhone(phone: t.Union[str, bytes]):
+        temp = []
+        for station in pending.find({'phone': phone}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
+
+    def getByRegistration(registration: t.Union[str, bytes]):
+        temp = []
+        for station in pending.find({'registration': registration}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
+
+    def getByCity(city: t.Union[str, bytes]):
+        temp = []
+        for station in pending.find({'city': city}):
+            temp.append(station)
+        return temp
