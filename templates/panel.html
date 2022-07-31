@@ -228,7 +228,7 @@
                                                 Add new Filling Station
                                             </h3>
                                             <h3 class="mt-0 mb-4 text-center"></h3>
-                                            <form onsubmit="event.preventDefault()" id="new_station_form_easy">
+                                            <form onsubmit="event.preventDefault()" id="new_station_form">
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="input-group">
@@ -371,7 +371,6 @@
 
         // save account details
         $("#account_details_form").submit(function () {
-            alert('submitting')
             const newPassword = $("#npassword")
             const verifyPassword = $("#vpassword")
             $.post(
@@ -379,6 +378,45 @@
                 {
                     npassword: newPassword.val(),
                     vpassword: verifyPassword.val()
+                },
+                function (data) {
+                    $("#account_successmsg").hide();
+                    $("#account_errormsg").hide();
+                    if (data['status'] == "done") {
+                        $("#account_errormsg").hide();
+                        $("#account_successmsg").text("Changed password successfully!")
+                        $("#account_successmsg").show();
+                    } else if (data['status'] == "nomatch") {
+                        $("#account_successmsg").hide();
+                        $("#account_errormsg").text("Password doesn't match each other! Please try again!")
+                        $("#account_errormsg").show();
+                    } else {
+                        $("#account_successmsg").hide();
+                        $("#account_errormsg").text(`${data['status']}`)
+                        $("#account_errormsg").show();
+                    }
+                }
+            )
+        })
+
+        $("#new_station_form").submit(function () {
+            const fsname = $("#fsname")
+            const fsgoogleurl = $("#fsgoogleurl")
+            const fscity = $("#fscity")
+            const bussinessRegistrationNumber = $("#bussinessRegistrationNumber")
+            const fsphone = $("#fsphone")
+            const petrolAvailability = $("#petrolAvailability")
+            const dieselAvailability = $("#dieselAvailability")
+            $.post(
+                '{{ url_for("add_new_station") }}',
+                {
+                    fsname: fsname.val(),
+                    fsgoogleurl: fsgoogleurl.val(),
+                    fscity: fscity.val(),
+                    bussinessRegistrationNumber: bussinessRegistrationNumber.val(),
+                    fsphone: fsphone.val(),
+                    petrolAvailability: petrolAvailability.val(),
+                    dieselAvailability: dieselAvailability.val()
                 },
                 function (data) {
                     $("#account_successmsg").hide();
