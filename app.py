@@ -127,8 +127,25 @@ def panel_edit_user():
 
 
 @app.route("/edit/station", methods=['GET', 'POST'])
-def panel_edit_user():
-    return jsonify({'status': 'success'})
+def panel_edit_station():
+    if not g.user:
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        fillingStationNameID = request.form.get('fillingStationNameID')
+        petrolAvailability = request.form.get('petrolAvailability')
+        dieselAvailability = request.form.get('dieselAvailability')
+        try:
+            Stations.updateAvailability(
+                id=int(fillingStationNameID),
+                petrol=True if petrolAvailability == '1' else False,
+                diesel=True if dieselAvailability == '1' else False
+            )
+            return jsonify({'status': 'success'})
+        except Exception as e:
+            return jsonify({'status': f'ERROR: {e}'})
+    else:
+        return jsonify({'status': ''})
 
 
 @app.route("/add/station", methods=['GET', 'POST'])
