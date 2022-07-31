@@ -125,6 +125,7 @@ def add_new_station():
     EASY ---->
         fsname -> Fillion Station's Name
         fsgoogleurl -> Google Maps URL
+        fsphone -> Phone Number
         petrolAvailability -> 1|2 -> Petrol
         dieselAvailability -> 1|2 -> Diesel
         bussinessRegistrationNumber -> Bussiness Registration Number
