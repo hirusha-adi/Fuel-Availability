@@ -10,7 +10,9 @@ client = MongoClient('mongodb://%s:%s@%s:27017/' % (
     MongoDB.ip
 ))
 
-users = client['users']['users']
+users = client['fuel']['users']
+stations = client['fuel']['stations']
+pending = client['fuel']['pending']
 
 
 class Users:
@@ -105,3 +107,32 @@ class Users:
             upsert=True
         )
         return True
+
+
+class Stations:
+    """
+    {
+        "_id": {
+            "$oid": ""
+        },
+        "id": 1,
+        "name": "Dhammika Filling Station",
+        "registration": "123",
+        "coordinates": [
+            7.494112,
+            80.3679604
+        ],
+        "city": "Kurunegala",
+        "availablitiy": {
+            "petrol": true,
+            "diesel": false
+        },
+        "lastupdated": ""
+    }
+    """
+
+    def getAllStations():
+        temp = []
+        for station in stations.find({}):
+            temp.append(station)
+        return temp
