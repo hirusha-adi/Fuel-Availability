@@ -147,13 +147,15 @@ class Stations:
             temp.append(user)
         return temp[-1]
 
-    def addStation(name, registration, coordinates, city, petrol, diesel, lastupdated):
+    def addStation(name, registration, phone, email, coordinates, city, petrol, diesel, lastupdated):
         try:
             stations.insert_one(
                 {
                     'id': int(Stations.getLastStation()['id']) + 1,
                     "name": name,
                     "registration": registration,
+                    "phone": phone,
+                    "email": email,
                     "coordinates": coordinates,
                     "city": city,
                     "availablitiy": {
@@ -169,6 +171,8 @@ class Stations:
                     'id': 1,
                     "name": name,
                     "registration": registration,
+                    "phone": phone,
+                    "email": email,
                     "coordinates": coordinates,
                     "city": city,
                     "availablitiy": {
