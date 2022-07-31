@@ -127,7 +127,7 @@ def add_new_station():
         fsgoogleurl -> Google Maps URL
         petrolAvailability -> 1|2 -> Petrol
         dieselAvailability -> 1|2 -> Diesel
-        bussinessRegistrationNumber -> 
+        bussinessRegistrationNumber -> Bussiness Registration Number
     """
 
     data = {}
@@ -136,23 +136,27 @@ def add_new_station():
     fsname = request.form.get('fsname')
     petrolAvailability = request.form.get('petrolAvailability')
     dieselAvailability = request.form.get('dieselAvailability')
+    bussinessRegistrationNumber = request.form.get(
+        'bussinessRegistrationNumber')
+
+    status = {'status': []}
+    if len(fsname) < 5:
+        status['status'].append('Please enter a valid filling station name')
+
+    if not((petrolAvailability in ['1', '2']) or (dieselAvailability in ['1', '2'])):
+        status['status'].append('Invalid values for fuel availability given')
+
+    if len(bussinessRegistrationNumber) < 4:
+        status['status'].append(
+            'Please enter a valid Bussiness Registration Number')
+
+    if len(status['status']) >= 1:
+        return jsonify(status)
 
     data['fsname'] = fsname
     data['petrolAvailability'] = petrolAvailability
     data['dieselAvailability'] = dieselAvailability
-
-    # depending
-    fsgoogleurl = request.form.get('fsgoogleurl')
-    fslat = request.form.get('fslat')
-    fslong = request.form.get('fslong')
-
-    if fsgoogleurl is None:
-        if (fslat is None) or (fslong is None):
-            return jsonify({'status': 'error'})
-        else:
-            return jsonify({'status': 'added from lat and long'})
-    else:
-        return jsonify({'status': 'add from google url'})
+    data['bussinessRegistrationNumber'] = bussinessRegistrationNumber
 
 
 if __name__ == "__main__":
