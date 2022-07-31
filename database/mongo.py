@@ -3,6 +3,7 @@ import urllib.parse
 from pymongo import MongoClient
 from bson import ObjectId
 from database.settings import MongoDB
+import typing as t
 
 client = MongoClient('mongodb://%s:%s@%s:27017/' % (
     urllib.parse.quote_plus(MongoDB.username),
@@ -44,7 +45,7 @@ class Users:
             temp.append(user)
         return temp[-1]
 
-    def getUserByEmail(email: str):
+    def getUserByEmail(email: t.Union[str, bytes]):
         temp = []
         for user in users.find({'email': email}):
             temp.append(user)
@@ -53,13 +54,13 @@ class Users:
         except:
             return False
 
-    def getUserByID(id):
+    def getUserByID(id: t.Union[int, str]):
         temp = []
         for user in users.find({'id': id}):
             temp.append(user)
         return temp[0]
 
-    def getUserByName(name: str):
+    def getUserByName(name: t.Union[str, bytes]):
         temp = []
         for user in users.find(
             {
@@ -72,7 +73,7 @@ class Users:
             temp.append(user)
         return temp
 
-    def addUser(name, email, password):
+    def addUser(name: t.Union[str, bytes], email: t.Union[str, bytes], password: t.Union[str, bytes]):
         try:
             users.insert_one(
                 {
@@ -92,7 +93,7 @@ class Users:
                 }
             )
 
-    def updateUser(name, email, password):
+    def updateUser(name: t.Union[str, bytes], email: t.Union[str, bytes], password: t.Union[str, bytes]):
         users.find_one_and_update(
             {
                 "email": email
@@ -147,7 +148,7 @@ class Stations:
             temp.append(user)
         return temp[-1]
 
-    def addStation(name, registration, phone, email, coordinates, city, petrol, diesel, lastupdated):
+    def addStation(name: t.Union[str, bytes], registration: t.Union[str, bytes], phone: t.Union[str, bytes], email: t.Union[str, bytes], coordinates: t.List[str], city: t.Union[str, bytes], petrol: bool, diesel: bool, lastupdated: t.Union[str, bytes]):
         try:
             stations.insert_one(
                 {
