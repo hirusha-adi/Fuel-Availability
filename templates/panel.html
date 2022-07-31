@@ -109,7 +109,7 @@
                                                 {% else %}
                                                 <!-- Form with dropdown to select the station to change availability -->
                                                 <div>
-                                                    <form onsubmit="event.preventDefault()" id="new_station_form">
+                                                    <form onsubmit="event.preventDefault()" id="filling_station_update">
 
                                                         <div class="row">
                                                             <div class="col-12">
@@ -148,6 +148,10 @@
                                                                         <option value="2">Not Avaibale</option>
                                                                     </select>
                                                                 </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-12" id="updateStationNotices">
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -292,8 +296,6 @@
                             <div id="menu3" class="tab-pane">
                                 <div class="row justify-content-center">
                                     <div class="col-11">
-
-                                        <!-- Easy Method -->
                                         <div class="form-card">
                                             <h3 class="mt-0 mb-4 text-center" id="title_new_station_form_easy">
                                                 Add new Filling Station
@@ -500,7 +502,7 @@
                     if (Array.isArray(data['status'])) {
                         data['status'].forEach(element => {
                             $("#newS_notices").append(`
-                            <div class="alert alert-danger" role="alert" id="account_errormsg">
+                            <div class="alert alert-danger" role="alert">
                                 ${element}
                             </div>
                             `)
@@ -515,6 +517,37 @@
                         $("#newS_notices").append(`
                         <div class="alert alert-warning" role="alert">
                             ${data['status']} 
+                        </div>
+                        `)
+                    }
+                }
+            )
+        })
+
+        $("#filling_station_update").submit(function () {
+            $("#newS_notices").empty()
+            $("#newS_notices").show();
+            const fillingStationNameID = $("fillingStationName")
+            const petrolAvailability = $("petrolAvailability")
+            const dieselAvailability = $("dieselAvailability")
+            $.post(
+                '{{ url_for("add_new_station") }}',
+                {
+                    fillingStationNameID: fillingStationNameID.val(),
+                    petrolAvailability: petrolAvailability.val(),
+                    dieselAvailability: dieselAvailability.val()
+                },
+                function (data) {
+                    if (data['status'] == 'success') {
+                        $("#updateStationNotices").append(`
+                        <div class="alert alert-success" role="alert">
+                           Successfully updated availability!
+                        </div>
+                        `)
+                    } else {
+                        $("#updateStationNotices").append(`
+                        <div class="alert alert-danger" role="alert">
+                           Something was wrong!
                         </div>
                         `)
                     }
