@@ -427,21 +427,21 @@
                     $("#newS_notices").empty()
                     $("#newS_notices").show();
                     if (Array.isArray(data['status'])) {
-                        theArray.forEach(element => {
-                            $("newS_notices").append(`
+                        data['status'].forEach(element => {
+                            $("#newS_notices").append(`
                             <div class="alert alert-danger" role="alert" id="account_errormsg">
                                 ${element}
                             </div>
                             `)
                         });
                     } else if (data['status'] == "success") {
-                        $("newS_notices").append(`
+                        $("#newS_notices").append(`
                             <div class="alert alert-success" role="alert">
                                 Done! You will be contacted by the admins soon! 
                             </div>
                             `)
                     } else {
-                        $("newS_notices").append(`
+                        $("#newS_notices").append(`
                         <div class="alert alert-warning" role="alert">
                             ${data['status']} 
                         </div>
