@@ -296,6 +296,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
+                                                    <div class="col-12" id="newS_notices">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-md-12"> <input type="submit" value="Add"
                                                             class="btn btn-success placeicon"> </div>
                                                 </div>
@@ -419,20 +423,27 @@
                     dieselAvailability: dieselAvailability.val()
                 },
                 function (data) {
-                    $("#account_successmsg").hide();
-                    $("#account_errormsg").hide();
-                    if (data['status'] == "done") {
-                        $("#account_errormsg").hide();
-                        $("#account_successmsg").text("Changed password successfully!")
-                        $("#account_successmsg").show();
-                    } else if (data['status'] == "nomatch") {
-                        $("#account_successmsg").hide();
-                        $("#account_errormsg").text("Password doesn't match each other! Please try again!")
-                        $("#account_errormsg").show();
+                    $("#newS_notices").hide();
+                    if (Array.isArray(data['status'])) {
+                        theArray.forEach(element => {
+                            $("newS_notices").append(`
+                            <div class="alert alert-danger" role="alert" id="account_errormsg">
+                                ${element}
+                            </div>
+                            `)
+                        });
+                    } else if (data['status'] == "success") {
+                        $("newS_notices").append(`
+                            <div class="alert alert-success" role="alert">
+                                Done! You will be contacted by the admins soon! 
+                            </div>
+                            `)
                     } else {
-                        $("#account_successmsg").hide();
-                        $("#account_errormsg").text(`${data['status']}`)
-                        $("#account_errormsg").show();
+                        $("newS_notices").append(`
+                        <div class="alert alert-warning" role="alert">
+                            ${data['status']} 
+                        </div>
+                        `)
                     }
                 }
             )
