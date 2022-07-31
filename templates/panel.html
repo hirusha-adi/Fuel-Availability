@@ -403,6 +403,7 @@
             )
         })
 
+        // add new station
         $("#new_station_form").submit(function () {
             const fsname = $("#fsname")
             const fsgoogleurl = $("#fsgoogleurl")
@@ -423,7 +424,8 @@
                     dieselAvailability: dieselAvailability.val()
                 },
                 function (data) {
-                    $("#newS_notices").hide();
+                    $("#newS_notices").empty()
+                    $("#newS_notices").show();
                     if (Array.isArray(data['status'])) {
                         theArray.forEach(element => {
                             $("newS_notices").append(`
