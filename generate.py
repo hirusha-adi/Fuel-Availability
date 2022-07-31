@@ -15,7 +15,6 @@ at end of body
 
 import folium
 import os
-import json
 from database.mongo import Stations
 
 
@@ -27,7 +26,6 @@ class Colors:
 class GenerateMap:
     def __init__(self) -> None:
         self._map = folium.Map(location=[7.4887197, 80.3597918], zoom_start=15)
-        self._data_file_path = os.path.join('database', 'data.json')
         self._data = None
         self._save_path = None
 
