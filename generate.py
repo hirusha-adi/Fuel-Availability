@@ -19,6 +19,7 @@ at end of body
 import folium
 import os
 from database.mongo import Stations
+from database.settings import JawgToken
 
 
 class Colors:
@@ -72,11 +73,39 @@ class GenerateMap:
                 '<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script></body>'
             ).replace(
                 "<body>",
-                """<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}"><body><nav class="navbar navbar-expand-lg navbar-light bg-light"><a class="navbar-brand" href="/">Fuel Availability</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav mr-auto"><li class="nav-item active"><a class="nav-link" href="/map">Map <span class="sr-only">(current)</span></a></li><li class="nav-item"><a class="nav-link" href="/">Home</a></li><li class="nav-item"><a class="nav-link" href="/about">About Us</a></li></ul><div class="form-inline my-2 my-lg-0"><button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a href="/login">Login</a></button></div></div></nav>"""
+                """<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}"><body><nav class="navbar navbar-expand-lg navbar-dark bg-dark"><a class="navbar-brand" href="/">Fuel Availability</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav mr-auto"><li class="nav-item active"><a class="nav-link" href="/map">Map <span class="sr-only">(current)</span></a></li><li class="nav-item"><a class="nav-link" href="/">Home</a></li><li class="nav-item"><a class="nav-link" href="/about">About Us</a></li></ul><div class="form-inline my-2 my-lg-0"><button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a href="/login" style="color: #fff;text-decoration: none;">Login</a></button></div></div></nav>"""
+            ).replace(
+                """top: 0.0%;
+                }
+            </style>""",
+                """top: 0.0%;
+                }
+                body {
+                    background-color: #343a40;
+                }
+            </style>"""
             )
 
+            y = html.split("</body>\n<script>")
+            a = y[1].strip()
+            b = a.split(" ")[1]  # map name
+            c = "var tile_layer_" + \
+                a.split("var tile_layer_")[1].split(
+                    ");")[0] + ");"  # remove this
+            p = """
+            var Jawg_Matrix = L.tileLayer('https://{s}.tile.jawg.io/jawg-matrix/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+                    attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    minZoom: 0,
+                    maxZoom: 22,
+                    subdomains: 'abcd',
+                    accessToken: '""" + JawgToken + """'
+                });
+            Jawg_Matrix.addTo(""" + b + """)
+            """
+            z = html.replace(c, p)
+
         with open(self._save_path, 'w', encoding='utf-8') as _file:
-            _file.write(html)
+            _file.write(z)
 
     def run(self, path='map.html'):
         self.loadData()
