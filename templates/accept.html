@@ -34,15 +34,21 @@
                 </div>
 
                 <div class="d-flex flex-row align-items-center qty">
-                    <h5 class="text-black mt-1 mr-1 ml-1">2</h5>
+                    <h5 class="text-black mt-1 mr-1 ml-1">
+                        {{ item.phone }}
+                        <br>
+                        {{ item.email }}
+                    </h5>
                 </div>
                 <div>
-                    <h5 class="text-black">$20.00</h5>
+                    <h5 class="text-black">
+                    </h5>
                 </div>
                 <div class="d-flex align-items-center">
-
                 </div>
             </div>
+            <button type="button" class="btn btn-success" itemid="{{ item.id }}">Success</button>
+            <button type="button" class="btn btn-danger" itemid="{{ item.id }}">Danger</button>
 
             {% endfor %}
 
