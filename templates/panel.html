@@ -546,12 +546,16 @@
             const fillingStationNameID = $("#fillingStationName")
             const petrolAvailability = $("#petrolAvailability")
             const dieselAvailability = $("#dieselAvailability")
+            const petrolamt = $("#petrolamt")
+            const dieselamt = $("#dieselamt")
             $.post(
                 '{{ url_for("panel_edit_station") }}',
                 {
                     fillingStationNameID: fillingStationNameID.val(),
                     petrolAvailability: petrolAvailability.val(),
-                    dieselAvailability: dieselAvailability.val()
+                    dieselAvailability: dieselAvailability.val(),
+                    petrolamt: petrolamt,
+                    dieselamt: dieselamt
                 },
                 function (data) {
                     if (data['status'] == 'success') {

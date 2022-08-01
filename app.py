@@ -188,12 +188,15 @@ def panel_edit_station():
         fillingStationNameID = request.form.get('fillingStationNameID')
         petrolAvailability = request.form.get('petrolAvailability')
         dieselAvailability = request.form.get('dieselAvailability')
+        petrolamt = request.form.get('petrolamt')
+        dieselamt = request.form.get('dieselamt')
         try:
             Stations.updateAvailability(
                 id=int(fillingStationNameID),
                 petrol=True if petrolAvailability == '1' else False,
                 diesel=True if dieselAvailability == '1' else False
             )
+            Stations.updateAmount(petrol=str(petrolamt), diesel=str(dieselamt))
             return jsonify({'status': 'success'})
         except Exception as e:
             return jsonify({'status': f'ERROR: {e}'})
