@@ -83,7 +83,10 @@ def logout():
 
 @app.route("/admin/approve")
 def admin_approve():
-    return render_template('accept.html')
+    data = {}
+    data['pending'] = Pending.getAllStations()
+    data['pending_length'] = len(data['pending'])
+    return render_template('accept.html', **data)
 
 
 @app.route("/panel")
