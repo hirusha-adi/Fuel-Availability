@@ -4,6 +4,8 @@ import json
 with open(os.path.join(os.getcwd(), 'database', 'settings.json'), 'r', encoding='utf-8') as _file:
     data = json.load(_file)
 
+adminkey = data['adminkey']
+
 
 class MongoDB:
     mongodb = data["mongodb"]
