@@ -41,7 +41,7 @@ class GenerateMap:
         for item in self._data:
             folium.Marker(
                 item['coordinates'],
-                popup=f'''Petrol: <strong style="color: #{Colors.available}">{'Available' if item["availablitiy"]["petrol"] == True else 'Not Available'}</strong><br><br>Diesel: <strong style="color: #{Colors.notAvailable}">{'Available' if item["availablitiy"]["diesel"] == True else 'Not Available'}</strong>''',
+                popup=f'''Petrol: <strong style="color: #{Colors.available}">{'Available' if item["availablitiy"]["petrol"] == True else 'Not Available'}</strong><br><br>Diesel: <strong style="color: #{Colors.notAvailable}">{'Available' if item["availablitiy"]["diesel"] == True else 'Not Available'}</strong><br><br><a href="https://www.google.com/maps/search/?api=1&query={item['coordinates'][0]},{item['coordinates'][1]}" target="_blank" rel="noopener noreferrer">Visit</a>''',
                 tooltip=item['name']
             ).add_to(self._map)
 
