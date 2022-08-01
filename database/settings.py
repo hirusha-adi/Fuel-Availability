@@ -7,6 +7,7 @@ with open(os.path.join(os.getcwd(), 'database', 'settings.json'), 'r', encoding=
 adminkey = data['adminkey']
 flaskSecret = data['flaskSecret']
 JawgToken = data['JawgToken']
+contactEmail = data['contactEmail']
 
 
 class MongoDB:

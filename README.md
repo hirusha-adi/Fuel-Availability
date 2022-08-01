@@ -110,11 +110,3 @@ The new user is created, Now, You have to make logging-in required
     ```bash
     python3 app.py
     ```
-
-# Branding Information
-
-## Name: `Fuel Availability`
-
-## Logo -
-
-![logo](https://user-images.githubusercontent.com/36286877/182085379-ad08e5a7-7722-49f2-8fd9-545760d80cbc.png)

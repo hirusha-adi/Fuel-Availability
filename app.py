@@ -6,7 +6,7 @@ from flask import jsonify, redirect, render_template, url_for
 from flask import g, request, session
 
 from database.mongo import Pending, Stations, Users
-from database.settings import adminkey, flaskSecret
+from database.settings import adminkey, contactEmail, flaskSecret
 from generate import GenerateMap
 
 app = Flask(__name__)
@@ -36,10 +36,9 @@ def map():
     return render_template("map.html")
 
 
-@app.route("/about")
 @app.route("/contact")
 def contact_us():
-    return render_template("index.html")
+    return redirect(f'mailto:{contactEmail}')
 
 
 @app.route("/login", methods=['GET', 'POST'])
