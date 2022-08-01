@@ -30,7 +30,10 @@ class Users:
     }
     """
 
-    def getAllUsers():
+    def getAllUsers() -> list:
+        """
+        return a list of all users
+        """
         temp = []
         for user in users.find({}):
             temp.append(user)
@@ -38,6 +41,8 @@ class Users:
 
     def getLastUser():
         """
+        return a dict with a user
+
         This is improvable and i dont know how to with pymongo
             https://stackoverflow.com/questions/32076382/mongodb-how-to-get-max-value-from-collections
         """
@@ -47,6 +52,9 @@ class Users:
         return temp[-1]
 
     def getUserByEmail(email: t.Union[str, bytes]):
+        """
+        return a dict with a user
+        """
         temp = []
         for user in users.find({'email': email}):
             temp.append(user)
@@ -56,12 +64,21 @@ class Users:
             return False
 
     def getUserByID(id: t.Union[int, str]):
+        """
+        return a dict with a user
+        """
         temp = []
         for user in users.find({'id': id}):
             temp.append(user)
-        return temp[0]
+        try:
+            return temp[0]
+        except:
+            return False
 
     def getUserByName(name: t.Union[str, bytes]):
+        """
+        return a list of users
+        """
         temp = []
         for user in users.find(
             {
@@ -75,24 +92,51 @@ class Users:
         return temp
 
     def addUser(name: t.Union[str, bytes], email: t.Union[str, bytes], password: t.Union[str, bytes]):
+        """
+        add a new user if doesnt exist
+        """
         try:
-            users.insert_one(
-                {
-                    'id': int(Users.getLastUser()['id']) + 1,
-                    'name': name,
-                    'email': email,
-                    'password': password
-                }
-            )
-        except IndexError:
-            users.insert_one(
-                {
-                    'id': 1,
-                    'name': name,
-                    'email': email,
-                    'password': password
-                }
-            )
+            temp = Users.getUserByEmail(email=email)
+            if email == temp['email']:
+                return
+            else:
+                try:
+                    users.insert_one(
+                        {
+                            'id': int(Users.getLastUser()['id']) + 1,
+                            'name': name,
+                            'email': email,
+                            'password': password
+                        }
+                    )
+                except IndexError:
+                    users.insert_one(
+                        {
+                            'id': 1,
+                            'name': name,
+                            'email': email,
+                            'password': password
+                        }
+                    )
+        except:
+            try:
+                users.insert_one(
+                    {
+                        'id': int(Users.getLastUser()['id']) + 1,
+                        'name': name,
+                        'email': email,
+                        'password': password
+                    }
+                )
+            except IndexError:
+                users.insert_one(
+                    {
+                        'id': 1,
+                        'name': name,
+                        'email': email,
+                        'password': password
+                    }
+                )
 
     def updateUser(name: t.Union[str, bytes], email: t.Union[str, bytes], password: t.Union[str, bytes]):
         users.find_one_and_update(
