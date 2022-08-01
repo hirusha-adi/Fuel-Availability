@@ -271,7 +271,7 @@ class Pending:
             temp.append(user)
         return temp[-1]
 
-    def addStation(name: t.Union[str, bytes], registration: t.Union[str, bytes], phone: t.Union[str, bytes], email: t.Union[str, bytes], coordinates: t.List[str], city: t.Union[str, bytes], petrol: bool, diesel: bool, lastupdated: t.Union[str, bytes]):
+    def addStation(name: t.Union[str, bytes], registration: t.Union[str, bytes], phone: t.Union[str, bytes], email: t.Union[str, bytes], coordinates: t.List[str], city: t.Union[str, bytes], petrol: bool, diesel: bool):
         try:
             pending.insert_one(
                 {
@@ -286,7 +286,7 @@ class Pending:
                         "petrol": petrol,
                         "diesel": diesel
                     },
-                    "lastupdated": lastupdated
+                    "lastupdated": str(datetime.now())
                 }
             )
         except IndexError:
@@ -303,7 +303,7 @@ class Pending:
                         "petrol": petrol,
                         "diesel": diesel
                     },
-                    "lastupdated": lastupdated
+                    "lastupdated": str(datetime.now())
                 }
             )
 
@@ -339,6 +339,9 @@ class Pending:
             return temp[0]
         except:
             return False
+
+    def deleteByID(id: t.Union[int, str, bytes]):
+        pending.delete_one({"id": int(id)})
 
     def getByCity(city: t.Union[str, bytes]):
         temp = []
