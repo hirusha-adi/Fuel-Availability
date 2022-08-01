@@ -36,7 +36,11 @@ def map():
     return render_template("map.html")
 
 
-@app.route("/about")
+@app.route("/amount")
+def amounts():
+    return render_template("amounts.html")
+
+
 @app.route("/contact")
 def contact_us():
     return render_template("index.html")
