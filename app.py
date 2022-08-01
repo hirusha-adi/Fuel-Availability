@@ -1,8 +1,10 @@
-import os
-from flask import Flask, render_template, g, session, request, redirect, url_for, jsonify
-from generate import GenerateMap
-from database.mongo import Users, Pending, Stations
 from datetime import datetime
+from database.mongo import Users, Pending, Stations
+from generate import GenerateMap
+from flask import Flask, render_template, g, session, request, redirect, url_for, jsonify
+import os
+
+ADMIN_PASSWORD = "123"
 
 app = Flask(__name__)
 app.secret_key = 'the random string'
@@ -107,6 +109,7 @@ def admin_approve():
 
         elif itemdo.lower() == 'remove':
             Pending.deleteByID(id=int(itemid))
+            makeMap()
             return jsonify({'status': 'success'})
 
     else:
@@ -249,6 +252,15 @@ def add_new_station():
     )
 
     return jsonify({'status': 'success'})
+
+
+@app.route("/admin/verify", methods=['POST'])
+def admin_verify():
+    secretKey = request.form.get('secretKey')
+    if secretKey == ADMIN_PASSWORD:
+        return jsonify({'status': 'ok'})
+    else:
+        return jsonify({'status': 'no'})
 
 
 if __name__ == "__main__":
