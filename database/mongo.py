@@ -328,6 +328,18 @@ class Pending:
         except:
             return False
 
+    def getByID(id: t.Union[int, str, bytes]):
+        temp = []
+        try:
+            for station in pending.find({'id': int(str)}):
+                temp.append(station)
+        except:
+            return False
+        try:
+            return temp[0]
+        except:
+            return False
+
     def getByCity(city: t.Union[str, bytes]):
         temp = []
         for station in pending.find({'city': city}):
