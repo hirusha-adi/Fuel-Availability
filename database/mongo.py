@@ -175,6 +175,10 @@ class Stations:
             "petrol": true,
             "diesel": false
         },
+        "amount": {
+            "petrol": "35",
+            "diesel": "70"
+        },
         "lastupdated": ""
     }
     """
@@ -305,8 +309,28 @@ class Stations:
             },
             {
                 "$set": {
-                    'name': petrol,
-                    'email': diesel,
+                    'availablitiy': {
+                        'petrol': petrol,
+                        'diesel': diesel
+                    },
+                    'lastupdated': datetime.now()
+                }
+            },
+            upsert=True
+        )
+        return True
+
+    def updateAmount(id: int, petrol: str, diesel: str):
+        stations.find_one_and_update(
+            {
+                "id": id
+            },
+            {
+                "$set": {
+                    'amount': {
+                        'petrol': petrol,
+                        'diesel': diesel
+                    },
                     'lastupdated': datetime.now()
                 }
             },
