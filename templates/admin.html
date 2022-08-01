@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin | Fuel Availability{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}" />
+{% endblock %}
+
+{% block body %}
+
+<link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,100' rel='stylesheet' type='text/css'>
+
+<h1>
+    ADMIN DHASHBOARD
+    <br>
+    <a href="{{ url_for('index') }}" style="font-size: 20px;">
+        BACK TO HOME
+    </a>
+</h1>
+
+
+<div class="price-table-wrapper">
+
+    <div class="pricing-table featured-table">
+        <h2 class="pricing-table__header">- Approve -</h2>
+        <h3 class="pricing-table__price">⛽</h3>
+        <a class="pricing-table__button" href="{{ url_for('admin_approve') }}">
+            Visit
+        </a>
+        <ul class="pricing-table__list">
+            <li>Approve Stations</li>
+            <li>Reject Stations</li>
+            <li>Manage Stations</li>
+        </ul>
+    </div>
+
+    <div class="pricing-table">
+        <h2 class="pricing-table__header">- Management -</h2>
+        <h3 class="pricing-table__price">📚</h3>
+        <a class="pricing-table__button">
+            COMING SOON!
+        </a>
+        <ul class="pricing-table__list">
+            <li>Manage Users</li>
+            <li>Manage Stations</li>
+            <li>Manage Support</li>
+        </ul>
+    </div>
+
+    <div class="pricing-table">
+        <h2 class="pricing-table__header">- Stats -</h2>
+        <h3 class="pricing-table__price">😉</h3>
+        <a class="pricing-table__button">
+            COMING SOON!
+        </a>
+        <ul class="pricing-table__list">
+            <li>Manage Logs</li>
+            <li>Web Traffic</li>
+            <li>Usage Analytics</li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block endbody %}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endblock %}
