@@ -33,7 +33,7 @@ h1 a {
     display: inline-block;
     border: 1px solid #C8C8C8;
     border-radius: 10px;
-    background: rgb(36, 38, 40);
+    background: #141617;
     margin: 20px;
     transition: all 0.3s ease-in-out;
 }
