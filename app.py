@@ -39,7 +39,12 @@ def map():
 @app.route("/amount/<id>")
 def amounts(id):
     data = Stations.getByID(id=id)
-    return render_template("amounts.html", data=data)
+    user_agent = request.headers.get('User-Agent').lower()
+    if ("iphone" in user_agent) or ("android" in user_agent):
+        mobile = True
+    else:
+        mobile = False
+    return render_template("amounts.html", data=data, mobile=mobile)
 
 
 @app.route("/contact")

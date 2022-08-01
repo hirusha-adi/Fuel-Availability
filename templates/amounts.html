@@ -46,7 +46,8 @@
 
 <h1 style="color: white; padding-top:20px">{{ data.name }}</h1>
 
-<div class="progress-pie-chart" data-percent="{{ data.amount.petrol }}">
+{% if mobile == True %}
+<div class="progress-pie-chart" data-percent="">
     <div class="ppc-progress">
         <div class="ppc-progress-fill"></div>
     </div>
@@ -57,9 +58,8 @@
     </div>
 </div>
 <br>
-<h2 style="color: white;">Petrol</h2>
-
-<div class="progress-pie-chart1" data-percent="{{ data.amount.diesel }}">
+<h2 style="color: white; text-align: center;">Petrol</h2>
+<div class="progress-pie-chart1" data-percent="100">
     <div class="ppc-progress1">
         <div class="ppc-progress-fill1"></div>
     </div>
@@ -70,7 +70,50 @@
     </div>
 </div>
 <br>
-<h2 style="color: white;">Diesel</h2>
+<h2 style="color: white; text-align: center;">Diesel</h2>
+{% else %}
+<table style="margin-left: auto;margin-right: auto;">
+    <thead>
+        <tr>
+            <th>
+                <div class="progress-pie-chart" data-percent="100">
+                    <div class="ppc-progress">
+                        <div class="ppc-progress-fill"></div>
+                    </div>
+                    <div class="ppc-percents">
+                        <div class="pcc-percents-wrapper">
+                            <span>%</span>
+                        </div>
+                    </div>
+                </div>
+            </th>
+            <th style="padding-left: 30px;">
+                <div class="progress-pie-chart1" data-percent="100">
+                    <div class="ppc-progress1">
+                        <div class="ppc-progress-fill1"></div>
+                    </div>
+                    <div class="ppc-percents1">
+                        <div class="pcc-percents-wrapper1">
+                            <span>%</span>
+                        </div>
+                    </div>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <h2 style="color: white; text-align: center; padding-top: 14px">Petrol</h2>
+            </td>
+            <td>
+                <h2 style="color: white; text-align: center;">Diesel</h2>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endif %}
+
 <br>
 <br>
 <h4 style="color: white; font-size: 20px; padding-bottom: 40px">Last Updated:
@@ -93,7 +136,7 @@
             $ppc.addClass('gt-50');
         }
         $('.ppc-progress-fill').css('transform', 'rotate(' + deg + 'deg)');
-        $('.ppc-percents span').html(percent + 'L');
+        $('.ppc-percents span').html('{{ data.amount.petrol }}' + 'L');
     });
 
     $(function () {
@@ -104,7 +147,7 @@
             $ppc.addClass('gt-501');
         }
         $('.ppc-progress-fill1').css('transform', 'rotate(' + deg + 'deg)');
-        $('.ppc-percents1 span').html(percent + 'L');
+        $('.ppc-percents1 span').html('{{ data.amount.diesel }}' + 'L');
     });
 
 </script>
