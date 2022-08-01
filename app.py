@@ -3,10 +3,10 @@ from database.mongo import Users, Pending, Stations
 from generate import GenerateMap
 from flask import Flask, render_template, g, session, request, redirect, url_for, jsonify
 import os
-from database.settings import adminkey
+from database.settings import adminkey, flaskSecret
 
 app = Flask(__name__)
-app.secret_key = 'the random string'
+app.secret_key = flaskSecret
 
 
 def makeMap():

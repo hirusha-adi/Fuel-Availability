@@ -5,6 +5,7 @@ with open(os.path.join(os.getcwd(), 'database', 'settings.json'), 'r', encoding=
     data = json.load(_file)
 
 adminkey = data['adminkey']
+flaskSecret = data['flaskSecret']
 
 
 class MongoDB:
