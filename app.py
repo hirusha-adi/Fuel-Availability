@@ -68,6 +68,9 @@ def login():
         except:
             return redirect(url_for('login'))
     else:
+        if g.user:
+            return redirect(url_for('panel'))
+
         return render_template("login.html")
 
 
