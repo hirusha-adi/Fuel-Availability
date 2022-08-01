@@ -89,9 +89,6 @@ def admin_approve():
 
         if itemdo.lower() == 'add':
             data_pending = Pending.getByID(id=int(itemid))
-            print("="*50)
-            print("Pending Data: \n", data_pending)
-
             Stations.addStation(
                 name=data_pending['name'],
                 registration=data_pending['registration'],
@@ -99,31 +96,18 @@ def admin_approve():
                 email=data_pending['email'],
                 coordinates=data_pending['coordinates'],
                 city=data_pending['city'],
-                availablitiy=data_pending['availablitiy']
+                petrol=data_pending['availablitiy']['petrol'],
+                diesel=data_pending['availablitiy']['diesel'],
+                lastupdated=str(datetime.now())
             )
-            print("="*50)
-            print("added data to Stations DB")
-
             Pending.deleteByID(id=int(data_pending['id']))
             del data_pending
-
-            print("="*50)
-            print("Deleted item from Pending DB")
-
+            makeMap()
             return jsonify({'status': 'success'})
 
         elif itemdo.lower() == 'remove':
-
             Pending.deleteByID(id=int(itemid))
-
-            print("="*50)
-            print("Deleted item from Pending DB")
-
             return jsonify({'status': 'success'})
-
-        else:
-            print(itemdo)
-            return "hi"
 
     else:
         data = {}
@@ -261,7 +245,7 @@ def add_new_station():
         city=fscity,
         petrol=True if petrolAvailability == '1' else False,
         diesel=True if dieselAvailability == '1' else False,
-        lastupdated=str(datetime.now())
+        lastupdated=datetime.now()
     )
 
     return jsonify({'status': 'success'})
