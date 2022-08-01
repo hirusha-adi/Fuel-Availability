@@ -197,39 +197,79 @@ class Stations:
 
     def addStation(name: t.Union[str, bytes], registration: t.Union[str, bytes], phone: t.Union[str, bytes], email: t.Union[str, bytes], coordinates: t.List[str], city: t.Union[str, bytes], petrol: bool, diesel: bool, lastupdated: t.Union[str, bytes]):
         try:
-            stations.insert_one(
-                {
-                    'id': int(Stations.getLastStation()['id']) + 1,
-                    "name": name,
-                    "registration": registration,
-                    "phone": phone,
-                    "email": email,
-                    "coordinates": coordinates,
-                    "city": city,
-                    "availablitiy": {
-                        "petrol": petrol,
-                        "diesel": diesel
-                    },
-                    "lastupdated": lastupdated
-                }
-            )
-        except IndexError:
-            stations.insert_one(
-                {
-                    'id': 1,
-                    "name": name,
-                    "registration": registration,
-                    "phone": phone,
-                    "email": email,
-                    "coordinates": coordinates,
-                    "city": city,
-                    "availablitiy": {
-                        "petrol": petrol,
-                        "diesel": diesel
-                    },
-                    "lastupdated": lastupdated
-                }
-            )
+            temp = Stations.getByRegistration(registration=registration)
+            if temp['registration'] == registration:
+                return
+            else:
+                try:
+                    stations.insert_one(
+                        {
+                            'id': int(Stations.getLastStation()['id']) + 1,
+                            "name": name,
+                            "registration": registration,
+                            "phone": phone,
+                            "email": email,
+                            "coordinates": coordinates,
+                            "city": city,
+                            "availablitiy": {
+                                "petrol": petrol,
+                                "diesel": diesel
+                            },
+                            "lastupdated": lastupdated
+                        }
+                    )
+                except IndexError:
+                    stations.insert_one(
+                        {
+                            'id': 1,
+                            "name": name,
+                            "registration": registration,
+                            "phone": phone,
+                            "email": email,
+                            "coordinates": coordinates,
+                            "city": city,
+                            "availablitiy": {
+                                "petrol": petrol,
+                                "diesel": diesel
+                            },
+                            "lastupdated": lastupdated
+                        }
+                    )
+        except:
+            try:
+                stations.insert_one(
+                    {
+                        'id': int(Stations.getLastStation()['id']) + 1,
+                        "name": name,
+                        "registration": registration,
+                        "phone": phone,
+                        "email": email,
+                        "coordinates": coordinates,
+                        "city": city,
+                        "availablitiy": {
+                            "petrol": petrol,
+                            "diesel": diesel
+                        },
+                        "lastupdated": lastupdated
+                    }
+                )
+            except IndexError:
+                stations.insert_one(
+                    {
+                        'id': 1,
+                        "name": name,
+                        "registration": registration,
+                        "phone": phone,
+                        "email": email,
+                        "coordinates": coordinates,
+                        "city": city,
+                        "availablitiy": {
+                            "petrol": petrol,
+                            "diesel": diesel
+                        },
+                        "lastupdated": lastupdated
+                    }
+                )
 
     def getByEmail(email: t.Union[str, bytes]):
         temp = []
@@ -327,39 +367,79 @@ class Pending:
         lastupdated
     ):
         try:
-            pending.insert_one(
-                {
-                    'id': int(Pending.getLastStation()['id']) + 1,
-                    "name": name,
-                    "registration": registration,
-                    "phone": phone,
-                    "email": email,
-                    "coordinates": coordinates,
-                    "city": city,
-                    "availablitiy": {
-                        "petrol": petrol,
-                        "diesel": diesel
-                    },
-                    "lastupdated": str(datetime.now())
-                }
-            )
-        except IndexError:
-            pending.insert_one(
-                {
-                    'id': 1,
-                    "name": name,
-                    "registration": registration,
-                    "phone": phone,
-                    "email": email,
-                    "coordinates": coordinates,
-                    "city": city,
-                    "availablitiy": {
-                        "petrol": petrol,
-                        "diesel": diesel
-                    },
-                    "lastupdated": str(datetime.now())
-                }
-            )
+            temp = Pending.getByRegistration(registration=registration)
+            if temp['registration'] == registration:
+                return
+            else:
+                try:
+                    pending.insert_one(
+                        {
+                            'id': int(Pending.getLastStation()['id']) + 1,
+                            "name": name,
+                            "registration": registration,
+                            "phone": phone,
+                            "email": email,
+                            "coordinates": coordinates,
+                            "city": city,
+                            "availablitiy": {
+                                "petrol": petrol,
+                                "diesel": diesel
+                            },
+                            "lastupdated": str(datetime.now())
+                        }
+                    )
+                except IndexError:
+                    pending.insert_one(
+                        {
+                            'id': 1,
+                            "name": name,
+                            "registration": registration,
+                            "phone": phone,
+                            "email": email,
+                            "coordinates": coordinates,
+                            "city": city,
+                            "availablitiy": {
+                                "petrol": petrol,
+                                "diesel": diesel
+                            },
+                            "lastupdated": str(datetime.now())
+                        }
+                    )
+        except:
+            try:
+                pending.insert_one(
+                    {
+                        'id': int(Pending.getLastStation()['id']) + 1,
+                        "name": name,
+                        "registration": registration,
+                        "phone": phone,
+                        "email": email,
+                        "coordinates": coordinates,
+                        "city": city,
+                        "availablitiy": {
+                            "petrol": petrol,
+                            "diesel": diesel
+                        },
+                        "lastupdated": str(datetime.now())
+                    }
+                )
+            except IndexError:
+                pending.insert_one(
+                    {
+                        'id': 1,
+                        "name": name,
+                        "registration": registration,
+                        "phone": phone,
+                        "email": email,
+                        "coordinates": coordinates,
+                        "city": city,
+                        "availablitiy": {
+                            "petrol": petrol,
+                            "diesel": diesel
+                        },
+                        "lastupdated": str(datetime.now())
+                    }
+                )
 
     def getByEmail(email: t.Union[str, bytes]):
         temp = []
