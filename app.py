@@ -3,8 +3,7 @@ from database.mongo import Users, Pending, Stations
 from generate import GenerateMap
 from flask import Flask, render_template, g, session, request, redirect, url_for, jsonify
 import os
-
-ADMIN_PASSWORD = "123"
+from database.settings import adminkey
 
 app = Flask(__name__)
 app.secret_key = 'the random string'
@@ -262,7 +261,7 @@ def admin_home():
 @app.route("/admin/verify", methods=['POST'])
 def admin_verify():
     secretKey = request.form.get('secretKey')
-    if secretKey == ADMIN_PASSWORD:
+    if secretKey == adminkey:
         return jsonify({'status': 'ok'})
     else:
         return jsonify({'status': 'no'})
