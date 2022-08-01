@@ -199,7 +199,7 @@ class Stations:
             temp.append(user)
         return temp[-1]
 
-    def addStation(name: t.Union[str, bytes], registration: t.Union[str, bytes], phone: t.Union[str, bytes], email: t.Union[str, bytes], coordinates: t.List[str], city: t.Union[str, bytes], petrol: bool, diesel: bool, lastupdated: t.Union[str, bytes]):
+    def addStation(name: t.Union[str, bytes], registration: t.Union[str, bytes], phone: t.Union[str, bytes], email: t.Union[str, bytes], coordinates: t.List[str], city: t.Union[str, bytes], petrol: bool, diesel: bool, lastupdated: t.Union[str, bytes], apetrol: str, adiesel: str):
         try:
             temp = Stations.getByRegistration(registration=registration)
             if temp['registration'] == registration:
@@ -219,6 +219,10 @@ class Stations:
                                 "petrol": petrol,
                                 "diesel": diesel
                             },
+                            "amount": {
+                                "petrol": apetrol,
+                                "diesel": adiesel
+                            },
                             "lastupdated": lastupdated
                         }
                     )
@@ -235,6 +239,10 @@ class Stations:
                             "availablitiy": {
                                 "petrol": petrol,
                                 "diesel": diesel
+                            },
+                            "amount": {
+                                "petrol": apetrol,
+                                "diesel": adiesel
                             },
                             "lastupdated": lastupdated
                         }
@@ -254,6 +262,10 @@ class Stations:
                             "petrol": petrol,
                             "diesel": diesel
                         },
+                        "amount": {
+                            "petrol": apetrol,
+                            "diesel": adiesel
+                        },
                         "lastupdated": lastupdated
                     }
                 )
@@ -270,6 +282,10 @@ class Stations:
                         "availablitiy": {
                             "petrol": petrol,
                             "diesel": diesel
+                        },
+                        "amount": {
+                            "petrol": apetrol,
+                            "diesel": adiesel
                         },
                         "lastupdated": lastupdated
                     }
