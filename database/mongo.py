@@ -312,6 +312,15 @@ class Stations:
         except:
             return False
 
+    def getByID(id: t.Any):
+        temp = []
+        for station in stations.find({'id': int(id)}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
+
     def getByCity(city: t.Union[str, bytes]):
         temp = []
         for station in stations.find({'city': city}):
