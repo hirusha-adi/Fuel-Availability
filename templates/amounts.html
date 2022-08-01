@@ -3,7 +3,8 @@
 {% block title %}Availability | Fuel Availability{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/amounts.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/amountsp.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/amountsd.css') }}" />
 {% endblock %}
 
 {% block body %}
@@ -43,9 +44,9 @@
     </div>
 </nav>
 
-<h1 style="color: white; padding-top:20px">Station Name</h1>
+<h1 style="color: white; padding-top:20px">{{ data.name }}</h1>
 
-<div class="progress-pie-chart" data-percent="100">
+<div class="progress-pie-chart" data-percent="{{ data.amount.petrol }}">
     <div class="ppc-progress">
         <div class="ppc-progress-fill"></div>
     </div>
@@ -58,12 +59,12 @@
 <br>
 <h2 style="color: white;">Petrol</h2>
 
-<div class="progress-pie-chart" data-percent="100">
-    <div class="ppc-progress">
-        <div class="ppc-progress-fill"></div>
+<div class="progress-pie-chart1" data-percent="{{ data.amount.diesel }}">
+    <div class="ppc-progress1">
+        <div class="ppc-progress-fill1"></div>
     </div>
-    <div class="ppc-percents">
-        <div class="pcc-percents-wrapper">
+    <div class="ppc-percents1">
+        <div class="pcc-percents-wrapper1">
             <span>%</span>
         </div>
     </div>
@@ -74,7 +75,7 @@
 <br>
 <h4 style="color: white; font-size: 20px; padding-bottom: 40px">Last Updated:
     <br>
-    TIME GOES HERE
+    {{ data.lastupdated }}
 </h4>
 
 {% endblock %}
@@ -94,5 +95,17 @@
         $('.ppc-progress-fill').css('transform', 'rotate(' + deg + 'deg)');
         $('.ppc-percents span').html(percent + 'L');
     });
+
+    $(function () {
+        var $ppc = $('.progress-pie-chart1'),
+            percent = parseInt($ppc.data('percent')),
+            deg = 360 * percent / 100;
+        if (percent > 50) {
+            $ppc.addClass('gt-501');
+        }
+        $('.ppc-progress-fill1').css('transform', 'rotate(' + deg + 'deg)');
+        $('.ppc-percents1 span').html(percent + 'L');
+    });
+
 </script>
 {% endblock %}
