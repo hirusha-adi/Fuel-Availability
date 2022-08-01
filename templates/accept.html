@@ -47,8 +47,10 @@
                 <div class="d-flex align-items-center">
                 </div>
             </div>
-            <button type="button" class="btn btn-success" itemid="{{ item.id }}">Success</button>
-            <button type="button" class="btn btn-danger" itemid="{{ item.id }}">Danger</button>
+            <button type="button" class="btn btn-success" itemid="{{ item.id }}" id="addStation{{ item.id }}"
+                onclick="clickedButton(this);">Success</button>
+            <button type="button" class="btn btn-danger" itemid="{{ item.id }}" id="removeStation{{ item.id }}"
+                onclick="clickedButton(this);">Danger</button>
 
             {% endfor %}
 
@@ -104,6 +106,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    function clickedButton() {
 
+    }
 </script>
 {% endblock %}
