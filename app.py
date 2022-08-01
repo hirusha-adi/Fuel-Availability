@@ -81,12 +81,16 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route("/admin/approve")
+@app.route("/admin/approve", methods=['GET', 'POST'])
 def admin_approve():
-    data = {}
-    data['pending'] = Pending.getAllStations()
-    data['pending_length'] = len(data['pending'])
-    return render_template('accept.html', **data)
+    if request.method == 'POST':
+        itemid = request.form.get('itemid')
+        itemdo = request.form.get('itemdo')
+    else:
+        data = {}
+        data['pending'] = Pending.getAllStations()
+        data['pending_length'] = len(data['pending'])
+        return render_template('accept.html', **data)
 
 
 @app.route("/panel")
