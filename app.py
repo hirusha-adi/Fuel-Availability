@@ -36,9 +36,10 @@ def map():
     return render_template("map.html")
 
 
-@app.route("/amount")
-def amounts():
-    return render_template("amounts.html")
+@app.route("/amount/<id>")
+def amounts(id):
+    data = Stations.getByID(id=id)
+    return render_template("amounts.html", data=data)
 
 
 @app.route("/contact")
