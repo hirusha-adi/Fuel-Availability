@@ -554,8 +554,8 @@
                     fillingStationNameID: fillingStationNameID.val(),
                     petrolAvailability: petrolAvailability.val(),
                     dieselAvailability: dieselAvailability.val(),
-                    petrolamt: petrolamt,
-                    dieselamt: dieselamt
+                    petrolamt: petrolamt.val(),
+                    dieselamt: dieselamt.val()
                 },
                 function (data) {
                     if (data['status'] == 'success') {

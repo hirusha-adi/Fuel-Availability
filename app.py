@@ -196,7 +196,11 @@ def panel_edit_station():
                 petrol=True if petrolAvailability == '1' else False,
                 diesel=True if dieselAvailability == '1' else False
             )
-            Stations.updateAmount(petrol=str(petrolamt), diesel=str(dieselamt))
+            Stations.updateAmount(
+                id=int(fillingStationNameID),
+                petrol=str(petrolamt),
+                diesel=str(dieselamt)
+            )
             return jsonify({'status': 'success'})
         except Exception as e:
             return jsonify({'status': f'ERROR: {e}'})
