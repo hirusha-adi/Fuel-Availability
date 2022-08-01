@@ -4,6 +4,24 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/accept.css') }}" />
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    const secretKey = prompt("Enter the Admin Password: ")
+    $.post(
+        '{{ url_for("admin_verify") }}',
+        {
+            secretKey: secretKey
+        },
+        function (data) {
+            if (data['status'] == 'ok') {
+                return
+            } else {
+                window.location.href = window.location.origin
+            }
+        }
+    )
+</script>
 {% endblock %}
 
 {% block body %}
@@ -57,6 +75,8 @@
                 Reject
             </button>
 
+
+
             {% endfor %}
 
         </div>
@@ -66,8 +86,6 @@
 {% endblock %}
 
 {% block endbody %}
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     function clickedButton(identifier) {
@@ -82,7 +100,9 @@
             },
             function (data) {
                 if (data['status'] == 'success') {
-                    $(pid).remove()
+                    $(`#${pid}`).remove()
+                    $(`#addStation${itemid}`).remove()
+                    $(`#removeStation${itemid}`).remove()
                 }
             }
         )
