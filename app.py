@@ -254,6 +254,11 @@ def add_new_station():
     return jsonify({'status': 'success'})
 
 
+@app.route("/admin", methods=['GET'])
+def admin_home():
+    return render_template("admin.html")
+
+
 @app.route("/admin/verify", methods=['POST'])
 def admin_verify():
     secretKey = request.form.get('secretKey')
