@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Availability | Fuel Availability{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/amounts.css') }}" />
+{% endblock %}
+
+{% block body %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">
+        Fuel Availability
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon">
+        </span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/map">
+                    Map
+                    <span class="sr-only">
+                        (current)
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    Home
+                </a>
+            </li>
+        </ul>
+        <div class="form-inline my-2 my-lg-0">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                <a href="/login" style="color: #fff;text-decoration: none;">
+                    Login
+                </a>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<h1 style="color: white; padding-top:20px">Station Name</h1>
+
+<div class="progress-pie-chart" data-percent="50">
+    <div class="ppc-progress">
+        <div class="ppc-progress-fill"></div>
+    </div>
+    <div class="ppc-percents">
+        <div class="pcc-percents-wrapper">
+            <span>%</span>
+        </div>
+    </div>
+</div>
+<br>
+<h2 style="color: white;">Petrol</h2>
+
+<div class="progress-pie-chart" data-percent="50">
+    <div class="ppc-progress">
+        <div class="ppc-progress-fill"></div>
+    </div>
+    <div class="ppc-percents">
+        <div class="pcc-percents-wrapper">
+            <span>%</span>
+        </div>
+    </div>
+</div>
+<br>
+<h2 style="color: white;">Diesel</h2>
+
+{% endblock %}
+
+{% block endbody %}
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(function () {
+        var $ppc = $('.progress-pie-chart'),
+            percent = parseInt($ppc.data('percent')),
+            deg = 360 * percent / 100;
+        if (percent > 50) {
+            $ppc.addClass('gt-50');
+        }
+        $('.ppc-progress-fill').css('transform', 'rotate(' + deg + 'deg)');
+        $('.ppc-percents span').html(percent + 'L');
+    });
+</script>
+{% endblock %}
