@@ -519,6 +519,7 @@
             const fsphone = $("#fsphone")
             const petrolAvailability = $("#petrolAvailability")
             const dieselAvailability = $("#dieselAvailability")
+            const regProof = $("#regProof")
             $.post(
                 '{{ url_for("add_new_station") }}',
                 {
@@ -528,7 +529,8 @@
                     bussinessRegistrationNumber: bussinessRegistrationNumber.val(),
                     fsphone: fsphone.val(),
                     petrolAvailability: petrolAvailability.val(),
-                    dieselAvailability: dieselAvailability.val()
+                    dieselAvailability: dieselAvailability.val(),
+                    regProof: regProof.val()
                 },
                 function (data) {
                     $("#newS_notices").empty()
