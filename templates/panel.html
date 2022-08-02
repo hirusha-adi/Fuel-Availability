@@ -51,11 +51,16 @@
                                     </div>
                                 </a>
 
-                                <a href="{{ url_for('index') }}">
-                                    <span id="new-label" style="font-size: 20px">
-                                        Go back to home
-                                    </span>
+                                <a data-toggle="tab" href="{{ url_for('index') }}" id="tab5"
+                                    class="tabs list-group-item bg-light"
+                                    style="background-color: rgb(10, 190, 82) !important;">
+                                    <div class="list-div my-2">
+                                        &nbsp;&nbsp; Go back to home
+                                    </div>
                                 </a>
+
+                                <!--  -->
+
                         </div>
                     </div>
 
@@ -311,7 +316,8 @@
                                                 Add new Filling Station
                                             </h3>
                                             <h3 class="mt-0 mb-4 text-center"></h3>
-                                            <form onsubmit="event.preventDefault()" id="new_station_form">
+                                            <form onsubmit="event.preventDefault()" id="new_station_form"
+                                                enctype="multipart/form-data">
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="input-group">
@@ -375,6 +381,17 @@
                                                                 <option value="1">Avaibale</option>
                                                                 <option value="2">Not Avaibale</option>
                                                             </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlFile1">
+                                                                Upload an Image Registration Proof
+                                                            </label>
+                                                            <input type="file" class="form-control-file"
+                                                                id="exampleFormControlFile1">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -455,6 +472,10 @@
         $("#tab4").click(function () {
             window.location.href = window.location.origin + '/logout'
         });
+
+        $("#tab5").click(function () {
+            window.location.href = window.location.origin
+        })
 
         // save account details
         $("#account_details_form").submit(function () {
