@@ -5,6 +5,7 @@
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/amountsp.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/amountsd.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/panel.css') }}" />
 {% endblock %}
 
 {% block body %}
@@ -20,12 +21,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/map">
                     Map
-                    <span class="sr-only">
-                        (current)
-                    </span>
                 </a>
             </li>
             <li class="nav-item">
@@ -44,82 +42,108 @@
     </div>
 </nav>
 
-<h1 style="color: white; padding-top:20px">{{ data.name }}</h1>
+<div class="container-fluid px-0" id="bg-div">
+    <div class="row justify-content-center">
+        <div class="col-lg-9 col-12">
+            <div class="card card0" style="border-radius: 2% !important; border: 2px solid  black;">
+                <div class="d-flex" id="wrapper">
 
-{% if mobile == True %}
-<div class="progress-pie-chart" data-percent="">
-    <div class="ppc-progress">
-        <div class="ppc-progress-fill"></div>
-    </div>
-    <div class="ppc-percents">
-        <div class="pcc-percents-wrapper">
-            <span>%</span>
+                    <!-- Page Content -->
+                    <div id="page-content-wrapper">
+
+                        <div class="tab-content">
+
+                            <h1 style="color: black; padding-top:20px">{{ data.name }}</h1>
+                            <h3 style="color: black; padding-top:20px">{{ data.city }}</h3>
+
+
+                            {% if mobile == True %}
+                            <div class="progress-pie-chart" data-percent="">
+                                <div class="ppc-progress">
+                                    <div class="ppc-progress-fill"></div>
+                                </div>
+                                <div class="ppc-percents">
+                                    <div class="pcc-percents-wrapper">
+                                        <span>%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h2 style="color: black; text-align: center;">Petrol</h2>
+                            <div class="progress-pie-chart1" data-percent="100">
+                                <div class="ppc-progress1">
+                                    <div class="ppc-progress-fill1"></div>
+                                </div>
+                                <div class="ppc-percents1">
+                                    <div class="pcc-percents-wrapper1">
+                                        <span>%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h2 style="color: black; text-align: center;">Diesel</h2>
+                            {% else %}
+                            <table style="margin-left: auto;margin-right: auto;">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="progress-pie-chart" data-percent="100">
+                                                <div class="ppc-progress">
+                                                    <div class="ppc-progress-fill"></div>
+                                                </div>
+                                                <div class="ppc-percents">
+                                                    <div class="pcc-percents-wrapper">
+                                                        <span>%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th style="padding-left: 30px;">
+                                            <div class="progress-pie-chart1" data-percent="100">
+                                                <div class="ppc-progress1">
+                                                    <div class="ppc-progress-fill1"></div>
+                                                </div>
+                                                <div class="ppc-percents1">
+                                                    <div class="pcc-percents-wrapper1">
+                                                        <span>%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <h2 style="color: black; text-align: center; padding-top: 14px">Petrol</h2>
+                                        </td>
+                                        <td>
+                                            <h2 style="color: black; text-align: center;">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;Diesel
+                                            </h2>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            {% endif %}
+
+                            <br>
+                            <br>
+                            <h4 style="color: black; font-size: 20px; padding-bottom: 40px">Last Updated:
+                                <br>
+                                {{ (data.lastupdated|string).split('.')[0] }}
+                            </h4>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<br>
-<h2 style="color: white; text-align: center;">Petrol</h2>
-<div class="progress-pie-chart1" data-percent="100">
-    <div class="ppc-progress1">
-        <div class="ppc-progress-fill1"></div>
-    </div>
-    <div class="ppc-percents1">
-        <div class="pcc-percents-wrapper1">
-            <span>%</span>
-        </div>
-    </div>
-</div>
-<br>
-<h2 style="color: white; text-align: center;">Diesel</h2>
-{% else %}
-<table style="margin-left: auto;margin-right: auto;">
-    <thead>
-        <tr>
-            <th>
-                <div class="progress-pie-chart" data-percent="100">
-                    <div class="ppc-progress">
-                        <div class="ppc-progress-fill"></div>
-                    </div>
-                    <div class="ppc-percents">
-                        <div class="pcc-percents-wrapper">
-                            <span>%</span>
-                        </div>
-                    </div>
-                </div>
-            </th>
-            <th style="padding-left: 30px;">
-                <div class="progress-pie-chart1" data-percent="100">
-                    <div class="ppc-progress1">
-                        <div class="ppc-progress-fill1"></div>
-                    </div>
-                    <div class="ppc-percents1">
-                        <div class="pcc-percents-wrapper1">
-                            <span>%</span>
-                        </div>
-                    </div>
-                </div>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <h2 style="color: white; text-align: center; padding-top: 14px">Petrol</h2>
-            </td>
-            <td>
-                <h2 style="color: white; text-align: center;">Diesel</h2>
-            </td>
-        </tr>
-    </tbody>
-</table>
-{% endif %}
 
-<br>
-<br>
-<h4 style="color: white; font-size: 20px; padding-bottom: 40px">Last Updated:
-    <br>
-    {{ data.lastupdated }}
-</h4>
+
 
 {% endblock %}
 
