@@ -520,19 +520,26 @@
             const petrolAvailability = $("#petrolAvailability")
             const dieselAvailability = $("#dieselAvailability")
             const regProof = $("#regProof")
-            $.post(
-                '{{ url_for("add_new_station") }}',
-                {
-                    fsname: fsname.val(),
-                    fsgoogleurl: fsgoogleurl.val(),
-                    fscity: fscity.val(),
-                    bussinessRegistrationNumber: bussinessRegistrationNumber.val(),
-                    fsphone: fsphone.val(),
-                    petrolAvailability: petrolAvailability.val(),
-                    dieselAvailability: dieselAvailability.val(),
-                    regProof: regProof.val()
-                },
-                function (data) {
+            const data = {
+                fsname: fsname.val(),
+                fsgoogleurl: fsgoogleurl.val(),
+                fscity: fscity.val(),
+                bussinessRegistrationNumber: bussinessRegistrationNumber.val(),
+                fsphone: fsphone.val(),
+                petrolAvailability: petrolAvailability.val(),
+                dieselAvailability: dieselAvailability.val(),
+                regProof: regProof.val()
+            }
+            alert(regProof.val())
+            $.ajax({
+                method: "POST",
+                contentType: 'application/x-www-form-urlencoded',
+                url: '{{ url_for("add_new_station") }}',
+                data: $("#new_station_form").serialize(),
+                cache: false,
+                async: false,
+                timeout: 600000,
+                success: function (data) {
                     $("#newS_notices").empty()
                     $("#newS_notices").show();
                     if (Array.isArray(data['status'])) {
@@ -556,8 +563,11 @@
                         </div>
                         `)
                     }
+                },
+                error: function (e) {
+                    console.log("ERROR : ", e);
                 }
-            )
+            });
         })
 
         $("#filling_station_update").submit(function () {

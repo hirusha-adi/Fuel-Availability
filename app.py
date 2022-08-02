@@ -236,6 +236,8 @@ def add_new_station():
     if not g.user:
         return redirect(url_for('login'))
 
+    print(len(request.form))
+
     # always
     fsname = request.form.get('fsname')
     fscity = request.form.get('fscity')
@@ -277,23 +279,29 @@ def add_new_station():
     # path = os.path.join(app.config['UPLOAD_FOLDER'], regProof.filename)
     # regProof.save(path)
 
-    if 'regProof' not in request.files:
-        status['status'].append(
-            'Please upload the proof of registration and try again!')
-    regProof = request.files['regProof']
-    if regProof.filename == '':
-        status['status'].append(
-            'Please select a proper file')
-    if regProof and allowed_file(regProof.filename):
-        savepath = os.path.join(
-            app.config['UPLOAD_FOLDER'],
-            str(secure_filename(regProof.filename)) + ''.join(
-                random.choice(
-                    string.ascii_letters + string.digits
-                ) for i in range(5)
-            )
-        )
-        regProof.save(savepath)
+    # if 'regProof' not in request.files:
+    #     status['status'].append(
+    #         'Please upload the proof of registration and try again!')
+    # regProof = request.files['regProof']
+    # if regProof.filename == '':
+    #     status['status'].append(
+    #         'Please select a proper file')
+    # if regProof and allowed_file(regProof.filename):
+    #     savepath = os.path.join(
+    #         app.config['UPLOAD_FOLDER'],
+    #         str(secure_filename(regProof.filename)) + ''.join(
+    #             random.choice(
+    #                 string.ascii_letters + string.digits
+    #             ) for i in range(5)
+    #         )
+    #     )
+    #     regProof.save(savepath)
+
+    regProof = request.form.get('regProof')
+    print(regProof)
+    print(type(regProof))
+    print(request.files)
+    print(len(request.files))
 
     if len(status['status']) != 0:
         return jsonify(status)
@@ -307,7 +315,7 @@ def add_new_station():
         city=fscity,
         petrol=True if petrolAvailability == '1' else False,
         diesel=True if dieselAvailability == '1' else False,
-        image=savepath,
+        image="test",
         lastupdated=datetime.now()
     )
 
