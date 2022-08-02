@@ -137,7 +137,7 @@ def admin_approve():
         return render_template('accept.html', **data)
 
 
-@app.route("/panel")
+@app.route("/dashboard")
 def panel():
     if not g.user:
         return redirect(url_for('login'))
