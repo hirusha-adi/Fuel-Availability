@@ -384,6 +384,7 @@ class Pending:
             "petrol": true,
             "diesel": false
         },
+        "image": "",
         "lastupdated": ""
     }
     """
@@ -413,6 +414,7 @@ class Pending:
         city: t.Union[str, bytes],
         petrol: bool,
         diesel: bool,
+        image: t.Union[str, bytes],
         lastupdated
     ):
         try:
@@ -434,6 +436,7 @@ class Pending:
                                 "petrol": petrol,
                                 "diesel": diesel
                             },
+                            "image": image,
                             "lastupdated": str(datetime.now())
                         }
                     )
@@ -451,6 +454,7 @@ class Pending:
                                 "petrol": petrol,
                                 "diesel": diesel
                             },
+                            "image": image,
                             "lastupdated": str(datetime.now())
                         }
                     )
@@ -469,6 +473,7 @@ class Pending:
                             "petrol": petrol,
                             "diesel": diesel
                         },
+                        "image": image,
                         "lastupdated": str(datetime.now())
                     }
                 )
@@ -486,6 +491,7 @@ class Pending:
                             "petrol": petrol,
                             "diesel": diesel
                         },
+                        "image": image,
                         "lastupdated": str(datetime.now())
                     }
                 )
