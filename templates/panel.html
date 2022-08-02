@@ -533,9 +533,12 @@
             alert(regProof.val())
             $.ajax({
                 method: "POST",
-                contentType: 'application/x-www-form-urlencoded',
+                // contentType: 'application/x-www-form-urlencoded',
+                contentType: false,
                 url: '{{ url_for("add_new_station") }}',
-                data: $("#new_station_form").serialize(),
+                // data: $("#new_station_form").serialize(),
+                data: new FormData($("#new_station_form")[0]),
+                processData: false,
                 cache: false,
                 async: false,
                 timeout: 600000,
