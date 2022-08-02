@@ -1,144 +1,188 @@
 <!DOCTYPE html>
-<head>    
+
+<head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    
-        <script>
-            L_NO_TOUCH = false;
-            L_DISABLE_3D = false;
-        </script>
-    
-    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
-    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+
+    <script>
+        L_NO_TOUCH = false;
+        L_DISABLE_3D = false;
+    </script>
+
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <style>
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
-    
-            <meta name="viewport" content="width=device-width,
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css" />
+
+    <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-            <style>
-                #map_edafbaadbfabc52a0ffda36d18e9d97f {
-                    position: relative;
-                    width: 100.0%;
-                    height: 93.0%;
-                    left: 0.0%;
-                    top: 0.0%;
-                }
-            </style>
-        
+    <style>
+        #map_984dbfb216b9301090ac29194964604f {
+            position: relative;
+            width: 100.0%;
+            height: 93.0%;
+            left: 0.0%;
+            top: 0.0%;
+        }
+
+        body {
+            background-color: #343a40;
+        }
+    </style>
+
 </head>
-<nav class="navbar navbar-expand-lg navbar-light bg-light"><a class="navbar-brand" href="/">Fuel Availability</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav mr-auto"><li class="nav-item active"><a class="nav-link" href="/map">Home <span class="sr-only">(current)</span></a></li><li class="nav-item"><a class="nav-link" href="/map">Reload</a></li><li class="nav-item"><a class="nav-link" href="/about">About Us</a></li></ul><div class="form-inline my-2 my-lg-0"><button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a href="/login">Login</a></button></div></div></nav>    
-    
-            <div class="folium-map" id="map_edafbaadbfabc52a0ffda36d18e9d97f" ></div>
-        
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script></body>
-<script>    
-    
-            var map_edafbaadbfabc52a0ffda36d18e9d97f = L.map(
-                "map_edafbaadbfabc52a0ffda36d18e9d97f",
-                {
-                    center: [7.4887197, 80.3597918],
-                    crs: L.CRS.EPSG3857,
-                    zoom: 15,
-                    zoomControl: true,
-                    preferCanvas: false,
-                }
-            );
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
-            
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark"><a class="navbar-brand" href="/">Fuel
+            Availability</a><button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active"><a class="nav-link" href="/map">Map <span
+                            class="sr-only">(current)</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Filter
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Radius</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">by Petrol</a>
+                        <a class="dropdown-item" href="#">by Deisel</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="form-inline my-2 my-lg-0"><button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a
+                        href="/login" style="color: #fff;text-decoration: none;">Login</a></button></div>
+        </div>
+    </nav>
 
-        
-    
-            var tile_layer_aa8600af7fcae243e0f6a49cd045a1ae = L.tileLayer(
-                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_edafbaadbfabc52a0ffda36d18e9d97f);
-        
-    
-            var marker_bb0e07be8f5833633d0bd35042afd7e7 = L.marker(
-                [7.494112, 80.3679604],
-                {}
-            ).addTo(map_edafbaadbfabc52a0ffda36d18e9d97f);
-        
-    
-        var popup_f525e0a6c14cb59eb32514022a0aa621 = L.popup({"maxWidth": "100%"});
+    <div class="folium-map" id="map_984dbfb216b9301090ac29194964604f"></div>
 
-        
-            var html_4d555ee90ec98d0f66be38bd512f91de = $(`<div id="html_4d555ee90ec98d0f66be38bd512f91de" style="width: 100.0%; height: 93.0%;">Petrol: <strong style="color: #228B22">Available</strong><br><br>Diesel: <strong style="color: #8B0000">Not Available</strong></div>`)[0];
-            popup_f525e0a6c14cb59eb32514022a0aa621.setContent(html_4d555ee90ec98d0f66be38bd512f91de);
-        
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<script>
 
-        marker_bb0e07be8f5833633d0bd35042afd7e7.bindPopup(popup_f525e0a6c14cb59eb32514022a0aa621)
+    var map_984dbfb216b9301090ac29194964604f = L.map(
+        "map_984dbfb216b9301090ac29194964604f",
+        {
+            center: [7.4887197, 80.3597918],
+            crs: L.CRS.EPSG3857,
+            zoom: 15,
+            zoomControl: true,
+            preferCanvas: false,
+        }
+    );
+
+
+    var Jawg_Matrix = L.tileLayer('https://{s}.tile.jawg.io/jawg-matrix/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+        attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        minZoom: 0,
+        maxZoom: 22,
+        subdomains: 'abcd',
+        accessToken: 'TELKz5WXUoERxOFSzrqlLAUuZTN6pC7x7Tq4tKmmTvnWBpBzBZzJs9fGjoUt0iYJ'
+    });
+    Jawg_Matrix.addTo(map_984dbfb216b9301090ac29194964604f)
+
+
+
+    var marker_694aa1bed34c1913e182c56cb946dad3 = L.marker(
+        [7.4735921, 80.3535283],
+        {}
+    ).addTo(map_984dbfb216b9301090ac29194964604f);
+
+
+    var popup_9808da620b6a408b4cda40f0ee93704b = L.popup({ "maxWidth": "100%" });
+
+
+    var html_cca4cc9b09b04ccf2b07e656b276b2c7 = $(`<div id="html_cca4cc9b09b04ccf2b07e656b276b2c7" style="width: 100.0%; height: 93.0%;">Petrol: <strong style="color: #228B22">Available</strong><br><br>Diesel: <strong style="color: #8B0000">Available</strong><br><br><a href="https://www.google.com/maps/search/?api=1&query=7.4735921,80.3535283" target="_blank" rel="noopener noreferrer">Visit</a><br><br><a href="/amount/1" >More Info</a></div>`)[0];
+    popup_9808da620b6a408b4cda40f0ee93704b.setContent(html_cca4cc9b09b04ccf2b07e656b276b2c7);
+
+
+    marker_694aa1bed34c1913e182c56cb946dad3.bindPopup(popup_9808da620b6a408b4cda40f0ee93704b)
         ;
 
-        
-    
-    
-            marker_bb0e07be8f5833633d0bd35042afd7e7.bindTooltip(
-                `<div>
-                     Dhammika Filling Station
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var marker_8eef632fd9f23cf01cd0e2fa5e310f80 = L.marker(
-                [7.4740667, 80.3515016],
-                {}
-            ).addTo(map_edafbaadbfabc52a0ffda36d18e9d97f);
-        
-    
-        var popup_7389b06acda67d7abdf0d9a11a9c4b40 = L.popup({"maxWidth": "100%"});
 
-        
-            var html_76f381897a5d031b1755db3359c647cf = $(`<div id="html_76f381897a5d031b1755db3359c647cf" style="width: 100.0%; height: 93.0%;">Petrol: <strong style="color: #228B22">Not Available</strong><br><br>Diesel: <strong style="color: #8B0000">Available</strong></div>`)[0];
-            popup_7389b06acda67d7abdf0d9a11a9c4b40.setContent(html_76f381897a5d031b1755db3359c647cf);
-        
 
-        marker_8eef632fd9f23cf01cd0e2fa5e310f80.bindPopup(popup_7389b06acda67d7abdf0d9a11a9c4b40)
-        ;
 
-        
-    
-    
-            marker_8eef632fd9f23cf01cd0e2fa5e310f80.bindTooltip(
-                `<div>
+    marker_694aa1bed34c1913e182c56cb946dad3.bindTooltip(
+        `<div>
                      Laugfs Gas Auto Lanka Filling Station
                  </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var marker_433ade15bd6e398b460845d27adecf0c = L.marker(
-                [7.4892377, 80.3573381],
-                {}
-            ).addTo(map_edafbaadbfabc52a0ffda36d18e9d97f);
-        
-    
-        var popup_79392e8246d150071e66b809f914d979 = L.popup({"maxWidth": "100%"});
+        { "sticky": true }
+    );
 
-        
-            var html_2716adf11580cf056c00b76436d2fbf5 = $(`<div id="html_2716adf11580cf056c00b76436d2fbf5" style="width: 100.0%; height: 93.0%;">Petrol: <strong style="color: #228B22">Not Available</strong><br><br>Diesel: <strong style="color: #8B0000">Not Available</strong></div>`)[0];
-            popup_79392e8246d150071e66b809f914d979.setContent(html_2716adf11580cf056c00b76436d2fbf5);
-        
 
-        marker_433ade15bd6e398b460845d27adecf0c.bindPopup(popup_79392e8246d150071e66b809f914d979)
+    var marker_fb5c2c47f5674a35ea6d77dc7b90300b = L.marker(
+        [7.5329778, 80.2426548],
+        {}
+    ).addTo(map_984dbfb216b9301090ac29194964604f);
+
+
+    var popup_f0a776d79b3d43c118c7dcef0ab4526c = L.popup({ "maxWidth": "100%" });
+
+
+    var html_30302fcefadd8cd038bd18ca728b59d4 = $(`<div id="html_30302fcefadd8cd038bd18ca728b59d4" style="width: 100.0%; height: 93.0%;">Petrol: <strong style="color: #228B22">Available</strong><br><br>Diesel: <strong style="color: #8B0000">Available</strong><br><br><a href="https://www.google.com/maps/search/?api=1&query=7.5329778,80.2426548" target="_blank" rel="noopener noreferrer">Visit</a><br><br><a href="/amount/2" >More Info</a></div>`)[0];
+    popup_f0a776d79b3d43c118c7dcef0ab4526c.setContent(html_30302fcefadd8cd038bd18ca728b59d4);
+
+
+    marker_fb5c2c47f5674a35ea6d77dc7b90300b.bindPopup(popup_f0a776d79b3d43c118c7dcef0ab4526c)
         ;
 
-        
-    
-    
-            marker_433ade15bd6e398b460845d27adecf0c.bindTooltip(
-                `<div>
-                     Lanka Filling Station
+
+
+
+    marker_fb5c2c47f5674a35ea6d77dc7b90300b.bindTooltip(
+        `<div>
+                     IOC Filling Station
                  </div>`,
-                {"sticky": true}
-            );
-        
+        { "sticky": true }
+    );
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+        x.innerHTML = "Latitude: " + position.coords.latitude +
+            "<br>Longitude: " + position.coords.longitude;
+    }
+
+
+
 </script>

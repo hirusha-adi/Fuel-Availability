@@ -175,6 +175,10 @@ class Stations:
             "petrol": true,
             "diesel": false
         },
+        "amount": {
+            "petrol": "35",
+            "diesel": "70"
+        },
         "lastupdated": ""
     }
     """
@@ -195,7 +199,7 @@ class Stations:
             temp.append(user)
         return temp[-1]
 
-    def addStation(name: t.Union[str, bytes], registration: t.Union[str, bytes], phone: t.Union[str, bytes], email: t.Union[str, bytes], coordinates: t.List[str], city: t.Union[str, bytes], petrol: bool, diesel: bool, lastupdated: t.Union[str, bytes]):
+    def addStation(name: t.Union[str, bytes], registration: t.Union[str, bytes], phone: t.Union[str, bytes], email: t.Union[str, bytes], coordinates: t.List[str], city: t.Union[str, bytes], petrol: bool, diesel: bool, lastupdated: t.Union[str, bytes], apetrol: str, adiesel: str):
         try:
             temp = Stations.getByRegistration(registration=registration)
             if temp['registration'] == registration:
@@ -215,6 +219,10 @@ class Stations:
                                 "petrol": petrol,
                                 "diesel": diesel
                             },
+                            "amount": {
+                                "petrol": apetrol,
+                                "diesel": adiesel
+                            },
                             "lastupdated": lastupdated
                         }
                     )
@@ -231,6 +239,10 @@ class Stations:
                             "availablitiy": {
                                 "petrol": petrol,
                                 "diesel": diesel
+                            },
+                            "amount": {
+                                "petrol": apetrol,
+                                "diesel": adiesel
                             },
                             "lastupdated": lastupdated
                         }
@@ -250,6 +262,10 @@ class Stations:
                             "petrol": petrol,
                             "diesel": diesel
                         },
+                        "amount": {
+                            "petrol": apetrol,
+                            "diesel": adiesel
+                        },
                         "lastupdated": lastupdated
                     }
                 )
@@ -266,6 +282,10 @@ class Stations:
                         "availablitiy": {
                             "petrol": petrol,
                             "diesel": diesel
+                        },
+                        "amount": {
+                            "petrol": apetrol,
+                            "diesel": adiesel
                         },
                         "lastupdated": lastupdated
                     }
@@ -292,6 +312,15 @@ class Stations:
         except:
             return False
 
+    def getByID(id: t.Any):
+        temp = []
+        for station in stations.find({'id': int(id)}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
+
     def getByCity(city: t.Union[str, bytes]):
         temp = []
         for station in stations.find({'city': city}):
@@ -305,8 +334,28 @@ class Stations:
             },
             {
                 "$set": {
-                    'name': petrol,
-                    'email': diesel,
+                    'availablitiy': {
+                        'petrol': petrol,
+                        'diesel': diesel
+                    },
+                    'lastupdated': datetime.now()
+                }
+            },
+            upsert=True
+        )
+        return True
+
+    def updateAmount(id: int, petrol: str, diesel: str):
+        stations.find_one_and_update(
+            {
+                "id": id
+            },
+            {
+                "$set": {
+                    'amount': {
+                        'petrol': petrol,
+                        'diesel': diesel
+                    },
                     'lastupdated': datetime.now()
                 }
             },
@@ -335,6 +384,7 @@ class Pending:
             "petrol": true,
             "diesel": false
         },
+        "image": "",
         "lastupdated": ""
     }
     """
@@ -364,6 +414,7 @@ class Pending:
         city: t.Union[str, bytes],
         petrol: bool,
         diesel: bool,
+        image: t.Union[str, bytes],
         lastupdated
     ):
         try:
@@ -385,6 +436,7 @@ class Pending:
                                 "petrol": petrol,
                                 "diesel": diesel
                             },
+                            "image": image,
                             "lastupdated": str(datetime.now())
                         }
                     )
@@ -402,6 +454,7 @@ class Pending:
                                 "petrol": petrol,
                                 "diesel": diesel
                             },
+                            "image": image,
                             "lastupdated": str(datetime.now())
                         }
                     )
@@ -420,6 +473,7 @@ class Pending:
                             "petrol": petrol,
                             "diesel": diesel
                         },
+                        "image": image,
                         "lastupdated": str(datetime.now())
                     }
                 )
@@ -437,6 +491,7 @@ class Pending:
                             "petrol": petrol,
                             "diesel": diesel
                         },
+                        "image": image,
                         "lastupdated": str(datetime.now())
                     }
                 )

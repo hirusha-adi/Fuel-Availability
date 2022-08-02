@@ -54,10 +54,10 @@ body {
     padding: 2px;
     font-size: 10px;
     font-weight: bold;
-    background-color: red;
+    background-color: rgb(0, 201, 80);
     color: #ffffff;
     border-radius: 5px;
-    margin-left: 5px
+    margin-left: 5px;
 }
 
 #sidebar-wrapper {

@@ -1,9 +1,12 @@
 import os
+import random
+import string
 from datetime import datetime
 
 from flask import Flask
 from flask import jsonify, redirect, render_template, url_for
 from flask import g, request, session
+from werkzeug.utils import secure_filename
 
 from database.mongo import Pending, Stations, Users
 from database.settings import adminkey, contactEmail, flaskSecret
@@ -11,6 +14,13 @@ from generate import GenerateMap
 
 app = Flask(__name__)
 app.secret_key = flaskSecret
+app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'static', 'uploads')
+
+ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 def makeMap():
@@ -36,6 +46,17 @@ def map():
     return render_template("map.html")
 
 
+@app.route("/amount/<id>")
+def amounts(id):
+    data = Stations.getByID(id=id)
+    user_agent = request.headers.get('User-Agent').lower()
+    if ("iphone" in user_agent) or ("android" in user_agent):
+        mobile = True
+    else:
+        mobile = False
+    return render_template("amounts.html", data=data, mobile=mobile)
+
+
 @app.route("/contact")
 def contact_us():
     return redirect(f'mailto:{contactEmail}')
@@ -57,6 +78,9 @@ def login():
         except:
             return redirect(url_for('login'))
     else:
+        if g.user:
+            return redirect(url_for('panel'))
+
         return render_template("login.html")
 
 
@@ -102,6 +126,8 @@ def admin_approve():
                 city=data_pending['city'],
                 petrol=data_pending['availablitiy']['petrol'],
                 diesel=data_pending['availablitiy']['diesel'],
+                adiesel="0",
+                apetrol="0",
                 lastupdated=str(datetime.now())
             )
             Pending.deleteByID(id=int(data_pending['id']))
@@ -121,7 +147,7 @@ def admin_approve():
         return render_template('accept.html', **data)
 
 
-@app.route("/panel")
+@app.route("/dashboard")
 def panel():
     if not g.user:
         return redirect(url_for('login'))
@@ -175,11 +201,18 @@ def panel_edit_station():
         fillingStationNameID = request.form.get('fillingStationNameID')
         petrolAvailability = request.form.get('petrolAvailability')
         dieselAvailability = request.form.get('dieselAvailability')
+        petrolamt = request.form.get('petrolamt')
+        dieselamt = request.form.get('dieselamt')
         try:
             Stations.updateAvailability(
                 id=int(fillingStationNameID),
                 petrol=True if petrolAvailability == '1' else False,
                 diesel=True if dieselAvailability == '1' else False
+            )
+            Stations.updateAmount(
+                id=int(fillingStationNameID),
+                petrol=str(petrolamt),
+                diesel=str(dieselamt)
             )
             return jsonify({'status': 'success'})
         except Exception as e:
@@ -238,6 +271,34 @@ def add_new_station():
     except IndexError:
         status['status'].append('Error processing the Google Maps URL')
 
+    # if 'regProof' not in request.files:
+    #     return status['status'].append('Please upload the proof of registration and try again!')
+    # regProof = request.files['regProof']
+    # path = os.path.join(app.config['UPLOAD_FOLDER'], regProof.filename)
+    # regProof.save(path)
+
+    if 'regProof' not in request.files:
+        status['status'].append(
+            'Please upload the proof of registration and try again!')
+    regProof = request.files['regProof']
+    if regProof.filename == '':
+        status['status'].append(
+            'Please select a proper file')
+    if regProof and allowed_file(regProof.filename):
+        savepath = os.path.join(
+            app.config['UPLOAD_FOLDER'],
+            ''.join(
+                random.choice(
+                    string.ascii_letters + string.digits
+                ) for i in range(5)
+            ) + str(
+                secure_filename(
+                    regProof.filename
+                )
+            )
+        )
+        regProof.save(savepath)
+
     if len(status['status']) != 0:
         return jsonify(status)
 
@@ -250,6 +311,7 @@ def add_new_station():
         city=fscity,
         petrol=True if petrolAvailability == '1' else False,
         diesel=True if dieselAvailability == '1' else False,
+        image=savepath,
         lastupdated=datetime.now()
     )
 

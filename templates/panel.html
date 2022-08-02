@@ -11,14 +11,14 @@
 <div class="container-fluid px-0" id="bg-div">
     <div class="row justify-content-center">
         <div class="col-lg-9 col-12">
-            <div class="card card0" style="border-radius: 2% !important;">
+            <div class="card card0" style="border-radius: 2% !important; border: 2px solid  black;">
                 <div class="d-flex" id="wrapper">
 
                     <!-- Sidebar -->
                     <div class="bg-light border-right" id="sidebar-wrapper" style="border-radius: 5% !important;">
                         <div class="sidebar-heading pt-5 pb-4">
                             <strong>
-                                PANEL
+                                DASHBOARD
                             </strong>
                         </div>
                         <div class="list-group list-group-flush">
@@ -52,15 +52,14 @@
                                 </a>
 
                                 <a data-toggle="tab" href="{{ url_for('index') }}" id="tab5"
-                                    class="tabs list-group-item bg-light">
+                                    class="tabs list-group-item bg-light"
+                                    style="background-color: rgb(10, 190, 82) !important;">
                                     <div class="list-div my-2">
-                                        <div class="fa fa-credit-card"></div>
-                                        &nbsp;&nbsp;
-                                        <span id="new-label">
-                                            Go back to home
-                                        </span>
+                                        &nbsp;&nbsp; Go back to home
                                     </div>
                                 </a>
+
+                                <!--  -->
 
                         </div>
                     </div>
@@ -68,11 +67,14 @@
                     <!-- Page Content -->
                     <div id="page-content-wrapper">
                         <div class="row pt-3" id="border-btm">
-                            <div class="col-4"> <button class="btn btn-success mt-4 ml-3 mb-3" id="menu-toggle">
+                            <div class="col-4">
+                                <button class="btn btn-success mt-4 ml-3 mb-3" id="menu-toggle">
                                     <div class="bar4"></div>
                                     <div class="bar4"></div>
                                     <div class="bar4"></div>
-                                </button> </div>
+                                </button>
+                            </div>
+
                             <div class="col-8">
                                 <div class="row justify-content-right">
                                     <div class="col-12">
@@ -147,6 +149,22 @@
                                                                         <option value="1">Avaibale</option>
                                                                         <option value="2">Not Avaibale</option>
                                                                     </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="input-group">
+                                                                    <input type="number" name="petrolamt" id="petrolamt"
+                                                                        min="0" placeholder="Petrol Amount">
+                                                                    <label>Petrol Amount</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="input-group">
+                                                                    <input type="number" name="dieselamt" id="dieselamt"
+                                                                        min="0" placeholder="Diesel Amount">
+                                                                    <label>Diesel Amount</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -247,14 +265,14 @@
                                                         <div class="input-group">
                                                             <input type="text" placeholder="" name="npassword"
                                                                 id="npassword">
-                                                            <label>New Password</label>
+                                                            <label>New Password&nbsp;&nbsp;&nbsp;</label>
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
                                                         <div class="input-group">
                                                             <input type="text" name="vpassword" id="vpassword"
                                                                 placeholder="" class="placeicon">
-                                                            <label>Verify Password</label>
+                                                            <label>Verify Password&nbsp;&nbsp;&nbsp;</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -301,7 +319,8 @@
                                                 Add new Filling Station
                                             </h3>
                                             <h3 class="mt-0 mb-4 text-center"></h3>
-                                            <form onsubmit="event.preventDefault()" id="new_station_form">
+                                            <form onsubmit="event.preventDefault()" id="new_station_form"
+                                                enctype="multipart/form-data">
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="input-group">
@@ -369,11 +388,22 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label for="regProof">
+                                                                Upload proof of Bussiness Registration
+                                                            </label>
+                                                            <input type="file" class="form-control-file" id="regProof"
+                                                                name="regProof">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-12" id="newS_notices">
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12"> <input type="submit" value="Add"
+                                                    <div class="col-md-12"> <input type="submit" value="Submit"
                                                             class="btn btn-success placeicon"> </div>
                                                 </div>
                                             </form>
@@ -446,6 +476,10 @@
             window.location.href = window.location.origin + '/logout'
         });
 
+        $("#tab5").click(function () {
+            window.location.href = window.location.origin
+        })
+
         // save account details
         $("#account_details_form").submit(function () {
             const newPassword = $("#npassword")
@@ -485,18 +519,30 @@
             const fsphone = $("#fsphone")
             const petrolAvailability = $("#petrolAvailability")
             const dieselAvailability = $("#dieselAvailability")
-            $.post(
-                '{{ url_for("add_new_station") }}',
-                {
-                    fsname: fsname.val(),
-                    fsgoogleurl: fsgoogleurl.val(),
-                    fscity: fscity.val(),
-                    bussinessRegistrationNumber: bussinessRegistrationNumber.val(),
-                    fsphone: fsphone.val(),
-                    petrolAvailability: petrolAvailability.val(),
-                    dieselAvailability: dieselAvailability.val()
-                },
-                function (data) {
+            const regProof = $("#regProof")
+            const data = {
+                fsname: fsname.val(),
+                fsgoogleurl: fsgoogleurl.val(),
+                fscity: fscity.val(),
+                bussinessRegistrationNumber: bussinessRegistrationNumber.val(),
+                fsphone: fsphone.val(),
+                petrolAvailability: petrolAvailability.val(),
+                dieselAvailability: dieselAvailability.val(),
+                regProof: regProof.val()
+            }
+            alert(regProof.val())
+            $.ajax({
+                method: "POST",
+                // contentType: 'application/x-www-form-urlencoded',
+                contentType: false,
+                url: '{{ url_for("add_new_station") }}',
+                // data: $("#new_station_form").serialize(),
+                data: new FormData($("#new_station_form")[0]),
+                processData: false,
+                cache: false,
+                async: false,
+                timeout: 600000,
+                success: function (data) {
                     $("#newS_notices").empty()
                     $("#newS_notices").show();
                     if (Array.isArray(data['status'])) {
@@ -520,8 +566,11 @@
                         </div>
                         `)
                     }
+                },
+                error: function (e) {
+                    console.log("ERROR : ", e);
                 }
-            )
+            });
         })
 
         $("#filling_station_update").submit(function () {
@@ -530,12 +579,16 @@
             const fillingStationNameID = $("#fillingStationName")
             const petrolAvailability = $("#petrolAvailability")
             const dieselAvailability = $("#dieselAvailability")
+            const petrolamt = $("#petrolamt")
+            const dieselamt = $("#dieselamt")
             $.post(
                 '{{ url_for("panel_edit_station") }}',
                 {
                     fillingStationNameID: fillingStationNameID.val(),
                     petrolAvailability: petrolAvailability.val(),
-                    dieselAvailability: dieselAvailability.val()
+                    dieselAvailability: dieselAvailability.val(),
+                    petrolamt: petrolamt.val(),
+                    dieselamt: dieselamt.val()
                 },
                 function (data) {
                     if (data['status'] == 'success') {

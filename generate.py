@@ -42,7 +42,7 @@ class GenerateMap:
         for item in self._data:
             folium.Marker(
                 item['coordinates'],
-                popup=f'''Petrol: <strong style="color: #{Colors.available}">{'Available' if item["availablitiy"]["petrol"] == True else 'Not Available'}</strong><br><br>Diesel: <strong style="color: #{Colors.notAvailable}">{'Available' if item["availablitiy"]["diesel"] == True else 'Not Available'}</strong><br><br><a href="https://www.google.com/maps/search/?api=1&query={item['coordinates'][0]},{item['coordinates'][1]}" target="_blank" rel="noopener noreferrer">Visit</a>''',
+                popup=f'''Petrol: <strong style="color: #{Colors.available}">{'Available' if item["availablitiy"]["petrol"] == True else 'Not Available'}</strong><br><br>Diesel: <strong style="color: #{Colors.notAvailable}">{'Available' if item["availablitiy"]["diesel"] == True else 'Not Available'}</strong><br><br><a href="https://www.google.com/maps/search/?api=1&query={item['coordinates'][0]},{item['coordinates'][1]}" target="_blank" rel="noopener noreferrer">Visit</a><br><br><a href="/amount/{str(item['id'])}" >More Info</a>''',
                 tooltip=item['name']
             ).add_to(self._map)
 
@@ -73,7 +73,7 @@ class GenerateMap:
                 '<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script></body>'
             ).replace(
                 "<body>",
-                """<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}"><body><nav class="navbar navbar-expand-lg navbar-dark bg-dark"><a class="navbar-brand" href="/">Fuel Check</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav mr-auto"><li class="nav-item active"><a class="nav-link" href="/map">Map <span class="sr-only">(current)</span></a></li><li class="nav-item"><a class="nav-link" href="/">Home</a></li></ul><div class="form-inline my-2 my-lg-0"><button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a href="/login" style="color: #fff;text-decoration: none;">Login</a></button></div></div></nav>"""
+                """<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}"><body><nav class="navbar navbar-expand-lg navbar-dark bg-dark"><a class="navbar-brand" href="/">Fuel Availability</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav mr-auto"><li class="nav-item active"><a class="nav-link" href="/map">Map <span class="sr-only">(current)</span></a></li><li class="nav-item"><a class="nav-link" href="/">Home</a></li></ul><div class="form-inline my-2 my-lg-0"><button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a href="/login" style="color: #fff;text-decoration: none;">Login</a></button></div></div></nav>"""
             ).replace(
                 """top: 0.0%;
                 }
@@ -86,7 +86,8 @@ class GenerateMap:
             </style>"""
             )
 
-            y = html.split("</body>\n<script>")
+            y = html.split("""</body>
+<script>""")
             a = y[1].strip()
             b = a.split(" ")[1]  # map name
             c = "var tile_layer_" + \
