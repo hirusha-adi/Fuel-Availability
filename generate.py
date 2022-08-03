@@ -36,15 +36,32 @@ class GenerateMap:
     def loadData(self):
         self._data = Stations.getAllStations()
 
-    def addMarkers(self):
+    def addMarkers(self, petrol: bool = True, diesel: bool = True):
         if self._data is None:
             self.loadData()
-        for item in self._data:
-            folium.Marker(
-                item['coordinates'],
-                popup=f'''Petrol: <strong style="color: #{Colors.available if item["availablitiy"]["petrol"] == True else Colors.notAvailable}">{'Available' if item["availablitiy"]["petrol"] == True else 'Not Available'}</strong><br><br>Diesel: <strong style="color: #{Colors.available if item["availablitiy"]["diesel"] == True else Colors.notAvailable}">{'Available' if item["availablitiy"]["diesel"] == True else 'Not Available'}</strong><br><br><a href="https://www.google.com/maps/search/?api=1&query={item['coordinates'][0]},{item['coordinates'][1]}" target="_blank" rel="noopener noreferrer">Visit</a><br><br><a href="/amount/{str(item['id'])}" >More Info</a>''',
-                tooltip=item['name']
-            ).add_to(self._map)
+        if (petrol and diesel):
+            for item in self._data:
+                folium.Marker(
+                    item['coordinates'],
+                    popup=f'''Petrol: <strong style="color: #{Colors.available if item["availablitiy"]["petrol"] == True else Colors.notAvailable}">{'Available' if item["availablitiy"]["petrol"] == True else 'Not Available'}</strong><br><br>Diesel: <strong style="color: #{Colors.available if item["availablitiy"]["diesel"] == True else Colors.notAvailable}">{'Available' if item["availablitiy"]["diesel"] == True else 'Not Available'}</strong><br><br><a href="https://www.google.com/maps/search/?api=1&query={item['coordinates'][0]},{item['coordinates'][1]}" target="_blank" rel="noopener noreferrer">Visit</a><br><br><a href="/amount/{str(item['id'])}" >More Info</a>''',
+                    tooltip=item['name']
+                ).add_to(self._map)
+        elif petrol:
+            for item in self._data:
+                if item["availablitiy"]["petrol"] == True:
+                    folium.Marker(
+                        item['coordinates'],
+                        popup=f'''Petrol: <strong style="color: #{Colors.available if item["availablitiy"]["petrol"] == True else Colors.notAvailable}">{'Available' if item["availablitiy"]["petrol"] == True else 'Not Available'}</strong><br><br>Diesel: <strong style="color: #{Colors.available if item["availablitiy"]["diesel"] == True else Colors.notAvailable}">{'Available' if item["availablitiy"]["diesel"] == True else 'Not Available'}</strong><br><br><a href="https://www.google.com/maps/search/?api=1&query={item['coordinates'][0]},{item['coordinates'][1]}" target="_blank" rel="noopener noreferrer">Visit</a><br><br><a href="/amount/{str(item['id'])}" >More Info</a>''',
+                        tooltip=item['name']
+                    ).add_to(self._map)
+        elif diesel:
+            for item in self._data:
+                if item["availablitiy"]["diesel"] == True:
+                    folium.Marker(
+                        item['coordinates'],
+                        popup=f'''Petrol: <strong style="color: #{Colors.available if item["availablitiy"]["petrol"] == True else Colors.notAvailable}">{'Available' if item["availablitiy"]["petrol"] == True else 'Not Available'}</strong><br><br>Diesel: <strong style="color: #{Colors.available if item["availablitiy"]["diesel"] == True else Colors.notAvailable}">{'Available' if item["availablitiy"]["diesel"] == True else 'Not Available'}</strong><br><br><a href="https://www.google.com/maps/search/?api=1&query={item['coordinates'][0]},{item['coordinates'][1]}" target="_blank" rel="noopener noreferrer">Visit</a><br><br><a href="/amount/{str(item['id'])}" >More Info</a>''',
+                        tooltip=item['name']
+                    ).add_to(self._map)
 
     def save(self, path=None):
         if path is None:
