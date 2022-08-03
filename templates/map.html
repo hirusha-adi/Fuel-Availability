@@ -43,7 +43,7 @@
     <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <style>
-        #map_984dbfb216b9301090ac29194964604f {
+        #map_0f6fe2ac335cefb104e28bef60053845 {
             position: relative;
             width: 100.0%;
             height: 93.0%;
@@ -60,8 +60,9 @@
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark"><a class="navbar-brand" href="/">Fuel
-            Availability</a><button class="navbar-toggler" type="button" data-toggle="collapse"
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark"><a class="navbar-brand" href="/"><img
+                src="{{ url_for('static', filename='images/logo-text.png') }}" alt="Fuel Availability"
+                width="200px"></a><button class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -75,7 +76,7 @@
                         Filter
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Radius</a>
+                        <a class="dropdown-item" onclick="showRadiusOnMap()">Radius</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">by Petrol</a>
                         <a class="dropdown-item" href="#">by Deisel</a>
@@ -87,15 +88,15 @@
         </div>
     </nav>
 
-    <div class="folium-map" id="map_984dbfb216b9301090ac29194964604f"></div>
+    <div class="folium-map" id="map_0f6fe2ac335cefb104e28bef60053845"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 <script>
 
-    var map_984dbfb216b9301090ac29194964604f = L.map(
-        "map_984dbfb216b9301090ac29194964604f",
+    var map_0f6fe2ac335cefb104e28bef60053845 = L.map(
+        "map_0f6fe2ac335cefb104e28bef60053845",
         {
             center: [7.4887197, 80.3597918],
             crs: L.CRS.EPSG3857,
@@ -106,6 +107,10 @@
     );
 
 
+
+
+
+
     var Jawg_Matrix = L.tileLayer('https://{s}.tile.jawg.io/jawg-matrix/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
         attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         minZoom: 0,
@@ -113,30 +118,30 @@
         subdomains: 'abcd',
         accessToken: 'TELKz5WXUoERxOFSzrqlLAUuZTN6pC7x7Tq4tKmmTvnWBpBzBZzJs9fGjoUt0iYJ'
     });
-    Jawg_Matrix.addTo(map_984dbfb216b9301090ac29194964604f)
+    Jawg_Matrix.addTo(map_0f6fe2ac335cefb104e28bef60053845)
 
 
 
-    var marker_694aa1bed34c1913e182c56cb946dad3 = L.marker(
+    var marker_ead7c5f9c35c6ed96964c176b5b98052 = L.marker(
         [7.4735921, 80.3535283],
         {}
-    ).addTo(map_984dbfb216b9301090ac29194964604f);
+    ).addTo(map_0f6fe2ac335cefb104e28bef60053845);
 
 
-    var popup_9808da620b6a408b4cda40f0ee93704b = L.popup({ "maxWidth": "100%" });
+    var popup_08664d6fb8dc153e4d38d2b3478107fe = L.popup({ "maxWidth": "100%" });
 
 
-    var html_cca4cc9b09b04ccf2b07e656b276b2c7 = $(`<div id="html_cca4cc9b09b04ccf2b07e656b276b2c7" style="width: 100.0%; height: 93.0%;">Petrol: <strong style="color: #228B22">Available</strong><br><br>Diesel: <strong style="color: #8B0000">Available</strong><br><br><a href="https://www.google.com/maps/search/?api=1&query=7.4735921,80.3535283" target="_blank" rel="noopener noreferrer">Visit</a><br><br><a href="/amount/1" >More Info</a></div>`)[0];
-    popup_9808da620b6a408b4cda40f0ee93704b.setContent(html_cca4cc9b09b04ccf2b07e656b276b2c7);
+    var html_eb4307345956e1c8dad5b401d4686118 = $(`<div id="html_eb4307345956e1c8dad5b401d4686118" style="width: 100.0%; height: 93.0%;">Petrol: <strong style="color: #228B22">Available</strong><br><br>Diesel: <strong style="color: #228B22">Available</strong><br><br><a href="https://www.google.com/maps/search/?api=1&query=7.4735921,80.3535283" target="_blank" rel="noopener noreferrer">Visit</a><br><br><a href="/amount/1" >More Info</a></div>`)[0];
+    popup_08664d6fb8dc153e4d38d2b3478107fe.setContent(html_eb4307345956e1c8dad5b401d4686118);
 
 
-    marker_694aa1bed34c1913e182c56cb946dad3.bindPopup(popup_9808da620b6a408b4cda40f0ee93704b)
+    marker_ead7c5f9c35c6ed96964c176b5b98052.bindPopup(popup_08664d6fb8dc153e4d38d2b3478107fe)
         ;
 
 
 
 
-    marker_694aa1bed34c1913e182c56cb946dad3.bindTooltip(
+    marker_ead7c5f9c35c6ed96964c176b5b98052.bindTooltip(
         `<div>
                      Laugfs Gas Auto Lanka Filling Station
                  </div>`,
@@ -144,45 +149,51 @@
     );
 
 
-    var marker_fb5c2c47f5674a35ea6d77dc7b90300b = L.marker(
+    var marker_3d2a856ef57f7a241b7ea6d12af9b712 = L.marker(
         [7.5329778, 80.2426548],
         {}
-    ).addTo(map_984dbfb216b9301090ac29194964604f);
+    ).addTo(map_0f6fe2ac335cefb104e28bef60053845);
 
 
-    var popup_f0a776d79b3d43c118c7dcef0ab4526c = L.popup({ "maxWidth": "100%" });
+    var popup_7dd49b0d1bd467747e0a7a82ca0073dc = L.popup({ "maxWidth": "100%" });
 
 
-    var html_30302fcefadd8cd038bd18ca728b59d4 = $(`<div id="html_30302fcefadd8cd038bd18ca728b59d4" style="width: 100.0%; height: 93.0%;">Petrol: <strong style="color: #228B22">Available</strong><br><br>Diesel: <strong style="color: #8B0000">Available</strong><br><br><a href="https://www.google.com/maps/search/?api=1&query=7.5329778,80.2426548" target="_blank" rel="noopener noreferrer">Visit</a><br><br><a href="/amount/2" >More Info</a></div>`)[0];
-    popup_f0a776d79b3d43c118c7dcef0ab4526c.setContent(html_30302fcefadd8cd038bd18ca728b59d4);
+    var html_c702c2108093dacac2ad902a8ba010b1 = $(`<div id="html_c702c2108093dacac2ad902a8ba010b1" style="width: 100.0%; height: 93.0%;">Petrol: <strong style="color: #228B22">Available</strong><br><br>Diesel: <strong style="color: #228B22">Available</strong><br><br><a href="https://www.google.com/maps/search/?api=1&query=7.5329778,80.2426548" target="_blank" rel="noopener noreferrer">Visit</a><br><br><a href="/amount/2" >More Info</a></div>`)[0];
+    popup_7dd49b0d1bd467747e0a7a82ca0073dc.setContent(html_c702c2108093dacac2ad902a8ba010b1);
 
 
-    marker_fb5c2c47f5674a35ea6d77dc7b90300b.bindPopup(popup_f0a776d79b3d43c118c7dcef0ab4526c)
+    marker_3d2a856ef57f7a241b7ea6d12af9b712.bindPopup(popup_7dd49b0d1bd467747e0a7a82ca0073dc)
         ;
 
 
 
 
-    marker_fb5c2c47f5674a35ea6d77dc7b90300b.bindTooltip(
+    marker_3d2a856ef57f7a241b7ea6d12af9b712.bindTooltip(
         `<div>
                      IOC Filling Station
                  </div>`,
         { "sticky": true }
     );
 
-    function getLocation() {
+    function showRadiusOnMap() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-            x.innerHTML = "Geolocation is not supported by this browser.";
+            position = navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    var circle = L.circle(
+                        [lat, lon],
+                        {
+                            radius: 7500
+                        }
+                    )
+                    circle.addTo(map_0f6fe2ac335cefb104e28bef60053845);
+                },
+                function (err) {
+                    alert(`Please provide location access and try again!`)
+                }
+            );
         }
     }
-
-    function showPosition(position) {
-        x.innerHTML = "Latitude: " + position.coords.latitude +
-            "<br>Longitude: " + position.coords.longitude;
-    }
-
-
 
 </script>
