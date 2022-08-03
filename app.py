@@ -9,7 +9,7 @@ from flask import g, request, session
 from werkzeug.utils import secure_filename
 
 from database.mongo import Pending, Stations, Users
-from database.settings import adminkey, flaskSecret
+from database.settings import adminkey, contactEmail, flaskSecret
 from generate import GenerateMap
 
 app = Flask(__name__)
@@ -59,7 +59,7 @@ def amounts(id):
 
 @app.route("/contact")
 def contact_us():
-    return render_template("index.html")
+    return redirect(f'mailto:{contactEmail}')
 
 
 @app.route("/login", methods=['GET', 'POST'])
