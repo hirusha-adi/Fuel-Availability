@@ -5,7 +5,7 @@
 
 body {
     overflow-x: hidden;
-    background: #e0e0e0
+    background: #ffffff
 }
 
 #bg-div {
@@ -15,9 +15,7 @@ body {
 }
 
 #border-btm {
-    padding-bottom: 20px;
     margin-bottom: 0px;
-    box-shadow: 0px 35px 2px -35px lightgray
 }
 
 #test {
@@ -43,7 +41,7 @@ body {
 }
 
 .list-group .tabs {
-    color: #000000
+    color: #ffffff
 }
 
 #menu-toggle {
@@ -134,9 +132,13 @@ body {
     width: 100%;
     box-sizing: border-box;
     font-family: arial;
-    color: #2C3E50;
+    color: #000000;
     font-size: 14px;
-    letter-spacing: 1px
+    letter-spacing: 1px;
+}
+
+.form-card input {
+    background-color: #c7c7c7;
 }
 
 .form-card input:focus,
@@ -157,7 +159,7 @@ input.btn-success {
 
 #below-btn a {
     font-weight: bold;
-    color: #000000
+    color: #ffffff
 }
 
 .input-group {
@@ -212,4 +214,27 @@ a:hover {
 
 a:active {
     text-decoration: none !important;
+}
+
+/* Dark Mode overwrites */
+
+body {
+    background-image: initial;
+    background-color: rgb(20, 22, 23);
+}
+
+html,
+body,
+input,
+textarea,
+select,
+button {
+    border-color: #625b50;
+    color: #ffffff;
+}
+
+.list-group-item.active {
+    color: rgb(197, 195, 193);
+    background-color: rgb(20, 22, 23) !important;
+    border-color: rgb(41, 44, 46) !important;
 }
