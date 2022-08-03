@@ -11,19 +11,21 @@
 <div class="container-fluid px-0" id="bg-div">
     <div class="row justify-content-center">
         <div class="col-lg-9 col-12">
-            <div class="card card0" style="border-radius: 2% !important; border: 2px solid  black;">
+            <!-- <div class="card card0" style="border-radius: 2% !important; border: 2px solid  black;"> -->
+            <div class="card card0" style="border-radius: 2% !important;">
                 <div class="d-flex" id="wrapper">
 
                     <!-- Sidebar -->
-                    <div class="bg-light border-right" id="sidebar-wrapper" style="border-radius: 5% !important;">
-                        <div class="sidebar-heading pt-5 pb-4">
+                    <div class="bg-dark border-right" id="sidebar-wrapper">
+                        <!-- <div class="bg-dark border-right" id="sidebar-wrapper" style="border-radius: 5% !important;"> -->
+                        <div class="sidebar-heading pt-5 pb-4" style="border-radius: 5% !important;">
                             <strong>
                                 DASHBOARD
                             </strong>
                         </div>
                         <div class="list-group list-group-flush">
 
-                            <a data-toggle="tab" href="#menu1" id="tab1" class="tabs list-group-item bg-light">
+                            <a data-toggle="tab" href="#menu1" id="tab1" class="tabs list-group-item bg-dark">
                                 <div class="list-div my-2">
                                     <div class="fa fa-home"></div>
                                     &nbsp;&nbsp; Filling Stations
@@ -37,14 +39,14 @@
                                 </div>
                             </a>
 
-                            <a data-toggle="tab" href="#menu3" id="tab3" class="tabs list-group-item bg-light">
+                            <a data-toggle="tab" href="#menu3" id="tab3" class="tabs list-group-item bg-dark">
                                 <div class="list-div my-2">
                                     <div class="fa fa-home"></div>
                                     &nbsp;&nbsp; New Station
                                 </div>
 
                                 <a data-toggle="tab" href="{{ url_for('logout') }}" id="tab4"
-                                    class="tabs list-group-item bg-light">
+                                    class="tabs list-group-item bg-dark">
                                     <div class="list-div my-2">
                                         <div class="fa fa-credit-card"></div>
                                         &nbsp;&nbsp; Log Out
@@ -52,14 +54,12 @@
                                 </a>
 
                                 <a data-toggle="tab" href="{{ url_for('index') }}" id="tab5"
-                                    class="tabs list-group-item bg-light"
+                                    class="tabs list-group-item bg-dark"
                                     style="background-color: rgb(10, 190, 82) !important;">
                                     <div class="list-div my-2">
                                         &nbsp;&nbsp; Go back to home
                                     </div>
                                 </a>
-
-                                <!--  -->
 
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                                     <div class="col-12">
                                         <p class="mb-0 mr-4 text-right">
                                             Welcome
-                                            <span class="top-highlight">
+                                            <span class="top-highdark" style="color: #0abe52; font-weight: bold;">
                                                 {{ user.name }}
                                             </span>
                                         </p>
@@ -174,8 +174,9 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                <input type="submit" value="Update"
-                                                                    class="btn btn-success placeicon">
+                                                                <input type="submit" value="Save"
+                                                                    class="btn btn-success placeicon"
+                                                                    style="background-color: rgb(0, 160, 64);">
                                                             </div>
                                                         </div>
                                                     </form>
@@ -291,7 +292,8 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <input type="submit" value="Save"
-                                                            class="btn btn-success placeicon">
+                                                            class="btn btn-success placeicon"
+                                                            style="background-color: rgb(0, 160, 64);">
                                                     </div>
                                                 </div>
 
@@ -403,8 +405,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12"> <input type="submit" value="Submit"
-                                                            class="btn btn-success placeicon"> </div>
+                                                    <div class="col-md-12"> <input type="submit" value="Save"
+                                                            class="btn btn-success placeicon"
+                                                            style="background-color: rgb(0, 160, 64);"> </div>
                                                 </div>
                                             </form>
                                         </div>
@@ -448,28 +451,28 @@
             $("#wrapper").toggleClass("toggled");
         });
 
-        // For highlighting activated tabs
+        // For highdarking activated tabs
         $("#tab1").click(function () {
             $(".tabs").removeClass("active1");
-            $(".tabs").addClass("bg-light");
+            $(".tabs").addClass("bg-dark");
             $("#tab1").addClass("active1");
-            $("#tab1").removeClass("bg-light");
+            $("#tab1").removeClass("bg-dark");
         });
 
         $("#tab2").click(function () {
             $("#account_successmsg").hide();
             $("#account_errormsg").hide();
             $(".tabs").removeClass("active1");
-            $(".tabs").addClass("bg-light");
+            $(".tabs").addClass("bg-dark");
             $("#tab2").addClass("active1");
-            $("#tab2").removeClass("bg-light");
+            $("#tab2").removeClass("bg-dark");
         });
 
         $("#tab3").click(function () {
             $(".tabs").removeClass("active1");
-            $(".tabs").addClass("bg-light");
+            $(".tabs").addClass("bg-dark");
             $("#tab3").addClass("active1");
-            $("#tab3").removeClass("bg-light");
+            $("#tab3").removeClass("bg-dark");
         });
 
         $("#tab4").click(function () {
