@@ -129,8 +129,8 @@ def admin_approve():
                 adiesel="0",
                 apetrol="0",
                 lastupdated=str(datetime.now()),
-                capacity_diesle=data_pending['capacity_diesle'],
-                capacity_petrol=data_pending['capacity_petrol']
+                capacity_diesle=data_pending['capacity']['diesel'],
+                capacity_petrol=data_pending['capacity']['petrol']
             )
             Pending.deleteByID(id=int(data_pending['id']))
             del data_pending
