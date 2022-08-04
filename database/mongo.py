@@ -203,7 +203,22 @@ class Stations:
             temp.append(user)
         return temp[-1]
 
-    def addStation(name: t.Union[str, bytes], registration: t.Union[str, bytes], phone: t.Union[str, bytes], email: t.Union[str, bytes], coordinates: t.List[str], city: t.Union[str, bytes], petrol: bool, diesel: bool, lastupdated: t.Union[str, bytes], apetrol: str, adiesel: str):
+    def addStation(
+            name: t.Union[str, bytes],
+            registration: t.Union[str, bytes],
+            phone: t.Union[str, bytes],
+            email: t.Union[str, bytes],
+            coordinates: t.List[str],
+            city: t.Union[str, bytes],
+            petrol: bool,
+            diesel: bool,
+            lastupdated: t.Union[str, bytes],
+            apetrol: str,
+            adiesel: str,
+            capacity_petrol,
+            capacity_diesle,
+
+    ):
         try:
             temp = Stations.getByRegistration(registration=registration)
             if temp['registration'] == registration:
@@ -227,6 +242,10 @@ class Stations:
                                 "petrol": apetrol,
                                 "diesel": adiesel
                             },
+                            "capacity": {
+                                "petrol": capacity_petrol,
+                                "diesel": capacity_diesle
+                            },
                             "lastupdated": lastupdated
                         }
                     )
@@ -247,6 +266,10 @@ class Stations:
                             "amount": {
                                 "petrol": apetrol,
                                 "diesel": adiesel
+                            },
+                            "capacity": {
+                                "petrol": capacity_petrol,
+                                "diesel": capacity_diesle
                             },
                             "lastupdated": lastupdated
                         }
@@ -270,6 +293,10 @@ class Stations:
                             "petrol": apetrol,
                             "diesel": adiesel
                         },
+                        "capacity": {
+                            "petrol": capacity_petrol,
+                            "diesel": capacity_diesle
+                        },
                         "lastupdated": lastupdated
                     }
                 )
@@ -290,6 +317,10 @@ class Stations:
                         "amount": {
                             "petrol": apetrol,
                             "diesel": adiesel
+                        },
+                        "capacity": {
+                            "petrol": capacity_petrol,
+                            "diesel": capacity_diesle
                         },
                         "lastupdated": lastupdated
                     }
