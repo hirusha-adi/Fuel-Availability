@@ -390,6 +390,22 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="input-group">
+                                                            <input type="number" name="petrolamtcap" id="petrolamtcap"
+                                                                min="0" placeholder="Petrol Amount">
+                                                            <label>Petrol Tank Capacity</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="input-group">
+                                                            <input type="number" name="dieselamtcap" id="dieselamtcap"
+                                                                min="0" placeholder="Diesel Amount">
+                                                            <label>Petrol Tank Capacity</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-12">
                                                         <div class="form-group">
                                                             <label for="regProof">
@@ -515,6 +531,7 @@
 
         // add new station
         $("#new_station_form").submit(function () {
+            /*
             const fsname = $("#fsname")
             const fsgoogleurl = $("#fsgoogleurl")
             const fscity = $("#fscity")
@@ -533,6 +550,7 @@
                 dieselAvailability: dieselAvailability.val(),
                 regProof: regProof.val()
             }
+            */
             alert(regProof.val())
             $.ajax({
                 method: "POST",
