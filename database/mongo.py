@@ -384,6 +384,10 @@ class Pending:
             "petrol": true,
             "diesel": false
         },
+        "capacity": {
+            "petrol": 123,
+            "diesel": 123
+        },
         "image": "",
         "lastupdated": ""
     }
