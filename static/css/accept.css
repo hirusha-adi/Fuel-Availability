@@ -1,7 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap');
-
 body {
-    font-family: 'Manrope', sans-serif;
     background: #eee;
 }
 
@@ -35,9 +32,13 @@ body {
 }
 
 .text-grey {
-    color: #a39f9f;
+    color: #000000;
 }
 
 .qty i {
     font-size: 11px;
+}
+
+* {
+    color: #000;
 }
