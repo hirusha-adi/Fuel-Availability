@@ -246,6 +246,9 @@ def add_new_station():
     bussinessRegistrationNumber = request.form.get(
         'bussinessRegistrationNumber')
 
+    petrolamtcap = request.form.get('petrolamtcap')
+    dieselamtcap = request.form.get('dieselamtcap')
+
     status = {'status': []}
     if len(fsname) < 5:
         status['status'].append('Please enter a valid filling station name')
@@ -312,7 +315,9 @@ def add_new_station():
         petrol=True if petrolAvailability == '1' else False,
         diesel=True if dieselAvailability == '1' else False,
         image=savepath,
-        lastupdated=datetime.now()
+        lastupdated=datetime.now(),
+        capacity_petrol=petrolamtcap,
+        capacity_diesle=dieselamtcap
     )
 
     return jsonify({'status': 'success'})
