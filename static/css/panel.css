@@ -138,7 +138,8 @@ body {
 }
 
 .form-card input {
-    background-color: #ffffff;
+    color: #ffffff;
+    background-color: #131619;
 }
 
 .form-card input:focus,
