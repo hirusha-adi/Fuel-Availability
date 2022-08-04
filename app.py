@@ -249,6 +249,16 @@ def add_new_station():
     petrolamtcap = request.form.get('petrolamtcap')
     dieselamtcap = request.form.get('dieselamtcap')
 
+    try:
+        petrolamtcap = int(petrolamtcap)
+    except:
+        petrolamtcap = 100
+
+    try:
+        dieselamtcap = int(dieselamtcap)
+    except:
+        dieselamtcap = 100
+
     status = {'status': []}
     if len(fsname) < 5:
         status['status'].append('Please enter a valid filling station name')
