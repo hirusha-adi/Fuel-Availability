@@ -179,6 +179,10 @@ class Stations:
             "petrol": "35",
             "diesel": "70"
         },
+        "capacity": {
+            "petrol": 123,
+            "diesel": 123
+        },
         "lastupdated": ""
     }
     """
