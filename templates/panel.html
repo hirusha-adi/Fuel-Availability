@@ -174,7 +174,7 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                <input type="submit" value="Save"
+                                                                <input type="submit" value="Submit"
                                                                     class="btn btn-success placeicon"
                                                                     style="background-color: rgb(0, 160, 64);">
                                                             </div>
@@ -531,7 +531,7 @@
 
         // add new station
         $("#new_station_form").submit(function () {
-            /*
+
             const fsname = $("#fsname")
             const fsgoogleurl = $("#fsgoogleurl")
             const fscity = $("#fscity")
@@ -540,6 +540,8 @@
             const petrolAvailability = $("#petrolAvailability")
             const dieselAvailability = $("#dieselAvailability")
             const regProof = $("#regProof")
+            const petrolamtcap = $("#petrolamtcap")
+            const dieselamtcap = $("#dieselamtcap")
             const data = {
                 fsname: fsname.val(),
                 fsgoogleurl: fsgoogleurl.val(),
@@ -548,10 +550,10 @@
                 fsphone: fsphone.val(),
                 petrolAvailability: petrolAvailability.val(),
                 dieselAvailability: dieselAvailability.val(),
+                petrolamtcap: petrolamtcap.val(),
+                dieselamtcap: dieselamtcap.val(),
                 regProof: regProof.val()
             }
-            */
-            alert(regProof.val())
             $.ajax({
                 method: "POST",
                 // contentType: 'application/x-www-form-urlencoded',
