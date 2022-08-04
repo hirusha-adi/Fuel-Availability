@@ -4,7 +4,7 @@ import string
 from datetime import datetime
 
 from flask import Flask
-from flask import jsonify, redirect, render_template, url_for
+from flask import jsonify, redirect, render_template, url_for, send_from_directory
 from flask import g, request, session
 from werkzeug.utils import secure_filename
 
@@ -300,17 +300,18 @@ def add_new_station():
         status['status'].append(
             'Please select a proper file')
     if regProof and allowed_file(regProof.filename):
+        filename = ''.join(
+            random.choice(
+                string.ascii_letters + string.digits
+            ) for i in range(5)
+        ) + str(
+            secure_filename(
+                regProof.filename
+            )
+        )
         savepath = os.path.join(
             app.config['UPLOAD_FOLDER'],
-            ''.join(
-                random.choice(
-                    string.ascii_letters + string.digits
-                ) for i in range(5)
-            ) + str(
-                secure_filename(
-                    regProof.filename
-                )
-            )
+            filename
         )
         regProof.save(savepath)
 
@@ -326,7 +327,7 @@ def add_new_station():
         city=fscity,
         petrol=True if petrolAvailability == '1' else False,
         diesel=True if dieselAvailability == '1' else False,
-        image=savepath,
+        image=filename,
         lastupdated=datetime.now(),
         capacity_petrol=petrolamtcap,
         capacity_diesle=dieselamtcap
