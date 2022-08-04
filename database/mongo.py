@@ -415,6 +415,8 @@ class Pending:
         petrol: bool,
         diesel: bool,
         image: t.Union[str, bytes],
+        capacity_petrol,
+        capacity_diesle,
         lastupdated
     ):
         try:
@@ -436,6 +438,10 @@ class Pending:
                                 "petrol": petrol,
                                 "diesel": diesel
                             },
+                            "capacity": {
+                                "petrol": capacity_petrol,
+                                "diesel": capacity_diesle
+                            },
                             "image": image,
                             "lastupdated": str(datetime.now())
                         }
@@ -453,6 +459,10 @@ class Pending:
                             "availablitiy": {
                                 "petrol": petrol,
                                 "diesel": diesel
+                            },
+                            "capacity": {
+                                "petrol": capacity_petrol,
+                                "diesel": capacity_diesle
                             },
                             "image": image,
                             "lastupdated": str(datetime.now())
@@ -473,6 +483,10 @@ class Pending:
                             "petrol": petrol,
                             "diesel": diesel
                         },
+                        "capacity": {
+                            "petrol": capacity_petrol,
+                            "diesel": capacity_diesle
+                        },
                         "image": image,
                         "lastupdated": str(datetime.now())
                     }
@@ -490,6 +504,10 @@ class Pending:
                         "availablitiy": {
                             "petrol": petrol,
                             "diesel": diesel
+                        },
+                        "capacity": {
+                            "petrol": capacity_petrol,
+                            "diesel": capacity_diesle
                         },
                         "image": image,
                         "lastupdated": str(datetime.now())
