@@ -150,9 +150,9 @@ class GenerateMap:
                 """
             ))
 
-    def run(self, path='map.html'):
+    def run(self, path='map.html', petrol: bool = True, diesel: bool = True):
         self.loadData()
-        self.addMarkers()
+        self.addMarkers(petrol=petrol, diesel=diesel)
         self.save(path=path)
         self.fixHtml()
 
