@@ -25,7 +25,24 @@ def allowed_file(filename):
 
 def makeMap():
     obj = GenerateMap()
-    obj.run(path=os.path.join(os.getcwd(), 'templates', 'map.html'))
+    obj.run(path=os.path.join(
+        os.getcwd(), 'templates', 'map.html'
+    ),
+        petrol=True,
+        diesel=True
+    )
+    obj.run(path=os.path.join(
+        os.getcwd(), 'templates', 'map_petrol.html'
+    ),
+        petrol=True,
+        diesel=False
+    )
+    obj.run(path=os.path.join(
+        os.getcwd(), 'templates', 'map_diesel.html'
+    ),
+        petrol=False,
+        diesel=True
+    )
 
 
 @app.before_request
@@ -44,6 +61,16 @@ def index():
 @app.route("/map")
 def map():
     return render_template("map.html")
+
+
+@app.route("/map/petrol")
+def map_petrol():
+    return render_template("map_petrol.html")
+
+
+@app.route("/map/diesel")
+def map_diesel():
+    return render_template("map_diesel.html")
 
 
 @app.route("/amount/<id>")
