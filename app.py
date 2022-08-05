@@ -4,7 +4,7 @@ import string
 from datetime import datetime
 
 from flask import Flask
-from flask import jsonify, redirect, render_template, url_for
+from flask import jsonify, redirect, render_template, url_for, send_from_directory
 from flask import g, request, session
 from werkzeug.utils import secure_filename
 
@@ -15,7 +15,8 @@ from generate import GenerateMap
 app = Flask(__name__)
 app.secret_key = flaskSecret
 app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'static', 'uploads')
-
+if not(os.path.isdir(app.config['UPLOAD_FOLDER'])):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
 
 
@@ -25,7 +26,24 @@ def allowed_file(filename):
 
 def makeMap():
     obj = GenerateMap()
-    obj.run(path=os.path.join(os.getcwd(), 'templates', 'map.html'))
+    obj.run(path=os.path.join(
+        os.getcwd(), 'templates', 'map.html'
+    ),
+        petrol=True,
+        diesel=True
+    )
+    obj.run(path=os.path.join(
+        os.getcwd(), 'templates', 'map_petrol.html'
+    ),
+        petrol=True,
+        diesel=False
+    )
+    obj.run(path=os.path.join(
+        os.getcwd(), 'templates', 'map_diesel.html'
+    ),
+        petrol=False,
+        diesel=True
+    )
 
 
 @app.before_request
@@ -44,6 +62,16 @@ def index():
 @app.route("/map")
 def map():
     return render_template("map.html")
+
+
+@app.route("/map/petrol")
+def map_petrol():
+    return render_template("map_petrol.html")
+
+
+@app.route("/map/diesel")
+def map_diesel():
+    return render_template("map_diesel.html")
 
 
 @app.route("/amount/<id>")
@@ -128,7 +156,9 @@ def admin_approve():
                 diesel=data_pending['availablitiy']['diesel'],
                 adiesel="0",
                 apetrol="0",
-                lastupdated=str(datetime.now())
+                lastupdated=str(datetime.now()),
+                capacity_diesle=data_pending['capacity']['diesel'],
+                capacity_petrol=data_pending['capacity']['petrol']
             )
             Pending.deleteByID(id=int(data_pending['id']))
             del data_pending
@@ -246,6 +276,19 @@ def add_new_station():
     bussinessRegistrationNumber = request.form.get(
         'bussinessRegistrationNumber')
 
+    petrolamtcap = request.form.get('petrolamtcap')
+    dieselamtcap = request.form.get('dieselamtcap')
+
+    try:
+        petrolamtcap = int(petrolamtcap)
+    except:
+        petrolamtcap = 100
+
+    try:
+        dieselamtcap = int(dieselamtcap)
+    except:
+        dieselamtcap = 100
+
     status = {'status': []}
     if len(fsname) < 5:
         status['status'].append('Please enter a valid filling station name')
@@ -285,17 +328,18 @@ def add_new_station():
         status['status'].append(
             'Please select a proper file')
     if regProof and allowed_file(regProof.filename):
+        filename = ''.join(
+            random.choice(
+                string.ascii_letters + string.digits
+            ) for i in range(5)
+        ) + str(
+            secure_filename(
+                regProof.filename
+            )
+        )
         savepath = os.path.join(
             app.config['UPLOAD_FOLDER'],
-            ''.join(
-                random.choice(
-                    string.ascii_letters + string.digits
-                ) for i in range(5)
-            ) + str(
-                secure_filename(
-                    regProof.filename
-                )
-            )
+            filename
         )
         regProof.save(savepath)
 
@@ -311,8 +355,10 @@ def add_new_station():
         city=fscity,
         petrol=True if petrolAvailability == '1' else False,
         diesel=True if dieselAvailability == '1' else False,
-        image=savepath,
-        lastupdated=datetime.now()
+        image=filename,
+        lastupdated=datetime.now(),
+        capacity_petrol=petrolamtcap,
+        capacity_diesle=dieselamtcap
     )
 
     return jsonify({'status': 'success'})
@@ -321,6 +367,12 @@ def add_new_station():
 @app.route("/admin", methods=['GET'])
 def admin_home():
     return render_template("admin.html")
+
+
+@app.route("/admin/update", methods=['GET'])
+def admin_update():
+    makeMap()
+    return redirect(url_for('map'))
 
 
 @app.route("/admin/verify", methods=['POST'])

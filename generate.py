@@ -90,7 +90,7 @@ class GenerateMap:
                 '<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script></body>'
             ).replace(
                 "<body>",
-                """<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}"><body><nav class="navbar navbar-expand-lg navbar-dark bg-dark"><a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='images/logo-text.png') }}" alt="Fuel Availability" width="200px"></a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav mr-auto"><li class="nav-item active"><a class="nav-link" href="/map">Map <span class="sr-only">(current)</span></a></li><li class="nav-item"><a class="nav-link" href="/">Home</a></li><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</a><div class="dropdown-menu" aria-labelledby="navbarDropdown"><a class="dropdown-item" onclick="showRadiusOnMap()">Location</a><div class="dropdown-divider"></div><a class="dropdown-item" href="#">by Petrol</a><a class="dropdown-item" href="#">by Deisel</a></div></li></ul><div class="form-inline my-2 my-lg-0"><button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a href="/login" style="color: #fff;text-decoration: none;">Login</a></button></div></div></nav>"""
+                """<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}"><body><nav class="navbar navbar-expand-lg navbar-dark bg-dark"><a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='images/logo-text.png') }}" alt="Fuel Availability" width="200px"></a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav mr-auto"><li class="nav-item active"><a class="nav-link" href="/map">Map <span class="sr-only">(current)</span></a></li><li class="nav-item"><a class="nav-link" href="/">Home</a></li><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</a><div class="dropdown-menu" aria-labelledby="navbarDropdown"><a class="dropdown-item" onclick="showRadiusOnMap()">by Location</a><div class="dropdown-divider"></div><a class="dropdown-item" href="/map/petrol">by Petrol</a><a class="dropdown-item" href="/map/diesel">by Diesel</a><div class="dropdown-divider"></div><a class="dropdown-item" href="/map">Clear Filters</a></div></li></ul><div class="form-inline my-2 my-lg-0"><button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a href="/login" style="color: #fff;text-decoration: none;">Login</a></button></div></div></nav>"""
             ).replace(
                 """top: 0.0%;
                 }
@@ -150,9 +150,9 @@ class GenerateMap:
                 """
             ))
 
-    def run(self, path='map.html'):
+    def run(self, path='map.html', petrol: bool = True, diesel: bool = True):
         self.loadData()
-        self.addMarkers()
+        self.addMarkers(petrol=petrol, diesel=diesel)
         self.save(path=path)
         self.fixHtml()
 

@@ -2,7 +2,7 @@
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    background-color: #0096ff;
+    background-color: #E5E5E5;
     position: relative;
 }
 
@@ -30,7 +30,7 @@
     width: 200px;
     height: 200px;
     clip: rect(0, 100px, 200px, 0);
-    background: #00ffff;
+    background: #0096ff;
     transform: rotate(60deg);
 }
 
@@ -69,7 +69,6 @@
 }
 
 body {
-    font-family: Arial;
     background: rgb(37, 39, 40);
 
 }

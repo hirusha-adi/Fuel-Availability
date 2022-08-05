@@ -48,7 +48,7 @@
 
 
 {% if mobile == True %}
-<div class="progress-pie-chart" data-percent="">
+<div class="progress-pie-chart" data-percent="{{ data.amount.petrol }}">
     <div class="ppc-progress">
         <div class="ppc-progress-fill"></div>
     </div>
@@ -60,7 +60,7 @@
 </div>
 <br>
 <h2 style="color: white; text-align: center;">Petrol</h2>
-<div class="progress-pie-chart1" data-percent="100">
+<div class="progress-pie-chart1" data-percent="{{ data.amount.diesel }}">
     <div class="ppc-progress1">
         <div class="ppc-progress-fill1"></div>
     </div>
@@ -77,7 +77,7 @@
     <thead>
         <tr>
             <th>
-                <div class="progress-pie-chart" data-percent="100">
+                <div class="progress-pie-chart" data-percent="{{ data.amount.petrol }}">
                     <div class="ppc-progress">
                         <div class="ppc-progress-fill"></div>
                     </div>
@@ -89,7 +89,7 @@
                 </div>
             </th>
             <th style="padding-left: 30px;">
-                <div class="progress-pie-chart1" data-percent="100">
+                <div class="progress-pie-chart1" data-percent="{{ data.amount.diesel }}">
                     <div class="ppc-progress1">
                         <div class="ppc-progress-fill1"></div>
                     </div>
@@ -133,24 +133,28 @@
 <script>
     $(function () {
         var $ppc = $('.progress-pie-chart'),
-            percent = parseInt($ppc.data('percent')),
-            deg = 360 * percent / 100;
+            amount = parseInt($ppc.data('percent')),
+            capac = parseInt('{{ data.capacity.petrol }}'),
+            percent = amount * 100 / capac
+        deg = 360 * percent / 100;
         if (percent > 50) {
             $ppc.addClass('gt-50');
         }
         $('.ppc-progress-fill').css('transform', 'rotate(' + deg + 'deg)');
-        $('.ppc-percents span').html('{{ data.amount.petrol }}' + 'L');
+        $('.ppc-percents span').html('{{ data.amount.petrol }}L');
     });
 
     $(function () {
         var $ppc = $('.progress-pie-chart1'),
-            percent = parseInt($ppc.data('percent')),
-            deg = 360 * percent / 100;
+            amount = parseInt($ppc.data('percent')),
+            capac = parseInt('{{ data.capacity.diesel }}'),
+            percent = amount * 100 / capac
+        deg = 360 * percent / 100;
         if (percent > 50) {
             $ppc.addClass('gt-501');
         }
         $('.ppc-progress-fill1').css('transform', 'rotate(' + deg + 'deg)');
-        $('.ppc-percents1 span').html('{{ data.amount.diesel }}' + 'L');
+        $('.ppc-percents1 span').html('{{ data.amount.diesel }}L');
     });
 
 </script>

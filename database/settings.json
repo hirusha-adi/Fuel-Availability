@@ -1,4 +1,8 @@
 {
+    "adminkey": "",
+    "flaskSecret": "",
+    "JawgToken": "",
+    "contactEmail": "",
     "mongodb": {
         "ip": "",
         "username": "",

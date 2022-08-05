@@ -174,7 +174,7 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                <input type="submit" value="Save"
+                                                                <input type="submit" value="Submit"
                                                                     class="btn btn-success placeicon"
                                                                     style="background-color: rgb(0, 160, 64);">
                                                             </div>
@@ -373,7 +373,8 @@
                                                     <div class="col-6">
                                                         <div class="form-group">
                                                             <label for="sel1">Petrol</label>
-                                                            <select class="form-control" id="petrolAvailability">
+                                                            <select class="form-control" id="petrolAvailability"
+                                                                name="petrolAvailability">
                                                                 <option value="1">Avaibale</option>
                                                                 <option value="2">Not Avaibale</option>
                                                             </select>
@@ -382,10 +383,27 @@
                                                     <div class="col-6">
                                                         <div class="form-group">
                                                             <label for="sel1">Diesel</label>
-                                                            <select class="form-control" id="dieselAvailability">
+                                                            <select class="form-control" id="dieselAvailability"
+                                                                name="dieselAvailability">
                                                                 <option value="1">Avaibale</option>
                                                                 <option value="2">Not Avaibale</option>
                                                             </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="input-group">
+                                                            <input type="number" name="petrolamtcap" id="petrolamtcap"
+                                                                min="0" placeholder="Petrol Amount">
+                                                            <label>Petrol Tank Capacity</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="input-group">
+                                                            <input type="number" name="dieselamtcap" id="dieselamtcap"
+                                                                min="0" placeholder="Diesel Amount">
+                                                            <label>Petrol Tank Capacity</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -515,6 +533,7 @@
 
         // add new station
         $("#new_station_form").submit(function () {
+
             const fsname = $("#fsname")
             const fsgoogleurl = $("#fsgoogleurl")
             const fscity = $("#fscity")
@@ -523,6 +542,8 @@
             const petrolAvailability = $("#petrolAvailability")
             const dieselAvailability = $("#dieselAvailability")
             const regProof = $("#regProof")
+            const petrolamtcap = $("#petrolamtcap")
+            const dieselamtcap = $("#dieselamtcap")
             const data = {
                 fsname: fsname.val(),
                 fsgoogleurl: fsgoogleurl.val(),
@@ -531,9 +552,10 @@
                 fsphone: fsphone.val(),
                 petrolAvailability: petrolAvailability.val(),
                 dieselAvailability: dieselAvailability.val(),
+                petrolamtcap: petrolamtcap.val(),
+                dieselamtcap: dieselamtcap.val(),
                 regProof: regProof.val()
             }
-            alert(regProof.val())
             $.ajax({
                 method: "POST",
                 // contentType: 'application/x-www-form-urlencoded',
