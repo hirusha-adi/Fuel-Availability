@@ -369,6 +369,12 @@ def admin_home():
     return render_template("admin.html")
 
 
+@app.route("/admin/update", methods=['GET'])
+def admin_update():
+    makeMap()
+    return redirect(url_for('map'))
+
+
 @app.route("/admin/verify", methods=['POST'])
 def admin_verify():
     secretKey = request.form.get('secretKey')
