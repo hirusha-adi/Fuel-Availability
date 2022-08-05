@@ -15,7 +15,8 @@ from generate import GenerateMap
 app = Flask(__name__)
 app.secret_key = flaskSecret
 app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'static', 'uploads')
-
+if not(os.path.isdir(app.config['UPLOAD_FOLDER'])):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
 
 
