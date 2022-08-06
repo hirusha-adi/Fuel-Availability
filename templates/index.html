@@ -62,66 +62,9 @@
             </p>
         </main>
 
-        <div class="box-modal">
-            <div class="overlay"></div>
-            <div class="body-modal">
-                <div class="inner-body-modal">
-                    <div>
-                        <h1 style="text-decoration: underline; color:#fff; padding-bottom: 25px; padding-top: 0px;">
-                            Credits
-                        </h1>
-                        <table>
-                            <thead>
-                            </thead>
-                            <tbody>
-                                <tr class="spaceUnder">
-                                    <td><img src="{{ url_for('static', filename='images/hirusha.jpeg') }}" alt="Hirusha"
-                                            style="border-radius: 50%;" width="80px"></td>
-                                    <td>
-                                        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            @hirushaadi
-                                        </h3>
-                                    </td>
-                                    <td>
-                                        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a href="https://twitter.com/hirusha_adikari" target="_blank"
-                                                rel="noopener noreferrer">
-                                                <img src="{{ url_for('static', filename='images/twitter.png') }}"
-                                                    alt="Twitter" style="border-radius: 50%;" height="50px">
-                                            </a>
-                                            &nbsp;
-                                            &nbsp;
-                                            <a href="http://github.com/hirusha-adi" target="_blank"
-                                                rel="noopener noreferrer">
-                                                <img src="{{ url_for('static', filename='images/github.png') }}"
-                                                    alt="Twitter" style="border-radius: 50%;" height="50px">
-                                            </a>
-                                        </h3>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><img src="{{ url_for('static', filename='images/kidwest.jpeg') }}" alt="Hirusha"
-                                            style="border-radius: 50%;" width="80px"></td>
-                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            @west_98
-                                        </h3>
-                                    </td>
-                                    <td>
-                                        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        </h3>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <footer class="mastfoot mt-auto">
             <div class="inner">
-                <p id="showCreditsOnClick">
+                <p>
                     Copyright © 2022 Fuel Check.
                 </p>
             </div>
@@ -137,19 +80,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-
-    <script>
-        $('#showCreditsOnClick').on('click', function () {
-            $('body').addClass('active-modal');
-            $('.box-modal').addClass('modal-show');
-        });
-
-        $('.overlay').on('click', function () {
-            $('body').removeClass('active-modal');
-            $('.box-modal').removeClass('modal-show');
-        })
-    </script>
-
 
 </body>
 
