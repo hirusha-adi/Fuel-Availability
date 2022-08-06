@@ -17,6 +17,12 @@
         * {
             font-family: "Open Sans", sans-serif;
         }
+
+        body {
+            background-image: url("{{ url_for('static', filename='images/background3.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
     </style>
 
 </head>
@@ -33,18 +39,26 @@
                 </h3>
                 <nav class="nav nav-masthead justify-content-center">
                     <a class="nav-link active" href="{{ url_for('map') }}">Map</a>
-                    <a class="nav-link" href="#">Contact Us</a>
+                    <a class="nav-link" href="{{ url_for('contact_us') }}">Contact Us</a>
                     <a class="nav-link" href="{{ url_for('login') }}">Login</a>
                 </nav>
             </div>
         </header>
 
         <main role="main" class="inner cover">
-            <h1 class="cover-heading">Cover your page.</h1>
-            <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit
-                the text, and add your own fullscreen background photo to make it your own.</p>
+            <h1 class="cover-heading">
+                FUEL
+                <b>
+                    AVAILABILITY
+                </b>
+                CHECK
+            </h1>
             <p class="lead">
-                <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
+                Sri Lanka's filling station's fuel availability.
+            </p>
+            <p class="lead">
+                <a href="{{ url_for('map') }}" class="btn btn-lg btn-secondary" style="border-radius: 50px;">Get
+                    Started</a>
             </p>
         </main>
 
