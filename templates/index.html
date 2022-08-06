@@ -1,209 +1,86 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Home | Fuel Availability</title>
+    <title>Cover Template for Bootstrap</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Hirusha Adikari">
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/lib/bootstrap-dark.css') }}" />
-    <link rel='stylesheet' href='{{ url_for("static", filename="css/home.css") }}'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/popup.css') }}" />
+
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css">
-    <link rel='stylesheet' href='{{ url_for("static", filename="css/popup.css") }}'>
     <style>
-        footer {
-            display: flex;
-            position: fixed;
-            background-color: rgb(17, 17, 17);
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 40px;
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .phone {
-            color: white;
-            font-size: 14px;
-            margin: auto;
-        }
-
-        .address {
-            color: white;
-            font-size: 14px;
-            margin: auto;
-        }
-
         * {
             font-family: "Open Sans", sans-serif;
         }
 
-        a:link,
-        a:visited,
-        a:hover,
-        a:active {
-            color: #fff;
-            text-decoration: none;
+        body {
+            background-image: url("{{ url_for('static', filename='images/background3.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
         }
     </style>
+
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <a class="navbar-brand" href="/">
-            <img src="{{ url_for('static', filename='images/logo-text.png') }}" alt="Fuel Availability" width="200px">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon">
-            </span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item" style="text-align: left;">
-                    <a class="nav-link" href="/map">
-                        Map
-                    </a>
-                </li>
-                <li class="nav-item" style="text-align: left;">
-                    <a class="nav-link" href="/">
-                        Home
-                    </a>
-                </li>
-            </ul>
-            <div class="form-inline my-2 my-lg-0" style="text-align: center;">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="text-align: center;">
-                    <a href="/login" style="color: #fff;text-decoration: none;">
-                        Login
-                    </a>
-                </button>
-            </div>
-        </div>
-    </nav>
+<body class="text-center">
 
-    <header>
-        <img class="img-absolute" src="{{ url_for('static', filename='images/background3.jpg') }}" alt="City 1">
-        <div class="wrapper astonish animated fadeInDown">
-            <h1 style="font-size: 60px;">
-                Fuel <strong>Availability</strong> Check
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <h3 class="masthead-brand">
+                    <a href="{{ url_for('index') }}">
+                        <img src="{{ url_for('static', filename='images/logo-text.png') }}" alt="Logo" width="170px">
+                    </a>
+                </h3>
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link active" href="{{ url_for('map') }}">Map</a>
+                    <a class="nav-link" href="{{ url_for('contact_us') }}">Contact Us</a>
+                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                </nav>
+            </div>
+        </header>
+
+        <main role="main" class="inner cover">
+            <h1 class="cover-heading">
+                FUEL
+                <b>
+                    AVAILABILITY
+                </b>
+                CHECK
             </h1>
-            <h2 style="font-size: 27px">
+            <p class="lead">
                 Sri Lanka's filling station's fuel availability.
-            </h2>
-            <button type="button" class="btn btn-success"
-                onclick="window.location.href = window.location.origin + '/map'"
-                style="background-color: #fff; color: #000;border-radius: 100px; font-weight:normal; font-size: 24px; text-align: center; padding-left: 50px; padding-right: 50px">
-                Get Started
-            </button>
-        </div>
-    </header>
+            </p>
+            <p class="lead">
+                <a href="{{ url_for('map') }}" class="btn btn-lg btn-secondary" style="border-radius: 50px;">Get
+                    Started</a>
+            </p>
+        </main>
 
-    <!-- Popup -->
-    <div class="box-modal">
-        <div class="overlay"></div>
-        <div class="body-modal">
-            <div class="inner-body-modal">
-                <div>
-                    <h1 style="text-decoration: underline; color:#fff; padding-bottom: 25px; padding-top: 0px;">Credits
-                    </h1>
-                    <table>
-                        <thead>
-                        </thead>
-                        <tbody>
-                            <tr class="spaceUnder">
-                                <td><img src="{{ url_for('static', filename='images/hirusha.jpeg') }}" alt="Hirusha"
-                                        style="border-radius: 50%;" width="80px"></td>
-                                <td>
-                                    <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        @hirushaadi
-                                    </h3>
-                                </td>
-                                <td>
-                                    <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href="https://twitter.com/hirusha_adikari" target="_blank"
-                                            rel="noopener noreferrer">
-                                            <img src="{{ url_for('static', filename='images/twitter.png') }}"
-                                                alt="Twitter" style="border-radius: 50%;" height="50px">
-                                        </a>
-                                        &nbsp;
-                                        &nbsp;
-                                        <a href="http://github.com/hirusha-adi" target="_blank"
-                                            rel="noopener noreferrer">
-                                            <img src="{{ url_for('static', filename='images/github.png') }}"
-                                                alt="Twitter" style="border-radius: 50%;" height="50px">
-                                        </a>
-                                    </h3>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><img src="{{ url_for('static', filename='images/kidwest.jpeg') }}" alt="Hirusha"
-                                        style="border-radius: 50%;" width="80px"></td>
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <h3>
-                                        @west_98
-                                    </h3>
-                                </td>
-                                <td>
-                                    <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    </h3>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <footer class="mastfoot mt-auto">
+            <div class="inner">
+                <p>
+                    Copyright © 2022 Fuel Check.
+                </p>
             </div>
-        </div>
+        </footer>
     </div>
 
-    <footer>
-        <p class="pull-left" style="margin-bottom: -5px;">Copyright © 2022 Fuel Check.</p>
-        <div class="address">
-        </div>
-        <div class="pull-right">
-            <a href="{{ url_for('contact_us') }}">
-                Contact Us
-            </a>
-            &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-            <a id="showCreditsOnClick">
-                Credits
-            </a>
-        </div>
-    </footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-    <script src='{{ url_for("static", filename="js/popup2.3.js") }}'></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        $('#menu-button').click(function () {
-            $(this).toggleClass('change');
-            $('.nav-links').toggleClass('nav-open');
-        });
-
-        $(window).resize(function () {
-            if ($(window).width() > 768) {
-                console.log($(window).width());
-                if ($('.nav-links').hasClass('nav-open')) {
-                    $('#menu-button').toggleClass('change');
-                    $('.nav-links').toggleClass('nav-open');
-                }
-            }
-        });
-    </script>
-    <script>
-        $('#showCreditsOnClick').on('click', function () {
-            $('body').addClass('active-modal');
-            $('.box-modal').addClass('modal-show');
-        });
-
-        $('.overlay').on('click', function () {
-            $('body').removeClass('active-modal');
-            $('.box-modal').removeClass('modal-show');
-        })
-    </script>
 </body>
 
 </html>
