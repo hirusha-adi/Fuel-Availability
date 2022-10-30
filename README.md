@@ -1,4 +1,6 @@
-# Fuel-Availability
+# Fuel-Availability (INCOMPLETE)
+
+NOTE: I'll get back to completing this after OL's in January
 
 A simple responsive web app made as a solution for the current fuel crisis in Sri Lanka
 
