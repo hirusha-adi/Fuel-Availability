@@ -10,69 +10,69 @@ A simple responsive web app made as a solution for the current fuel crisis in Sr
 
 1. Install
 
-    ```bash
-    sudo apt update && sudo apt upgrade -y
-    sudo apt install mongodb -y
-    sudo systemctl enable mongodb --now
-    ```
+   ```bash
+   sudo apt update && sudo apt upgrade -y
+   sudo apt install mongodb -y
+   sudo systemctl enable mongodb --now
+   ```
 
 2. Run this command and open the config file
 
-    ```bash
-    sudo nano /etc/mongodb.conf
-    ```
+   ```bash
+   sudo nano /etc/mongodb.conf
+   ```
 
 3. Change bind_ip from 127.0.0.1 to 0.0.0.0
 
-    ```bash
-    bind_ip = 0.0.0.0
-    ```
+   ```bash
+   bind_ip = 0.0.0.0
+   ```
 
 4. run this command to restart mongo
 
-    ```bash
-    sudo systemctl restart mongodb
-    ```
+   ```bash
+   sudo systemctl restart mongodb
+   ```
 
 MongoDB is now publicly accessible by the default Port and the Server IP. Now, create an account and enable authorization for security
 
 5. Start MongoDB CLI
 
-    ```bash
-    mongo
-    ```
+   ```bash
+   mongo
+   ```
 
 6. Switch to the default pre-made admin database
 
-    ```
-    use admin
-    ````
+   ```
+   use admin
+   ```
 
 7. Create a new user
 
-    ```
-    db.createUser(
-    {
-    user: "AdminUserName",
-    pwd: "SuperSecretPassword",
-    roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
-    }
-    )
-    ```
+   ```
+   db.createUser(
+   {
+   user: "AdminUserName",
+   pwd: "SuperSecretPassword",
+   roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
+   }
+   )
+   ```
 
 The new user is created, Now, You have to make logging-in required
 
 8. Open the config file
 
-    ```bash
-    sudo nano /etc/mongodb.conf
-    ```
+   ```bash
+   sudo nano /etc/mongodb.conf
+   ```
 
 9. Edit the file content `Ctrl+W` to search
 
-    ```
-    authorization: enabled
-    ```
+   ```
+   authorization: enabled
+   ```
 
 10. Restart MongoDB Service
 
@@ -84,36 +84,49 @@ The new user is created, Now, You have to make logging-in required
 
 1. Install main dependencies
 
-    ```bash
-    sudo apt update && sudo apt upgrade -y
-    sudo apt install python3 python3-pip git nano -y
-    ```
+   ```bash
+   sudo apt update && sudo apt upgrade -y
+   sudo apt install python3 python3-pip git nano -y
+   ```
 
 2. Create a seperate folder (Optional)
 
-    ```bash
-    mkdir FuelApp && cd ./FuelApp
-    ```
+   ```bash
+   mkdir FuelApp && cd ./FuelApp
+   ```
 
 3. Clone the repo and cd into it
 
-    ```bash
-    git clone "https://github.com/hirusha-adi/Fuel-Availability.git" && cd ./Fuel-Availability
-    ```
+   ```bash
+   git clone "https://github.com/hirusha-adi/Fuel-Availability.git" && cd ./Fuel-Availability
+   ```
 
-4. Edit the main config file
+4. Install requirements
 
-    ```bash
-    nano database/settings.json
-    ```
+   ```bash
+   python3 -m pip instal -r requirements.txt
+   ```
 
-5. start the web server
+5. Edit the main config file
 
-    ```bash
-    python3 app.py
-    ```
-    
-# Images
+   ```bash
+   nano database/settings.json
+   ```
+
+   - `adminkey`: Password to access admin panel
+   - `flaskSecret`: Flask Secret Key. Learn more [here](https://flask.palletsprojects.com/en/2.2.x/config/#SECRET_KEY)
+   - `JawgToken`: Token for the Map's Dark Theme. You can get it from [here](https://www.jawg.io/lab/access-tokens)
+   - `mongodb` _and Others_: Your Mongo DB Server IP, Username and Password
+
+<br>
+
+6. Start the web server
+
+   ```bash
+   python3 app.py
+   ```
+
+# Images (Outdated)
 
 ![image](https://user-images.githubusercontent.com/36286877/182191521-b47fbd96-4c22-4752-b01e-4ad668a080d4.png)
 
