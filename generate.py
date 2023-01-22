@@ -80,8 +80,11 @@ class GenerateMap:
     def fixHtml(self):
         with open(self._save_path, 'r', encoding='utf-8') as _file:
             html = str(_file.read()).replace(
-                "https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css",
-                "https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+                "https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css",
+                "{{ url_for('static', filename='css/lib/bootstrap-dark.css') }}"
+            ).replace(
+                "https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css",
+                "{{ url_for('static', filename='css/lib/bootstrap-dark.css') }}"
             ).replace(
                 "height: 100.0%;",
                 "height: 93.0%;"
