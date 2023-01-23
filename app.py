@@ -12,6 +12,8 @@ from database.mongo import Pending, Stations, Users
 from database.settings import adminkey, contactEmail, flaskSecret
 from generate import GenerateMap
 
+from routes.general import *
+
 app = Flask(__name__)
 app.secret_key = flaskSecret
 app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'static', 'uploads')
@@ -85,9 +87,8 @@ def log_unique_requests():
             ))
 
 
-@app.route("/")
-def index():
-    return render_template("index.html")
+app.add_url_rule("/", 'index', index, methods=['GET'])
+app.add_url_rule("/contact", 'contact_us', contact_us, methods=['GET'])
 
 
 @app.route("/map")
@@ -121,11 +122,6 @@ def amounts(id):
     else:
         mobile = False
     return render_template("amounts.html", data=data, mobile=mobile)
-
-
-@app.route("/contact")
-def contact_us():
-    return redirect(f'mailto:{contactEmail}')
 
 
 @app.route("/login", methods=['GET', 'POST'])
