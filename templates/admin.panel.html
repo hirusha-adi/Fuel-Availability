@@ -12,8 +12,10 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="msapplication-tap-highlight" content="no">
 
-    <link href="file.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/admin.panel.css') }}" rel="stylesheet">
 
+    <!-- Others -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://kit.fontawesome.com/2a2e95598a.js" crossorigin="anonymous"></script>
 
@@ -870,7 +872,8 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="./file.js"></script>
+    <!-- Custom JS -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/admin.panel.js') }}"></script>
 
 </body>
 
