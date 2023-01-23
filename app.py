@@ -20,6 +20,9 @@ if not (os.path.isdir(app.config['UPLOAD_FOLDER'])):
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
 uniqueVisitors = set()
 
+if not (os.path.isdir(os.path.join(os.getcwd(), "logs"))):
+    os.makedirs("logs")
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
