@@ -9,6 +9,11 @@ flaskSecret = data['flaskSecret']
 JawgToken = data['JawgToken']
 contactEmail = data['contactEmail']
 
+uploadPath = os.path.join(os.getcwd(), 'static', 'uploads')
+if not (os.path.isdir(uploadPath)):
+    os.makedirs(uploadPath)
+ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
+
 
 class MongoDB:
     mongodb = data["mongodb"]
