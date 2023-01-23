@@ -4,7 +4,9 @@ from datetime import datetime
 from flask import Flask
 
 from database.mongo import Users
-from database.settings import flaskSecret, uploadPath, ALLOWED_EXTENSIONS
+from database.settings import flaskSecret
+from database.settings import uploadPath
+from database.settings import WebServer
 
 from routes.general import *
 from routes.stations import *
@@ -16,12 +18,9 @@ app.secret_key = flaskSecret
 app.config['UPLOAD_FOLDER'] = uploadPath
 uniqueVisitors = set()
 
-if not (os.path.isdir(os.path.join(os.getcwd(), "logs"))):
-    os.makedirs("logs")
-
 
 @app.before_request
-def before_request():
+def check_user():
     g.user = None
     if 'user_id' in session:
         user = Users.getUserByID(id=session['user_id'])
@@ -29,29 +28,27 @@ def before_request():
 
 
 @app.before_request
-def log_all_requests():
+def log_requests():
     now = datetime.now()
+    ip = request.remote_addr
+
+    # Log - All
     with open(now.strftime("logs/all_%Y_%m_%d.log"), "a") as f:
         f.write("{} - {} - {} - {}\n".format(
             now,
-            request.remote_addr,
+            ip,
             request.user_agent,
             request.path
         ))
 
-
-@app.before_request
-def log_unique_requests():
-    now = datetime.now()
-    ip = request.remote_addr
+    # Log - Unique Visitors
     if not (ip in uniqueVisitors):
         uniqueVisitors.add(ip)
         with open(now.strftime("logs/unique_%Y_%m_%d.log"), "a") as f:
-            f.write("{} - {} - {} - {}\n".format(
+            f.write("{} - {} - {}\n".format(
                 now,
                 ip,
-                request.user_agent,
-                request.path
+                request.user_agent
             ))
 
 
@@ -90,6 +87,23 @@ app.add_url_rule("/admin/approve", 'admin_approve',
                  admin_approve, methods=['GET', 'POST'])
 
 
-if __name__ == "__main__":
+def runApp():
+    if not (os.path.isdir(os.path.join(os.getcwd(), "logs"))):
+        os.makedirs("logs")
+
     makeMap()
-    app.run("0.0.0.0", port=7879, debug=True)
+
+    _host = f"{'localhost' if (WebServer.host == '0.0.0.0') or (WebServer.host == '127.0.0.1') else WebServer.host}:{WebServer.port}"
+    print(f"[*] The server is running on:\n\t-> http://{_host}/")
+
+    app.run(
+        WebServer.host,
+        port=WebServer.port,
+        debug=WebServer.debug
+    )
+
+
+WebServer
+
+if __name__ == "__main__":
+    runApp()
