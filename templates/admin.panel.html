@@ -545,13 +545,106 @@
                             <li>
                                 <a href="#">
                                     <i class="fa-solid fa-check"></i>
-                                    SFW
+                                    Public
                                 </a>
                                 <ul>
                                     <li>
                                         <a href="{{ url_for('index') }}">
                                             <i class="metismenu-icon"></i>
-                                            Index
+                                            /
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('contact_us') }}">
+                                            <i class="metismenu-icon"></i>
+                                            /contact
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="fa-solid fa-check"></i>
+                                    Map
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="{{ url_for('map') }}">
+                                            <i class="metismenu-icon"></i>
+                                            /map
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('map_petrol') }}">
+                                            <i class="metismenu-icon"></i>
+                                            /map/petrol
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('map_diesel') }}">
+                                            <i class="metismenu-icon"></i>
+                                            /map/diesel
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('amounts_no_id') }}">
+                                            <i class="metismenu-icon"></i>
+                                            /amount/(id)
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="fa-solid fa-check"></i>
+                                    User
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="{{ url_for('login') }}">
+                                            <i class="metismenu-icon"></i>
+                                            /login
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('signup') }}">
+                                            <i class="metismenu-icon"></i>
+                                            /signup
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('panel') }}">
+                                            <i class="metismenu-icon"></i>
+                                            /dashboard
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('logout') }}">
+                                            <i class="metismenu-icon"></i>
+                                            /logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="fa-solid fa-check"></i>
+                                    Admin
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="{{ url_for('admin_home') }}">
+                                            <i class="metismenu-icon"></i>
+                                            /admin
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('admin_panel') }}">
+                                            <i class="metismenu-icon"></i>
+                                            /admin/panel
                                         </a>
                                     </li>
                                 </ul>
