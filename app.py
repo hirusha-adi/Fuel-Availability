@@ -1,16 +1,10 @@
 import os
-import random
-import string
 from datetime import datetime
 
 from flask import Flask
-from flask import jsonify, redirect, render_template, url_for, send_from_directory
-from flask import g, request, session
-from werkzeug.utils import secure_filename
 
-from database.mongo import Pending, Stations, Users
-from database.settings import adminkey, contactEmail, flaskSecret
-from generate import GenerateMap
+from database.mongo import Users
+from database.settings import flaskSecret, uploadPath, ALLOWED_EXTENSIONS
 
 from routes.general import *
 from routes.stations import *
@@ -19,18 +13,11 @@ from routes.admin import *
 
 app = Flask(__name__)
 app.secret_key = flaskSecret
-app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'static', 'uploads')
-if not (os.path.isdir(app.config['UPLOAD_FOLDER'])):
-    os.makedirs(app.config['UPLOAD_FOLDER'])
-ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
+app.config['UPLOAD_FOLDER'] = uploadPath
 uniqueVisitors = set()
 
 if not (os.path.isdir(os.path.join(os.getcwd(), "logs"))):
     os.makedirs("logs")
-
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.before_request
