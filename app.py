@@ -77,12 +77,11 @@ def log_unique_requests():
     if not (ip in uniqueVisitors):
         uniqueVisitors.add(ip)
         with open(now.strftime("logs/unique_%Y_%m_%d.log"), "a") as f:
-            f.write("{} - {} - {} - {} - {}\n".format(
+            f.write("{} - {} - {} - {}\n".format(
                 now,
                 ip,
                 request.user_agent,
-                request.path,
-                len(uniqueVisitors)
+                request.path
             ))
 
 
