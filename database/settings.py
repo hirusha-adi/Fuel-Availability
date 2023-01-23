@@ -20,3 +20,10 @@ class MongoDB:
     ip: str = mongodb["ip"]
     username: str = mongodb["username"]
     password: str = mongodb["password"]
+
+
+class WebServer:
+    webserver = data["webserver"]
+    host = webserver['host']
+    port = webserver['port']
+    debug = webserver['debug']
