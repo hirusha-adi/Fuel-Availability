@@ -30,28 +30,6 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def makeMap():
-    obj = GenerateMap()
-    obj.run(path=os.path.join(
-        os.getcwd(), 'templates', 'map.html'
-    ),
-        petrol=True,
-        diesel=True
-    )
-    obj.run(path=os.path.join(
-        os.getcwd(), 'templates', 'map_petrol.html'
-    ),
-        petrol=True,
-        diesel=False
-    )
-    obj.run(path=os.path.join(
-        os.getcwd(), 'templates', 'map_diesel.html'
-    ),
-        petrol=False,
-        diesel=True
-    )
-
-
 @app.before_request
 def before_request():
     g.user = None

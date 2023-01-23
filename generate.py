@@ -160,6 +160,28 @@ class GenerateMap:
         self.fixHtml()
 
 
+def makeMap():
+    obj = GenerateMap()
+    obj.run(path=os.path.join(
+        os.getcwd(), 'templates', 'map.html'
+    ),
+        petrol=True,
+        diesel=True
+    )
+    obj.run(path=os.path.join(
+        os.getcwd(), 'templates', 'map_petrol.html'
+    ),
+        petrol=True,
+        diesel=False
+    )
+    obj.run(path=os.path.join(
+        os.getcwd(), 'templates', 'map_diesel.html'
+    ),
+        petrol=False,
+        diesel=True
+    )
+
+
 if __name__ == "__main__":
     obj = GenerateMap()
     obj.run(path=os.path.join(os.getcwd(), 'templates', 'map.html'))
