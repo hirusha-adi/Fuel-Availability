@@ -54,6 +54,17 @@ def before_request():
         g.user = user
 
 
+@app.before_request
+def log_requests():
+    with open("request_log.txt", "a") as f:
+        f.write("{} - {} - {} - {}\n".format(
+            datetime.datetime.now(),
+            request.remote_addr,
+            request.user_agent,
+            request.path
+        ))
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
