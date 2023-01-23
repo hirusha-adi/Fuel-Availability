@@ -5,8 +5,20 @@ from flask import session
 from flask import g
 from flask import render_template
 from flask import jsonify
+import random
+import string
+import os
+from datetime import datetime
+from werkzeug.utils import secure_filename
 
 from database.mongo import Pending, Stations, Users
+
+
+ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 def login():
