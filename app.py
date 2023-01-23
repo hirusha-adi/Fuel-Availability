@@ -15,7 +15,7 @@ from generate import GenerateMap
 app = Flask(__name__)
 app.secret_key = flaskSecret
 app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'static', 'uploads')
-if not(os.path.isdir(app.config['UPLOAD_FOLDER'])):
+if not (os.path.isdir(app.config['UPLOAD_FOLDER'])):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
 
@@ -293,7 +293,7 @@ def add_new_station():
     if len(fsname) < 5:
         status['status'].append('Please enter a valid filling station name')
 
-    if not((petrolAvailability in ['1', '2']) or (dieselAvailability in ['1', '2'])):
+    if not ((petrolAvailability in ['1', '2']) or (dieselAvailability in ['1', '2'])):
         status['status'].append('Invalid values for fuel availability given')
 
     if len(fsphone) < 9:
@@ -303,7 +303,7 @@ def add_new_station():
         status['status'].append(
             'Please enter a valid Bussiness Registration Number')
 
-    if not(('maps.google.com' in fsgoogleurl) or ('/maps')):
+    if not (('maps.google.com' in fsgoogleurl) or ('/maps')):
         status['status'].append(
             'Invalid Google Maps URL. make sure you have "maps.google.com" in the url')
 
@@ -367,6 +367,11 @@ def add_new_station():
 @app.route("/admin", methods=['GET'])
 def admin_home():
     return render_template("admin.html")
+
+
+@app.route("/admin/panel", methods=['GET'])
+def admin_panel():
+    return render_template("admin.panel.html")
 
 
 @app.route("/admin/update", methods=['GET'])
