@@ -58,7 +58,7 @@ def before_request():
 @app.before_request
 def log_all_requests():
     now = datetime.now()
-    with open(now.strftime("log_all_%Y_%m_%d.txt"), "a") as f:
+    with open(now.strftime("logs/all_%Y_%m_%d.log"), "a") as f:
         f.write("{} - {} - {} - {}\n".format(
             now,
             request.remote_addr,
@@ -71,15 +71,16 @@ def log_all_requests():
 def log_unique_requests():
     now = datetime.now()
     ip = request.remote_addr
-    uniqueVisitors.add(ip)
-    with open(now.strftime("log_unique_%Y_%m_%d.txt"), "a") as f:
-        f.write("{} - {} - {} - {} - {}\n".format(
-            now,
-            ip,
-            request.user_agent,
-            request.path,
-            len(uniqueVisitors)
-        ))
+    if not (ip in uniqueVisitors):
+        uniqueVisitors.add(ip)
+        with open(now.strftime("logs/unique_%Y_%m_%d.log"), "a") as f:
+            f.write("{} - {} - {} - {} - {}\n".format(
+                now,
+                ip,
+                request.user_agent,
+                request.path,
+                len(uniqueVisitors)
+            ))
 
 
 @app.route("/")
