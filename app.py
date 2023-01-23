@@ -54,9 +54,15 @@ def before_request():
         g.user = user
 
 
+def get_log_file():
+    now = datetime.datetime.now()
+    filename = now.strftime("log_%Y_%m_%d.txt")
+    return filename
+
+
 @app.before_request
 def log_requests():
-    with open("request_log.txt", "a") as f:
+    with open(get_log_file(), "a") as f:
         f.write("{} - {} - {} - {}\n".format(
             datetime.datetime.now(),
             request.remote_addr,
