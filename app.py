@@ -105,6 +105,13 @@ def map_diesel():
     return render_template("map_diesel.html")
 
 
+@app.route("/amount")
+def amounts_no_id():
+    "return no stations if none"
+    "return the first station if no val and have stations"
+    return url_for('amounts', id='1')
+
+
 @app.route("/amount/<id>")
 def amounts(id):
     data = Stations.getByID(id=id)
