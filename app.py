@@ -54,20 +54,43 @@ def before_request():
         g.user = user
 
 
-def get_log_file():
-    now = datetime.datetime.now()
-    filename = now.strftime("log_%Y_%m_%d.txt")
+def get_log_file_all():
+    now = datetime.now()
+    filename = now.strftime("log_all_%Y_%m_%d.txt")
+    return filename
+
+
+def get_log_file_unique():
+    now = datetime.now()
+    filename = now.strftime("log_all_%Y_%m_%d.txt")
     return filename
 
 
 @app.before_request
-def log_requests():
-    with open(get_log_file(), "a") as f:
+def log_all_requests():
+    with open(get_log_file_all(), "a") as f:
         f.write("{} - {} - {} - {}\n".format(
-            datetime.datetime.now(),
+            datetime.now(),
             request.remote_addr,
             request.user_agent,
             request.path
+        ))
+
+
+uniqueVisitors = set()
+
+
+@app.before_request
+def log_unique_requests():
+    ip = request.remote_addr
+    uniqueVisitors.add(ip)
+    with open(get_log_file_unique(), "a") as f:
+        f.write("{} - {} - {} - {} - {}\n".format(
+            datetime.datetime.now(),
+            ip,
+            request.user_agent,
+            request.path,
+            len(uniqueVisitors)
         ))
 
 
