@@ -18,6 +18,7 @@ app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'static', 'uploads')
 if not (os.path.isdir(app.config['UPLOAD_FOLDER'])):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
+uniqueVisitors = set()
 
 
 def allowed_file(filename):
@@ -54,39 +55,26 @@ def before_request():
         g.user = user
 
 
-def get_log_file_all():
-    now = datetime.now()
-    filename = now.strftime("log_all_%Y_%m_%d.txt")
-    return filename
-
-
-def get_log_file_unique():
-    now = datetime.now()
-    filename = now.strftime("log_all_%Y_%m_%d.txt")
-    return filename
-
-
 @app.before_request
 def log_all_requests():
-    with open(get_log_file_all(), "a") as f:
+    now = datetime.now()
+    with open(now.strftime("log_all_%Y_%m_%d.txt"), "a") as f:
         f.write("{} - {} - {} - {}\n".format(
-            datetime.now(),
+            now,
             request.remote_addr,
             request.user_agent,
             request.path
         ))
 
 
-uniqueVisitors = set()
-
-
 @app.before_request
 def log_unique_requests():
+    now = datetime.now()
     ip = request.remote_addr
     uniqueVisitors.add(ip)
-    with open(get_log_file_unique(), "a") as f:
+    with open(now.strftime("log_unique_%Y_%m_%d.txt"), "a") as f:
         f.write("{} - {} - {} - {} - {}\n".format(
-            datetime.datetime.now(),
+            now,
             ip,
             request.user_agent,
             request.path,
