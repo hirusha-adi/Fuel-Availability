@@ -14,6 +14,8 @@ from generate import GenerateMap
 
 from routes.general import *
 from routes.stations import *
+from routes.users import *
+from routes.admin import *
 
 app = Flask(__name__)
 app.secret_key = flaskSecret
@@ -79,304 +81,26 @@ app.add_url_rule("/amount/<id>", 'amounts', amounts, methods=['GET'])
 
 
 # Users
+app.add_url_rule("/login", 'login', login, methods=['GET', 'POST'])
+app.add_url_rule("/signup", 'signup', signup, methods=['GET', 'POST'])
+app.add_url_rule("/logout", 'logout', logout, methods=['GET'])
+app.add_url_rule("/dashboard", 'panel', panel, methods=['GET'])
+app.add_url_rule("/edit/user", 'panel_edit_user',
+                 panel_edit_user, methods=['GET', 'POST'])
+app.add_url_rule("/edit/station", 'panel_edit_station',
+                 panel_edit_station, methods=['GET', 'POST'])
+app.add_url_rule("/add/station", 'add_new_station',
+                 add_new_station, methods=['GET', 'POST'])
 
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        session.pop('user_id', None)
-        email = request.form.get('email')
-        password = request.form.get('password')
-        user = Users.getUserByEmail(email=email)
-        try:
-            if user and user['password'] == password:
-                session['user_id'] = user['id']
-                return redirect(url_for('panel'))
-            else:
-                return redirect(url_for('login'))
-        except:
-            return redirect(url_for('login'))
-    else:
-        if g.user:
-            return redirect(url_for('panel'))
-
-        return render_template("login.html")
-
-
-@app.route("/signup", methods=['GET', 'POST'])
-def signup():
-    if request.method == 'POST':
-        session.pop('user_id', None)
-        name = request.form.get('name')
-        email = request.form.get('email')
-        password = request.form.get('password')
-        Users.addUser(
-            password=password,
-            name=name,
-            email=email
-        )
-        user = Users.getUserByEmail(email=email)
-        session['user_id'] = user['id']
-        return redirect(url_for('panel'))
-    else:
-        return render_template("signup.html")
-
-
-@app.route("/logout")
-def logout():
-    session.pop('user_id', None)
-    return redirect(url_for('index'))
-
-
-@app.route("/admin/approve", methods=['GET', 'POST'])
-def admin_approve():
-    if request.method == 'POST':
-        itemid = request.form.get('itemid')
-        itemdo = request.form.get('itemdo')
-
-        if itemdo.lower() == 'add':
-            data_pending = Pending.getByID(id=int(itemid))
-            Stations.addStation(
-                name=data_pending['name'],
-                registration=data_pending['registration'],
-                phone=data_pending['phone'],
-                email=data_pending['email'],
-                coordinates=data_pending['coordinates'],
-                city=data_pending['city'],
-                petrol=data_pending['availablitiy']['petrol'],
-                diesel=data_pending['availablitiy']['diesel'],
-                adiesel="0",
-                apetrol="0",
-                lastupdated=str(datetime.now()),
-                capacity_diesle=data_pending['capacity']['diesel'],
-                capacity_petrol=data_pending['capacity']['petrol']
-            )
-            Pending.deleteByID(id=int(data_pending['id']))
-            del data_pending
-            makeMap()
-            return jsonify({'status': 'success'})
-
-        elif itemdo.lower() == 'remove':
-            Pending.deleteByID(id=int(itemid))
-            makeMap()
-            return jsonify({'status': 'success'})
-
-    else:
-        data = {}
-        data['pending'] = Pending.getAllStations()
-        data['pending_length'] = len(data['pending'])
-        return render_template('accept.html', **data)
-
-
-@app.route("/dashboard")
-def panel():
-    if not g.user:
-        return redirect(url_for('login'))
-
-    data = {}
-    data['user'] = Users.getUserByEmail(email=g.user['email'])
-    data['pending'] = Pending.getByEmail(email=g.user['email'])
-    data['pending_length'] = len(data['pending'])
-    data['stations'] = Stations.getByEmail(email=g.user['email'])
-    data['stations_length'] = len(data['stations'])
-    return render_template("panel.html", **data)
-
-
-@app.route("/edit/user", methods=['GET', 'POST'])
-def panel_edit_user():
-    """
-    fullname (disabled)
-    email (disabled)
-    npassword
-    vpassword
-    """
-    if not g.user:
-        return redirect(url_for('login'))
-
-    if request.method == 'POST':
-        npassword = request.form.get('npassword')
-        vpassword = request.form.get('vpassword')
-        print(npassword, vpassword)
-        try:
-            if npassword == vpassword:
-                Users.updateUser(
-                    name=g.user['name'],
-                    email=g.user['email'],
-                    password=npassword
-                )
-                return jsonify({'status': 'done'})
-            else:
-                return jsonify({'status': 'nomatch'})
-        except Exception as e:
-            return jsonify({'status': f'ERROR: {e}'})
-    else:
-        return redirect(url_for('panel'))
-
-
-@app.route("/edit/station", methods=['GET', 'POST'])
-def panel_edit_station():
-    if not g.user:
-        return redirect(url_for('login'))
-
-    if request.method == 'POST':
-        fillingStationNameID = request.form.get('fillingStationNameID')
-        petrolAvailability = request.form.get('petrolAvailability')
-        dieselAvailability = request.form.get('dieselAvailability')
-        petrolamt = request.form.get('petrolamt')
-        dieselamt = request.form.get('dieselamt')
-        try:
-            Stations.updateAvailability(
-                id=int(fillingStationNameID),
-                petrol=True if petrolAvailability == '1' else False,
-                diesel=True if dieselAvailability == '1' else False
-            )
-            Stations.updateAmount(
-                id=int(fillingStationNameID),
-                petrol=str(petrolamt),
-                diesel=str(dieselamt)
-            )
-            return jsonify({'status': 'success'})
-        except Exception as e:
-            return jsonify({'status': f'ERROR: {e}'})
-    else:
-        return jsonify({'status': ''})
-
-
-@app.route("/add/station", methods=['GET', 'POST'])
-def add_new_station():
-    """
-        fsname -> Fillion Station's Name
-        fscity -> City name
-        fsgoogleurl -> Google Maps URL
-        fsphone -> Phone Number
-        petrolAvailability -> 1|2 -> Petrol
-        dieselAvailability -> 1|2 -> Diesel
-        bussinessRegistrationNumber -> Bussiness Registration Number
-    """
-
-    if not g.user:
-        return redirect(url_for('login'))
-
-    # always
-    fsname = request.form.get('fsname')
-    fscity = request.form.get('fscity')
-    fsgoogleurl = request.form.get('fsgoogleurl')
-    fsphone = request.form.get('fsphone')
-    petrolAvailability = request.form.get('petrolAvailability')
-    dieselAvailability = request.form.get('dieselAvailability')
-    bussinessRegistrationNumber = request.form.get(
-        'bussinessRegistrationNumber')
-
-    petrolamtcap = request.form.get('petrolamtcap')
-    dieselamtcap = request.form.get('dieselamtcap')
-
-    try:
-        petrolamtcap = int(petrolamtcap)
-    except:
-        petrolamtcap = 100
-
-    try:
-        dieselamtcap = int(dieselamtcap)
-    except:
-        dieselamtcap = 100
-
-    status = {'status': []}
-    if len(fsname) < 5:
-        status['status'].append('Please enter a valid filling station name')
-
-    if not ((petrolAvailability in ['1', '2']) or (dieselAvailability in ['1', '2'])):
-        status['status'].append('Invalid values for fuel availability given')
-
-    if len(fsphone) < 9:
-        status['status'].append('Please enter a valid Phone Number')
-
-    if len(bussinessRegistrationNumber) < 4:
-        status['status'].append(
-            'Please enter a valid Bussiness Registration Number')
-
-    if not (('maps.google.com' in fsgoogleurl) or ('/maps')):
-        status['status'].append(
-            'Invalid Google Maps URL. make sure you have "maps.google.com" in the url')
-
-    try:
-        coordinates = fsgoogleurl.split('@')[1].split(',')[0:2]
-        if len(coordinates) == 0:
-            status['status'].append('Error processing the Google Maps URL')
-    except IndexError:
-        status['status'].append('Error processing the Google Maps URL')
-
-    # if 'regProof' not in request.files:
-    #     return status['status'].append('Please upload the proof of registration and try again!')
-    # regProof = request.files['regProof']
-    # path = os.path.join(app.config['UPLOAD_FOLDER'], regProof.filename)
-    # regProof.save(path)
-
-    if 'regProof' not in request.files:
-        status['status'].append(
-            'Please upload the proof of registration and try again!')
-    regProof = request.files['regProof']
-    if regProof.filename == '':
-        status['status'].append(
-            'Please select a proper file')
-    if regProof and allowed_file(regProof.filename):
-        filename = ''.join(
-            random.choice(
-                string.ascii_letters + string.digits
-            ) for i in range(5)
-        ) + str(
-            secure_filename(
-                regProof.filename
-            )
-        )
-        savepath = os.path.join(
-            app.config['UPLOAD_FOLDER'],
-            filename
-        )
-        regProof.save(savepath)
-
-    if len(status['status']) != 0:
-        return jsonify(status)
-
-    Pending.addStation(
-        name=fsname,
-        registration=bussinessRegistrationNumber,
-        phone=fsphone,
-        email=g.user['email'],
-        coordinates=coordinates,
-        city=fscity,
-        petrol=True if petrolAvailability == '1' else False,
-        diesel=True if dieselAvailability == '1' else False,
-        image=filename,
-        lastupdated=datetime.now(),
-        capacity_petrol=petrolamtcap,
-        capacity_diesle=dieselamtcap
-    )
-
-    return jsonify({'status': 'success'})
-
-
-@app.route("/admin", methods=['GET'])
-def admin_home():
-    return render_template("admin.html")
-
-
-@app.route("/admin/panel", methods=['GET'])
-def admin_panel():
-    return render_template("admin.panel.html")
-
-
-@app.route("/admin/update", methods=['GET'])
-def admin_update():
-    makeMap()
-    return redirect(url_for('map'))
-
-
-@app.route("/admin/verify", methods=['POST'])
-def admin_verify():
-    secretKey = request.form.get('secretKey')
-    if secretKey == adminkey:
-        return jsonify({'status': 'ok'})
-    else:
-        return jsonify({'status': 'no'})
+# Admin
+app.add_url_rule("/admin", 'admin_home', admin_home, methods=['GET'])
+app.add_url_rule("/admin/panel", 'admin_panel', admin_panel, methods=['GET'])
+app.add_url_rule("/admin/update", 'admin_update',
+                 admin_update, methods=['GET'])
+app.add_url_rule("/admin/verify", 'admin_verify',
+                 admin_verify, methods=['GET'])
+app.add_url_rule("/admin/approve", 'admin_approve',
+                 admin_approve, methods=['GET', 'POST'])
 
 
 if __name__ == "__main__":
