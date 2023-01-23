@@ -13,6 +13,7 @@ from database.settings import adminkey, contactEmail, flaskSecret
 from generate import GenerateMap
 
 from routes.general import *
+from routes.stations import *
 
 app = Flask(__name__)
 app.secret_key = flaskSecret
@@ -65,42 +66,19 @@ def log_unique_requests():
             ))
 
 
+# General
 app.add_url_rule("/", 'index', index, methods=['GET'])
 app.add_url_rule("/contact", 'contact_us', contact_us, methods=['GET'])
 
-
-@app.route("/map")
-def map():
-    return render_template("map.html")
-
-
-@app.route("/map/petrol")
-def map_petrol():
-    return render_template("map_petrol.html")
+# Stations
+app.add_url_rule("/map", 'map', map, methods=['GET'])
+app.add_url_rule("/map/petrol", 'map_petrol', map_petrol, methods=['GET'])
+app.add_url_rule("/map/diesel", 'map_diesel', map_diesel, methods=['GET'])
+app.add_url_rule("/amount", 'amounts_no_id', amounts_no_id, methods=['GET'])
+app.add_url_rule("/amount/<id>", 'amounts', amounts, methods=['GET'])
 
 
-@app.route("/map/diesel")
-def map_diesel():
-    return render_template("map_diesel.html")
-
-
-@app.route("/amount")
-def amounts_no_id():
-    "return no stations if none"
-    "return the first station if no val and have stations"
-    return url_for('amounts', id='1')
-
-
-@app.route("/amount/<id>")
-def amounts(id):
-    data = Stations.getByID(id=id)
-    user_agent = request.headers.get('User-Agent').lower()
-    if ("iphone" in user_agent) or ("android" in user_agent):
-        mobile = True
-    else:
-        mobile = False
-    return render_template("amounts.html", data=data, mobile=mobile)
-
+# Users
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
