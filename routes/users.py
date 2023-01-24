@@ -12,12 +12,10 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 
 from database.mongo import Pending, Stations, Users
+from database.settings import ALLOWED_EXTENSIONS, uploadPath
 
 
-ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
-
-
-def allowed_file(filename):
+def _allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
@@ -211,7 +209,7 @@ def add_new_station():
     if regProof.filename == '':
         status['status'].append(
             'Please select a proper file')
-    if regProof and allowed_file(regProof.filename):
+    if regProof and _allowed_file(regProof.filename):
         filename = ''.join(
             random.choice(
                 string.ascii_letters + string.digits
@@ -222,7 +220,7 @@ def add_new_station():
             )
         )
         savepath = os.path.join(
-            app.config['UPLOAD_FOLDER'],
+            uploadPath,
             filename
         )
         regProof.save(savepath)
