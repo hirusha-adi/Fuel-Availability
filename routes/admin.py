@@ -44,8 +44,10 @@ def admin_panel():
     modes:
         overview
         settings
+        alllogs
+        uniquelogs
     """
-    data['wmode'] = "overview"
+    data['wmode'] = "uniquelogs"
 
     # TODAY's LOG FILES
     # -------------------------------------
@@ -65,16 +67,23 @@ def admin_panel():
     with open(data['file_name_all'], "r", encoding="utf-8") as _latest_log_all:
         latest_log_last_lines = _latest_log_all.readlines()
         data['latest_log_last_length'] = len(latest_log_last_lines)
-        data['latest_log_last_lines'] = latest_log_last_lines[-10:]
+        if data['wmode'] == "alllogs":
+            data['latest_log_last_lines'] = latest_log_last_lines[::-1]
+        else:
+            data['latest_log_last_lines'] = latest_log_last_lines[-10:]
 
     with open(data['file_name_unique'], "r", encoding="utf-8") as _latest_log_unique:
         unique_log_last_lines = _latest_log_unique.readlines()
         data['unique_log_last_length'] = len(unique_log_last_lines)
-        data['unique_log_last_lines'] = unique_log_last_lines[-10:]
+        if data['wmode'] == "uniquelogs":
+            data['unique_log_last_lines'] = unique_log_last_lines[::-1]
+        else:
+            data['unique_log_last_lines'] = unique_log_last_lines[-10:]
     
     data['unique_requests_percentage'] = str((data['unique_log_last_length']/data['latest_log_last_length'])*100)[:4]
 
     return render_template("admin.panel.html", **data)
+
 
 def admin_download_log_noargs():
     return redirect(url_for('admin_panel'))
@@ -127,7 +136,6 @@ def admin_update():
     # ReMake the map and redirect to /map
     makeMap()
     return redirect(url_for('map'))
-
 
 def admin_approve():
     # login to redirect page if not logged in
