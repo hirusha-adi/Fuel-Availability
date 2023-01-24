@@ -1,8 +1,17 @@
 from flask import render_template
 from flask import url_for
+from flask import redirect
 from flask import request
 
 from database.mongo import Stations
+
+
+def check_mobile(request):
+    user_agent = request.headers.get('User-Agent').lower()
+    if ("iphone" in user_agent) or ("android" in user_agent):
+        return True
+    else:
+        return False
 
 
 def map():
@@ -18,16 +27,14 @@ def map_diesel():
 
 
 def amounts_no_id():
-    "return no stations if none"
-    "return the first station if no val and have stations"
-    return url_for('amounts', id='1')
+    mobile = check_mobile(request=request)
+    stations = Stations.getAllStations()
+    if len(stations) <= 0:
+        return render_template("amounts.html", data={}, mobile=mobile, empty=True)
+    return redirect(url_for('map'))
 
 
 def amounts(id):
     data = Stations.getByID(id=id)
-    user_agent = request.headers.get('User-Agent').lower()
-    if ("iphone" in user_agent) or ("android" in user_agent):
-        mobile = True
-    else:
-        mobile = False
-    return render_template("amounts.html", data=data, mobile=mobile)
+    mobile = check_mobile(request=request)
+    return render_template("amounts.html", data=data, mobile=mobile, empty=False)
