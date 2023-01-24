@@ -18,7 +18,14 @@ def admin_home():
 
 
 def admin_panel():
+    """
+    modes:
+        overview
+        settings
+    """
     data = {}
+
+    data['wmode'] = "overview"
 
     # TODAY's LOG FILES
     # -------------------------------------
