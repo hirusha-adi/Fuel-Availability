@@ -27,52 +27,75 @@ def _allowed_file(filename):
 
 def login():
     if request.method == 'POST':
+        # remove `user_id` from sessions to remove any conflicts in the future
         session.pop('user_id', None)
+
+        # Get info from form
         email = request.form.get('email')
         password = request.form.get('password')
+
+        # get user from db
         user = Users.getUserByEmail(email=email)
+
         try:
             if user and user['password'] == password:
+                # password matched
                 session['user_id'] = user['id']
                 return redirect(url_for('panel'))
             else:
+                # password incorrect
                 return redirect(url_for('login'))
         except:
             return redirect(url_for('login'))
-    else:
+
+    else:  # GET
+        # If already logged in
         if g.user:
             return redirect(url_for('panel'))
 
+        # Return to login page if not
         return render_template("login.html")
 
 
 def signup():
     if request.method == 'POST':
+        # remove `user_id` from sessions to remove any conflicts in the future
         session.pop('user_id', None)
+
+        # Get info from form
         name = request.form.get('name')
         email = request.form.get('email')
         password = request.form.get('password')
+
+        # Add user to db
         Users.addUser(
             password=password,
             name=name,
             email=email
         )
+
+        # Get new user from db again and store to session
         user = Users.getUserByEmail(email=email)
         session['user_id'] = user['id']
+
         return redirect(url_for('panel'))
-    else:
+
+    else:  # GET
         return render_template("signup.html")
 
 
 def logout():
+    # Remove `user_id` from session
     session.pop('user_id', None)
     return redirect(url_for('index'))
 
 
 def panel():
     if not g.user:
+        # login to redirect page if not logged in
         return redirect(url_for('login'))
 
+    # Get all required user info to display in the user dashboard
     data = {}
     data['user'] = Users.getUserByEmail(email=g.user['email'])
     data['pending'] = Pending.getByEmail(email=g.user['email'])
@@ -84,20 +107,21 @@ def panel():
 
 def panel_edit_user():
     """
-    fullname (disabled)
-    email (disabled)
-    npassword
-    vpassword
+    fullname (disabled) - cannot be changed
+    email (disabled) - cannot be changed
+    npassword - New Password
+    vpassword - Re-entered New Password to check for errors and typos
     """
     if not g.user:
         return redirect(url_for('login'))
 
     if request.method == 'POST':
+        # get details from form
         npassword = request.form.get('npassword')
         vpassword = request.form.get('vpassword')
-        print(npassword, vpassword)
         try:
             if npassword == vpassword:
+                # update db is new password == verify password (the re-enter thing)
                 Users.updateUser(
                     name=g.user['name'],
                     email=g.user['email'],
@@ -108,21 +132,23 @@ def panel_edit_user():
                 return jsonify({'status': 'nomatch'})
         except Exception as e:
             return jsonify({'status': f'ERROR: {e}'})
-    else:
+    else:  # GET
         return redirect(url_for('panel'))
 
 
 def panel_edit_station():
     if not g.user:
+        # login to redirect page if not logged in
         return redirect(url_for('login'))
 
     if request.method == 'POST':
+        # get info from request
         fillingStationNameID = request.form.get('fillingStationNameID')
         petrolAvailability = request.form.get('petrolAvailability')
         dieselAvailability = request.form.get('dieselAvailability')
         petrolamt = request.form.get('petrolamt')
         dieselamt = request.form.get('dieselamt')
-        try:
+        try:  # update db
             Stations.updateAvailability(
                 id=int(fillingStationNameID),
                 petrol=True if petrolAvailability == '1' else False,
@@ -149,12 +175,17 @@ def add_new_station():
         petrolAvailability -> 1|2 -> Petrol
         dieselAvailability -> 1|2 -> Diesel
         bussinessRegistrationNumber -> Bussiness Registration Number
+
+        This will create a request for the Admins to approve,
+        once approved, you can manage it and update it and
+        it will be shown on the map.
     """
 
     if not g.user:
+        # login to redirect page if not logged in
         return redirect(url_for('login'))
 
-    # always
+    # Main Information - Required
     fsname = request.form.get('fsname')
     fscity = request.form.get('fscity')
     fsgoogleurl = request.form.get('fsgoogleurl')
@@ -164,9 +195,11 @@ def add_new_station():
     bussinessRegistrationNumber = request.form.get(
         'bussinessRegistrationNumber')
 
+    # Capacity - How much can they store? In litres
     petrolamtcap = request.form.get('petrolamtcap')
     dieselamtcap = request.form.get('dieselamtcap')
 
+    # Default to 100 if any issue occurs
     try:
         petrolamtcap = int(petrolamtcap)
     except:
@@ -177,6 +210,7 @@ def add_new_station():
     except:
         dieselamtcap = 100
 
+    # Check for errors and send to the front end
     status = {'status': []}
     if len(fsname) < 5:
         status['status'].append('Please enter a valid filling station name')
@@ -195,6 +229,7 @@ def add_new_station():
         status['status'].append(
             'Invalid Google Maps URL. make sure you have "maps.google.com" in the url')
 
+    # get coordinated from the google maps url
     try:
         coordinates = fsgoogleurl.split('@')[1].split(',')[0:2]
         if len(coordinates) == 0:
@@ -202,19 +237,25 @@ def add_new_station():
     except IndexError:
         status['status'].append('Error processing the Google Maps URL')
 
+    # I have no idea whats going on in here
     # if 'regProof' not in request.files:
     #     return status['status'].append('Please upload the proof of registration and try again!')
     # regProof = request.files['regProof']
     # path = os.path.join(app.config['UPLOAD_FOLDER'], regProof.filename)
     # regProof.save(path)
 
+    # Check for bussiness registration proof files
     if 'regProof' not in request.files:
         status['status'].append(
             'Please upload the proof of registration and try again!')
+
     regProof = request.files['regProof']
+
     if regProof.filename == '':
         status['status'].append(
             'Please select a proper file')
+
+    # Save it in the upload path by sanitizing the name
     if regProof and _allowed_file(regProof.filename):
         filename = ''.join(
             random.choice(
@@ -231,9 +272,11 @@ def add_new_station():
         )
         regProof.save(savepath)
 
+    # If any errors, return them to the front end, dont add to pending list
     if len(status['status']) != 0:
         return jsonify(status)
 
+    # Add everything to the Pending list for the admins to approve
     Pending.addStation(
         name=fsname,
         registration=bussinessRegistrationNumber,
