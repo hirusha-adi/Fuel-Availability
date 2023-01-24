@@ -862,13 +862,14 @@
                                     <div class="d-block text-center card-footer">
                                         <a href="#">
                                             <button class="btn-wide btn btn-success">
+                                                View Log
+                                            </button>
+                                        </a>
+                                        <a href="{{ url_for('admin_download_log', logtype='all') }}">
+                                            <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger">
                                                 Download
                                             </button>
                                         </a>
-                                        <!-- This funcationality will be available in the future versions soon -->
-                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" disabled>
-                                            Delete
-                                        </button>
                                     </div>
 
                                 </div>
