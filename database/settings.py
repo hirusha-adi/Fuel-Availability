@@ -27,3 +27,12 @@ class WebServer:
     host = webserver['host']
     port = webserver['port']
     debug = webserver['debug']
+
+class Admin:
+    admin = data["admin"]
+    username = admin['username']
+    email = admin['email']
+    id = admin['id']
+    password = admin['password']
+    fullname = admin['fullname']
+    

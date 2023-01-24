@@ -1,7 +1,8 @@
 import os
 from datetime import datetime
 
-from flask import request
+from flask import g
+from flask import request 
 from flask import render_template
 from flask import url_for
 from flask import redirect
@@ -10,7 +11,13 @@ from flask import jsonify
 from generate import makeMap
 from database.mongo import Pending
 from database.mongo import Stations
+from database.mongo import Users
 from database.settings import adminkey
+from database.settings import Admin
+
+def isAdmin(user):
+    # The in user's information matches with the info in the backend
+    return ((user['email'] == Admin.username) or (user['email'] == Admin.email)) and (user['id'] == Admin.id) and (user['password'] == Admin.password)
 
 
 def admin_home():
@@ -18,13 +25,25 @@ def admin_home():
 
 
 def admin_panel():
+    # login to redirect page if not logged in
+    if not g.user:
+        return redirect(url_for('login'))
+    
+    # send the currently logged in user
+    adminAccess = isAdmin(user=g.user)
+    
+    # Login with account with admin access if you have not
+    if not(adminAccess):
+        return redirect(url_for('login'))
+            
+    
+    data = {}
+
     """
     modes:
         overview
         settings
     """
-    data = {}
-
     data['wmode'] = "overview"
 
     # TODAY's LOG FILES
@@ -56,9 +75,22 @@ def admin_panel():
 
     return render_template("admin.panel.html", **data)
 
+def admin_download_log(type):
+    return 
 
 def admin_update():
-    # Update map and redirect to the /map
+    # login to redirect page if not logged in
+    if not g.user:
+        return redirect(url_for('login'))
+    
+    # send the currently logged in user
+    adminAccess = isAdmin(user=g.user)
+    
+    # Login with account with admin access if you have not
+    if not(adminAccess):
+        return redirect(url_for('login'))
+    
+    # ReMake the map and redirect to /map
     makeMap()
     return redirect(url_for('map'))
 
