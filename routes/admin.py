@@ -1,10 +1,14 @@
+from datetime import datetime
+
+from flask import request
 from flask import render_template
 from flask import url_for
 from flask import redirect
-from flask import jsonify, request
-from database.mongo import Pending, Stations
-from datetime import datetime
+from flask import jsonify
+
 from generate import makeMap
+from database.mongo import Pending
+from database.mongo import Stations
 from database.settings import adminkey
 
 
@@ -17,11 +21,13 @@ def admin_panel():
 
 
 def admin_update():
+    # Update map and redirect to the /map
     makeMap()
     return redirect(url_for('map'))
 
 
 def admin_verify():
+    """Verify the admin login key from `prompt()` in javascript with the backend"""
     secretKey = request.form.get('secretKey')
     if secretKey == adminkey:
         return jsonify({'status': 'ok'})
@@ -34,6 +40,7 @@ def admin_approve():
         itemid = request.form.get('itemid')
         itemdo = request.form.get('itemdo')
 
+        # Admin approved the station
         if itemdo.lower() == 'add':
             data_pending = Pending.getByID(id=int(itemid))
             Stations.addStation(
@@ -56,12 +63,14 @@ def admin_approve():
             makeMap()
             return jsonify({'status': 'success'})
 
+        # Admin declined the station
         elif itemdo.lower() == 'remove':
             Pending.deleteByID(id=int(itemid))
             makeMap()
             return jsonify({'status': 'success'})
 
     else:
+        # if GET
         data = {}
         data['pending'] = Pending.getAllStations()
         data['pending_length'] = len(data['pending'])
