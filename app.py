@@ -13,14 +13,20 @@ from routes.stations import *
 from routes.users import *
 from routes.admin import *
 
+# Initialize flask app
 app = Flask(__name__)
+
+# Set up flask app config
 app.secret_key = flaskSecret
 app.config['UPLOAD_FOLDER'] = uploadPath
+
+# Keep track of number of unique visitiors
 uniqueVisitors = set()
 
 
 @app.before_request
 def check_user():
+    # handle and check if user is logged in
     g.user = None
     if 'user_id' in session:
         user = Users.getUserByID(id=session['user_id'])
@@ -29,6 +35,15 @@ def check_user():
 
 @app.before_request
 def log_requests():
+    """
+    Both log every request made and log all unique visitors by IP
+
+    Structure of log of all requests ->
+        {time} - {ip} - {user agent} - {route}
+
+    Structure of log of unique visitors ->
+        {time} - {ip} - {user agent}
+    """
     now = datetime.now()
     ip = request.remote_addr
 
@@ -43,6 +58,7 @@ def log_requests():
 
     # Log - Unique Visitors
     if not (ip in uniqueVisitors):
+        # If IP is not in our set, then proceed
         uniqueVisitors.add(ip)
         with open(now.strftime("logs/unique_%Y_%m_%d.log"), "a") as f:
             f.write("{} - {} - {}\n".format(
@@ -82,14 +98,18 @@ app.add_url_rule("/admin/approve", 'admin_approve', admin_approve, methods=['GET
 
 
 def runApp():
+    # create the logs folder if it doesnt exist
     if not (os.path.isdir(os.path.join(os.getcwd(), "logs"))):
         os.makedirs("logs")
 
+    # generate the map inititally before starting web app
     makeMap()
 
+    # display web server stats
     _host = f"{'localhost' if (WebServer.host == '0.0.0.0') or (WebServer.host == '127.0.0.1') else WebServer.host}:{WebServer.port}"
     print(f"[*] The server is running on:\n\t-> http://{_host}/")
 
+    # start the flask app
     app.run(
         WebServer.host,
         port=WebServer.port,
