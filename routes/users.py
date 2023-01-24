@@ -1,18 +1,24 @@
-from flask import request
-from flask import url_for
-from flask import redirect
-from flask import session
-from flask import g
-from flask import render_template
-from flask import jsonify
+
 import random
 import string
 import os
+
 from datetime import datetime
+
+from flask import g
+from flask import request
+from flask import session
+from flask import url_for
+from flask import redirect
+from flask import render_template
+from flask import jsonify
 from werkzeug.utils import secure_filename
 
-from database.mongo import Pending, Stations, Users
-from database.settings import ALLOWED_EXTENSIONS, uploadPath
+from database.mongo import Pending
+from database.mongo import Stations
+from database.mongo import Users
+from database.settings import ALLOWED_EXTENSIONS
+from database.settings import uploadPath
 
 
 def _allowed_file(filename):
