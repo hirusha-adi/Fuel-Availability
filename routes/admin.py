@@ -5,6 +5,7 @@ from flask import g
 from flask import request 
 from flask import render_template
 from flask import url_for
+from flask import send_file
 from flask import redirect
 from flask import jsonify
 
@@ -75,8 +76,41 @@ def admin_panel():
 
     return render_template("admin.panel.html", **data)
 
-def admin_download_log(type):
-    return 
+def admin_download_log_noargs():
+    return redirect(url_for('admin_panel'))
+
+def admin_download_log(logtype):
+    # login to redirect page if not logged in
+    if not g.user:
+        return redirect(url_for('login'))
+    
+    # send the currently logged in user
+    adminAccess = isAdmin(user=g.user)
+    
+    # Login with account with admin access if you have not
+    if not(adminAccess):
+        return redirect(url_for('login'))
+    
+    # Get File Names
+    now = datetime.now()
+    file_name_all = os.path.join(
+        "logs",
+        now.strftime("all_%Y_%m_%d.log")
+    )
+    file_name_unique = os.path.join(
+        "logs",
+        now.strftime("unique_%Y_%m_%d.log")
+    )
+    
+    # Return Files
+    if logtype in ("all", "a"): # All
+        return send_file(file_name_all)
+    
+    elif logtype in ("unique", "u"): # Unique
+        return send_file(file_name_unique)
+
+    else: # Redirect to admin page if none
+        return redirect(url_for('admin_panel'))
 
 def admin_update():
     # login to redirect page if not logged in
