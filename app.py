@@ -69,22 +69,16 @@ app.add_url_rule("/login", 'login', login, methods=['GET', 'POST'])
 app.add_url_rule("/signup", 'signup', signup, methods=['GET', 'POST'])
 app.add_url_rule("/logout", 'logout', logout, methods=['GET'])
 app.add_url_rule("/dashboard", 'panel', panel, methods=['GET'])
-app.add_url_rule("/edit/user", 'panel_edit_user',
-                 panel_edit_user, methods=['GET', 'POST'])
-app.add_url_rule("/edit/station", 'panel_edit_station',
-                 panel_edit_station, methods=['GET', 'POST'])
-app.add_url_rule("/add/station", 'add_new_station',
-                 add_new_station, methods=['GET', 'POST'])
+app.add_url_rule("/edit/user", 'panel_edit_user', panel_edit_user, methods=['GET', 'POST'])
+app.add_url_rule("/edit/station", 'panel_edit_station', panel_edit_station, methods=['GET', 'POST'])
+app.add_url_rule("/add/station", 'add_new_station', add_new_station, methods=['GET', 'POST'])
 
 # Admin
 app.add_url_rule("/admin", 'admin_home', admin_home, methods=['GET'])
 app.add_url_rule("/admin/panel", 'admin_panel', admin_panel, methods=['GET'])
-app.add_url_rule("/admin/update", 'admin_update',
-                 admin_update, methods=['GET'])
-app.add_url_rule("/admin/verify", 'admin_verify',
-                 admin_verify, methods=['GET'])
-app.add_url_rule("/admin/approve", 'admin_approve',
-                 admin_approve, methods=['GET', 'POST'])
+app.add_url_rule("/admin/update", 'admin_update', admin_update, methods=['GET'])
+app.add_url_rule("/admin/verify", 'admin_verify', admin_verify, methods=['GET'])
+app.add_url_rule("/admin/approve", 'admin_approve', admin_approve, methods=['GET', 'POST'])
 
 
 def runApp():
@@ -102,8 +96,6 @@ def runApp():
         debug=WebServer.debug
     )
 
-
-WebServer
 
 if __name__ == "__main__":
     runApp()
