@@ -51,6 +51,8 @@ def admin_panel():
         unique_log_last_lines = _latest_log_unique.readlines()
         data['unique_log_last_length'] = len(unique_log_last_lines)
         data['unique_log_last_lines'] = unique_log_last_lines[-10:]
+    
+    data['unique_requests_percentage'] = str((data['unique_log_last_length']/data['latest_log_last_length'])*100)[:4]
 
     return render_template("admin.panel.html", **data)
 

@@ -764,24 +764,6 @@
                                 <div class="card mb-3 widget-content bg-midnight-bloom">
                                     <div class="widget-content-wrapper text-white">
                                         <div class="widget-content-left">
-                                            <div class="widget-heading">Unique Requests</div>
-                                            <div class="widget-subheading">of Today</div>
-                                        </div>
-                                        <div class="widget-content-right">
-                                            <div class="widget-numbers text-white">
-                                                <span>
-                                                    {{ unique_log_last_length }}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 col-xl-4">
-                                <div class="card mb-3 widget-content bg-arielle-smile">
-                                    <div class="widget-content-wrapper text-white">
-                                        <div class="widget-content-left">
                                             <div class="widget-heading">All Requests</div>
                                             <div class="widget-subheading">of Today</div>
                                         </div>
@@ -797,16 +779,34 @@
                             </div>
 
                             <div class="col-md-6 col-xl-4">
-                                <div class="card mb-3 widget-content bg-grow-early">
+                                <div class="card mb-3 widget-content bg-arielle-smile">
                                     <div class="widget-content-wrapper text-white">
                                         <div class="widget-content-left">
-                                            <div class="widget-heading">Todays Percentage</div>
-                                            <div class="widget-subheading">from Total Requests</div>
+                                            <div class="widget-heading">Unique Requests</div>
+                                            <div class="widget-subheading">of Today</div>
                                         </div>
                                         <div class="widget-content-right">
                                             <div class="widget-numbers text-white">
                                                 <span>
-                                                    {{ percentage_of_today_from_total }} %
+                                                    {{ unique_log_last_length }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content bg-grow-early">
+                                    <div class="widget-content-wrapper text-white">
+                                        <div class="widget-content-left">
+                                            <div class="widget-heading">Unique Requests Percentage</div>
+                                            <div class="widget-subheading">of Today</div>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <div class="widget-numbers text-white">
+                                                <span>
+                                                    {{ unique_requests_percentage }} %
                                                 </span>
                                             </div>
                                         </div>
@@ -948,13 +948,14 @@
                                     <div class="d-block text-center card-footer">
                                         <a href="#">
                                             <button class="btn-wide btn btn-success">
+                                                View Log
+                                            </button>
+                                        </a>
+                                        <a href="#">
+                                            <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger">
                                                 Download
                                             </button>
                                         </a>
-                                        <!-- This funcationality will be available in the future versions soon -->
-                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" disabled>
-                                            Delete
-                                        </button>
                                     </div>
 
                                 </div>
