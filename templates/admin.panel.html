@@ -12,6 +12,23 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="msapplication-tap-highlight" content="no">
 
+    <script>
+        const secretKey = prompt("Enter the Admin Password: ")
+        $.post(
+            '{{ url_for("admin_verify") }}',
+            {
+                secretKey: secretKey
+            },
+            function (data) {
+                if (data['status'] == 'ok') {
+                    return
+                } else {
+                    window.location.href = window.location.origin
+                }
+            }
+        )
+    </script>
+
     <!-- Custom CSS -->
     <link href="{{ url_for('static', filename='css/admin.panel.css') }}" rel="stylesheet">
 
@@ -52,8 +69,8 @@
 
                 <div class="app-header-left">
                     <div class="search-wrapper">
-                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo"
-                            style="max-width: 40px;">
+                        <!-- <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo"
+                            style="max-width: 40px;"> -->
                     </div>
                     <ul class="header-menu nav">
                         <li class="nav-item">
@@ -69,7 +86,7 @@
                             </a>
                         </li>
                         <li class="dropdown nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ url_for('logout') }}" class="nav-link">
                                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 Logout
                             </a>
@@ -87,7 +104,7 @@
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                             class="p-0 btn">
                                             <img width="42" class="rounded-circle"
-                                                src="{{ url_for('static', filename='images/logo.png') }}" alt="">
+                                                src="{{ url_for('static', filename='images/hirusha.jpeg') }}" alt="">
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true"
@@ -537,6 +554,12 @@
                                     Dashboard
                                 </a>
                             </li>
+                            <li>
+                                <a href="#" class="mm">
+                                    <i class="fa-solid fa-gear"></i>
+                                    Settings
+                                </a>
+                            </li>
 
                             <li class="app-sidebar__heading">
                                 Routes
@@ -544,7 +567,7 @@
 
                             <li>
                                 <a href="#">
-                                    <i class="fa-solid fa-check"></i>
+                                    <i class="fas fa-users"></i>
                                     Public
                                 </a>
                                 <ul>
@@ -565,7 +588,7 @@
 
                             <li>
                                 <a href="#">
-                                    <i class="fa-solid fa-check"></i>
+                                    <i class="fas fa-map-marker"></i>
                                     Map
                                 </a>
                                 <ul>
@@ -598,7 +621,7 @@
 
                             <li>
                                 <a href="#">
-                                    <i class="fa-solid fa-check"></i>
+                                    <i class="fas fa-user"></i>
                                     User
                                 </a>
                                 <ul>
@@ -631,7 +654,7 @@
 
                             <li>
                                 <a href="#">
-                                    <i class="fa-solid fa-check"></i>
+                                    <i class="fas fa-user-shield"></i>
                                     Admin
                                 </a>
                                 <ul>
@@ -652,7 +675,7 @@
 
                             <li class="app-sidebar__heading">Others</li>
                             <li>
-                                <a href="https://github.com/hirusha-adi/GifGang" target="_blank"
+                                <a href="https://github.com/hirusha-adi/Fuel-Availability" target="_blank"
                                     rel="noopener noreferrer">
                                     <i class="fa-solid fa-code"></i>
                                     Source Code
