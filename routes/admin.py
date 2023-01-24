@@ -95,16 +95,19 @@ def admin_update():
     return redirect(url_for('map'))
 
 
-def admin_verify():
-    """Verify the admin login key from `prompt()` in javascript with the backend"""
-    secretKey = request.form.get('secretKey')
-    if secretKey == adminkey:
-        return jsonify({'status': 'ok'})
-    else:
-        return jsonify({'status': 'no'})
-
-
 def admin_approve():
+    # login to redirect page if not logged in
+    if not g.user:
+        return redirect(url_for('login'))
+    
+    # send the currently logged in user
+    adminAccess = isAdmin(user=g.user)
+    
+    # Login with account with admin access if you have not
+    if not(adminAccess):
+        return redirect(url_for('login'))
+    
+    # Proceed if Admin
     if request.method == 'POST':
         itemid = request.form.get('itemid')
         itemdo = request.form.get('itemdo')

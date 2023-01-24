@@ -93,7 +93,6 @@ app.add_url_rule("/add/station", 'add_new_station', add_new_station, methods=['G
 app.add_url_rule("/admin", 'admin_home', admin_home, methods=['GET'])
 app.add_url_rule("/admin/panel", 'admin_panel', admin_panel, methods=['GET'])
 app.add_url_rule("/admin/update", 'admin_update', admin_update, methods=['GET'])
-app.add_url_rule("/admin/verify", 'admin_verify', admin_verify, methods=['GET'])
 app.add_url_rule("/admin/approve", 'admin_approve', admin_approve, methods=['GET', 'POST'])
 
 

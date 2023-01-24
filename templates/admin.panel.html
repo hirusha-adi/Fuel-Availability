@@ -11,24 +11,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="msapplication-tap-highlight" content="no">
-
-    <!-- <script>
-        const secretKey = prompt("Enter the Admin Password: ")
-        $.post(
-            '{{ url_for("admin_verify") }}',
-            {
-                secretKey: secretKey
-            },
-            function (data) {
-                if (data['status'] == 'ok') {
-                    return
-                } else {
-                    window.location.href = window.location.origin
-                }
-            }
-        )
-    </script> -->
-
+    
     <!-- Custom CSS -->
     <link href="{{ url_for('static', filename='css/admin.panel.css') }}" rel="stylesheet">
 
