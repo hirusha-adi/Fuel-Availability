@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 
 from flask import request
@@ -17,7 +18,34 @@ def admin_home():
 
 
 def admin_panel():
-    return render_template("admin.panel.html")
+    data = {}
+
+    # TODAY's LOG FILES
+    # -------------------------------------
+
+    # Get File Names
+    now = datetime.now()
+    data['file_name_all'] = os.path.join(
+        "logs",
+        now.strftime("all_%Y_%m_%d.log")
+    )
+    data['file_name_unique'] = os.path.join(
+        "logs",
+        now.strftime("unique_%Y_%m_%d.log")
+    )
+
+    # Open Files and Get Info
+    with open(data['file_name_all'], "r", encoding="utf-8") as _latest_log_all:
+        latest_log_last_lines = _latest_log_all.readlines()
+        data['latest_log_last_length'] = len(latest_log_last_lines)
+        data['latest_log_last_lines'] = latest_log_last_lines[-10:]
+
+    with open(data['file_name_unique'], "r", encoding="utf-8") as _latest_log_unique:
+        unique_log_last_lines = _latest_log_unique.readlines()
+        data['unique_log_last_length'] = len(unique_log_last_lines)
+        data['unique_log_last_lines'] = unique_log_last_lines[-10:]
+
+    return render_template("admin.panel.html", **data)
 
 
 def admin_update():

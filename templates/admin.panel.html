@@ -721,13 +721,13 @@
                             <div class="card mb-3 widget-content bg-midnight-bloom">
                                 <div class="widget-content-wrapper text-white">
                                     <div class="widget-content-left">
-                                        <div class="widget-heading">Total Requests</div>
-                                        <div class="widget-subheading">of All Time</div>
+                                        <div class="widget-heading">Unique Requests</div>
+                                        <div class="widget-subheading">of Today</div>
                                     </div>
                                     <div class="widget-content-right">
                                         <div class="widget-numbers text-white">
                                             <span>
-                                                {{ total_requests_all_time }}
+                                                {{ unique_log_last_length }}
                                             </span>
                                         </div>
                                     </div>
@@ -739,13 +739,13 @@
                             <div class="card mb-3 widget-content bg-arielle-smile">
                                 <div class="widget-content-wrapper text-white">
                                     <div class="widget-content-left">
-                                        <div class="widget-heading">Requests Today</div>
-                                        <div class="widget-subheading">of last 24 hours</div>
+                                        <div class="widget-heading">All Requests</div>
+                                        <div class="widget-subheading">of Today</div>
                                     </div>
                                     <div class="widget-content-right">
                                         <div class="widget-numbers text-white">
                                             <span>
-                                                {{ total_requests_last_24h }}
+                                                {{ latest_log_last_length }}
                                             </span>
                                         </div>
                                     </div>
@@ -777,7 +777,7 @@
                         <div class="col-md-12">
                             <div class="main-card mb-3 card">
                                 <div class="card-header">
-                                    Last Log File: {{ final_log_file_name }}
+                                    <b>Last Log File:</b> &nbsp;&nbsp; {{ file_name_all[5:] }}
                                 </div>
                                 <div class="table-responsive">
                                     <table class="align-middle mb-0 table table-borderless table-striped table-hover">
@@ -794,7 +794,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for one_log_line in log_file_lines_last_5 %}
+                                            {% for one_log_line_all in latest_log_last_lines %}
                                             <tr>
 
                                                 <!-- Not showing the count -->
@@ -811,7 +811,7 @@
                                                             </div>
                                                             <div class="widget-content-left flex2">
                                                                 <div class="widget-heading">
-                                                                    {{ one_log_line.split(' - ')[-1][1:-2] }}
+                                                                    {{ one_log_line_all.split(' - ')[-2] }}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -819,17 +819,92 @@
                                                 </td>
 
                                                 <td class="text-center">
-                                                    {{ one_log_line.split(' - ')[0][29:][1:-1] }}
+                                                    {{ one_log_line_all.split(" - ")[1] }}
                                                 </td>
 
                                                 <td class="text-center">
                                                     <div class="badge badge-info">
-                                                        {{ one_log_line.split(' - ')[1] }}
+                                                        {{ one_log_line_all.split(' - ')[-1] }}
                                                     </div>
                                                 </td>
 
                                                 <td class="text-center">
-                                                    {{ one_log_line[:28][1:-5] }}
+                                                    {{ one_log_line_all.split(" - ")[0] }}
+                                                </td>
+
+                                            </tr>
+                                            {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="d-block text-center card-footer">
+                                    <a href="#">
+                                        <button class="btn-wide btn btn-success">
+                                            Download
+                                        </button>
+                                    </a>
+                                    <!-- This funcationality will be available in the future versions soon -->
+                                    <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" disabled>
+                                        Delete
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="gifgang-last-log-file-content">
+                        <div class="col-md-12">
+                            <div class="main-card mb-3 card">
+                                <div class="card-header">
+                                    <b>Last Log File:</b> &nbsp;&nbsp; {{ file_name_unique[5:] }}
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                        <thead>
+                                            <tr>
+
+                                                <!-- Not showing the count -->
+                                                <!-- <th class="text-center">#</th> -->
+
+                                                <th class="text-center">IP</th>
+                                                <th>User Agent</th>
+                                                <th class="text-center">Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for one_log_line_unique in unique_log_last_lines %}
+                                            <tr>
+
+                                                <!-- Not showing the count -->
+                                                <!-- <td class="text-center text-muted"></td> -->
+
+                                                <td>
+                                                    <div class="widget-content p-0">
+                                                        <div class="widget-content-wrapper">
+                                                            <div class="widget-content-left mr-3">
+                                                                <div class="widget-content-left">
+                                                                    <img width="40" class="rounded-circle"
+                                                                        src="assets/images/avatars/4.jpg" alt="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="widget-content-left flex2">
+                                                                <div class="widget-heading">
+                                                                    {{ one_log_line_unique.split(' - ')[1] }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td class="text-center">
+                                                    {{ one_log_line_unique.split(" - ")[-1] }}
+                                                </td>
+
+                                                <td class="text-center">
+                                                    {{ one_log_line_unique.split(' - ')[0] }}
                                                 </td>
 
                                             </tr>
