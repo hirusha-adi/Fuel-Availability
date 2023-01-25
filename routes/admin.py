@@ -38,17 +38,11 @@ def admin_panel_catergory(category):
         fileslogs
     """
     
-    # login to redirect page if not logged in
     if not g.user:
         return redirect(url_for('login'))
-    
-    # send the currently logged in user
     adminAccess = isAdmin(user=g.user)
-    
-    # Login with account with admin access if you have not
     if not(adminAccess):
         return redirect(url_for('login'))
-    
     
     category = str(category)
     
@@ -58,47 +52,43 @@ def admin_panel_catergory(category):
         data['wmode'] = category.lower()
     else:
         data['wmode'] = "overview"
+
+    if data['wmode'] in ("overview", "alllogs", "uniquelogs", "fileslogs"):
+        now = datetime.now()
+        data['file_name_all'] = os.path.join(
+            "logs",
+            now.strftime("all_%Y_%m_%d.log")
+        )
+        data['file_name_unique'] = os.path.join(
+            "logs",
+            now.strftime("unique_%Y_%m_%d.log")
+        )
+
+        with open(data['file_name_all'], "r", encoding="utf-8") as _latest_log_all:
+            latest_log_last_lines = _latest_log_all.readlines()
+            data['latest_log_last_length'] = len(latest_log_last_lines)
+            if data['wmode'] == "alllogs":
+                data['latest_log_last_lines'] = latest_log_last_lines[::-1]
+            else:
+                data['latest_log_last_lines'] = latest_log_last_lines[-10:]
+
+        with open(data['file_name_unique'], "r", encoding="utf-8") as _latest_log_unique:
+            unique_log_last_lines = _latest_log_unique.readlines()
+            data['unique_log_last_length'] = len(unique_log_last_lines)
+            if data['wmode'] == "uniquelogs":
+                data['unique_log_last_lines'] = unique_log_last_lines[::-1]
+            else:
+                data['unique_log_last_lines'] = unique_log_last_lines[-10:]
+
+       
+        if data['wmode'] == "fileslogs":
+            data['all_log_file_list'] = [filename for filename in os.listdir("logs") if filename not in (data['file_name_all'][5:], data['file_name_unique'][5:])]
     
-    # TODAY's LOG FILES
-    # -------------------------------------
-
-    # Get File Names
-    now = datetime.now()
-    data['file_name_all'] = os.path.join(
-        "logs",
-        now.strftime("all_%Y_%m_%d.log")
-    )
-    data['file_name_unique'] = os.path.join(
-        "logs",
-        now.strftime("unique_%Y_%m_%d.log")
-    )
-
-    # Open Files and Get Info
-    with open(data['file_name_all'], "r", encoding="utf-8") as _latest_log_all:
-        latest_log_last_lines = _latest_log_all.readlines()
-        data['latest_log_last_length'] = len(latest_log_last_lines)
-        if data['wmode'] == "alllogs":
-            data['latest_log_last_lines'] = latest_log_last_lines[::-1]
-        else:
-            data['latest_log_last_lines'] = latest_log_last_lines[-10:]
-
-    with open(data['file_name_unique'], "r", encoding="utf-8") as _latest_log_unique:
-        unique_log_last_lines = _latest_log_unique.readlines()
-        data['unique_log_last_length'] = len(unique_log_last_lines)
-        if data['wmode'] == "uniquelogs":
-            data['unique_log_last_lines'] = unique_log_last_lines[::-1]
-        else:
-            data['unique_log_last_lines'] = unique_log_last_lines[-10:]
-    
-    data['unique_requests_percentage'] = str((data['unique_log_last_length']/data['latest_log_last_length'])*100)[:4]
-
-    if data['wmode'] == "fileslogs":
-        data['all_log_file_list'] = [filename for filename in os.listdir("logs") if filename not in (data['file_name_all'][5:], data['file_name_unique'][5:])]
-    
-    if data['wmode'] == "overview":
-        data['total_no_users'] = len(Users.getAllUsers())
-        data["total_pending_stations"] = len(Pending.getAllStations())
-        data["total_approved_stations"] = len(Stations.getAllStations())
+        if data['wmode'] == "overview":
+            data['unique_requests_percentage'] = str((data['unique_log_last_length']/data['latest_log_last_length'])*100)[:4]
+            data['total_no_users'] = len(Users.getAllUsers())
+            data["total_pending_stations"] = len(Pending.getAllStations())
+            data["total_approved_stations"] = len(Stations.getAllStations())
     
     return render_template("admin.panel.html", **data)
 
