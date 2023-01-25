@@ -24,8 +24,20 @@ def isAdmin(user):
 def admin_home():
     return render_template("admin.html")
 
-
 def admin_panel():
+    return redirect(url_for('admin_panel_catergory', category='overview'))
+
+def admin_panel_catergory(category):
+    
+    """
+    category:
+        overview
+        settings
+        alllogs
+        uniquelogs
+        fileslogs
+    """
+    
     # login to redirect page if not logged in
     if not g.user:
         return redirect(url_for('login'))
@@ -36,20 +48,17 @@ def admin_panel():
     # Login with account with admin access if you have not
     if not(adminAccess):
         return redirect(url_for('login'))
-            
+    
+    
+    category = str(category)
     
     data = {}
 
-    """
-    modes:
-        overview
-        settings
-        alllogs
-        uniquelogs
-        fileslogs
-    """
-    data['wmode'] = "fileslogs"
-
+    if category.lower() in ("overview", "settings", "alllogs", "uniquelogs", "filelogs"):
+        data['wmode'] = category.lower()
+    else:
+        data['wmode'] = "overview"
+        
     # TODAY's LOG FILES
     # -------------------------------------
 
@@ -83,8 +92,13 @@ def admin_panel():
     
     data['unique_requests_percentage'] = str((data['unique_log_last_length']/data['latest_log_last_length'])*100)[:4]
 
-    # if fileslog:
-    data['all_log_file_list'] = [filename for filename in os.listdir("logs") if filename not in (data['file_name_all'][5:], data['file_name_unique'][5:])]
+    if data['wmode'] == "fileslogs":
+        data['all_log_file_list'] = [filename for filename in os.listdir("logs") if filename not in (data['file_name_all'][5:], data['file_name_unique'][5:])]
+    
+    if data['wmode'] == "overview":
+        data['total_no_users'] = len(Users.getAllUsers())
+        data["total_pending_stations"] = len(Pending.getAllStations())
+        data["total_approved_stations"] = len(Stations.getAllStations())
     
     return render_template("admin.panel.html", **data)
 
