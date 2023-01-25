@@ -95,6 +95,7 @@ app.add_url_rule("/admin/update", 'admin_update', admin_update, methods=['GET'])
 app.add_url_rule("/admin/approve", 'admin_approve', admin_approve, methods=['GET', 'POST'])
 
 app.add_url_rule("/admin/panel", 'admin_panel', admin_panel, methods=['GET'])
+app.add_url_rule("/admin/panel/<category>", 'admin_panel_catergory', admin_panel_catergory, methods=['GET'])
 
 app.add_url_rule("/admin/download/log/latest", 'admin_download_log_noargs', admin_download_log_noargs, methods=['GET'])
 app.add_url_rule("/admin/download/log/latest/<logtype>", 'admin_download_log', admin_download_log, methods=['GET'])
