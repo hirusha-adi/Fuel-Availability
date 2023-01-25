@@ -1083,7 +1083,8 @@
                 </div>
             <!-- Overview MAIN BODY ENDS HERE -->
             
-            {% elif wmode == "settings" %}
+            {% elif wmode == "settings" %} 
+            <!-- COMPLETE THIS*** -->
             <!-- Settings MAIN BODY STARTS HERE -->
                 <div class="app-main__outer">
                     <div class="app-main__inner">
@@ -1462,7 +1463,7 @@
                                 <!-- page info starts here -->
                                 <div class="page-title-heading">
                                     <div class="page-title-icon">
-                                        <i class="fa-solid fa-gauge"></i>
+                                        <i class="fa-solid fa-book"></i>
                                     </div>
                                     <div>
                                         {% if wmode == "uniquelogs" %}
@@ -1495,19 +1496,37 @@
                                         <button type="button" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
                                             <span class="btn-icon-wrapper pr-2 opacity-7">
-                                                <i class="fa-solid fa-location-pin"></i>
+                                                <i class="fa-solid fa-book"></i>
                                             </span>
-                                            Pins
+                                            Logs
                                         </button>
                                         <div tabindex="-1" role="menu" aria-hidden="true"
                                             class="dropdown-menu dropdown-menu-right">
                                             <ul class="nav flex-column">
 
                                                 <li class="nav-item">
-                                                    <a href="#" class="nav-link">
+                                                    <a href="{{ url_for('admin_panel_catergory', category='alllogs') }}" class="nav-link">
                                                         <i class="nav-link-icon lnr-inbox"></i>
                                                         <span>
-                                                            Start
+                                                            All Logs
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="{{ url_for('admin_panel_catergory', category='uniquelogs') }}" class="nav-link">
+                                                        <i class="nav-link-icon lnr-inbox"></i>
+                                                        <span>
+                                                            Unique Logs
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="{{ url_for('admin_panel_catergory', category='fileslogs') }}" class="nav-link">
+                                                        <i class="nav-link-icon lnr-inbox"></i>
+                                                        <span>
+                                                            Log Files
                                                         </span>
                                                     </a>
                                                 </li>
