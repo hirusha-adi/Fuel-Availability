@@ -1080,13 +1080,13 @@
                                 <!-- page info starts here -->
                                 <div class="page-title-heading">
                                     <div class="page-title-icon">
-                                        <i class="fa-solid fa-gauge"></i>
+                                        <i class="fa-solid fa-cog"></i>
                                     </div>
                                     <div>
-                                        Overview
+                                        Settings
                                         <div class="page-title-subheading">
                                             This is Admin Dashboard of <a href="{{ url_for('index') }}">Fuel App</a>.
-                                            This is the Overview Page
+                                            All configurations in the `database/settings.json` can be modified here except fot Admin User Information
                                         </div>
                                     </div>
                                 </div>
@@ -1124,188 +1124,104 @@
                             </div>
                         </div>
 
-                        <div class="row" id="fuelapp-request-stats">
-                            <div class="col-md-6 col-xl-4">
-                                <div class="card mb-3 widget-content bg-midnight-bloom">
-                                    <div class="widget-content-wrapper text-white">
-                                        <div class="widget-content-left">
-                                            <div class="widget-heading">Unique Requests</div>
-                                            <div class="widget-subheading">of Today</div>
-                                        </div>
-                                        <div class="widget-content-right">
-                                            <div class="widget-numbers text-white">
-                                                <span>
-                                                    {{ unique_log_last_length }}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 col-xl-4">
-                                <div class="card mb-3 widget-content bg-arielle-smile">
-                                    <div class="widget-content-wrapper text-white">
-                                        <div class="widget-content-left">
-                                            <div class="widget-heading">All Requests</div>
-                                            <div class="widget-subheading">of Today</div>
-                                        </div>
-                                        <div class="widget-content-right">
-                                            <div class="widget-numbers text-white">
-                                                <span>
-                                                    {{ latest_log_last_length }}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 col-xl-4">
-                                <div class="card mb-3 widget-content bg-grow-early">
-                                    <div class="widget-content-wrapper text-white">
-                                        <div class="widget-content-left">
-                                            <div class="widget-heading">Todays Percentage</div>
-                                            <div class="widget-subheading">from Total Requests</div>
-                                        </div>
-                                        <div class="widget-content-right">
-                                            <div class="widget-numbers text-white">
-                                                <span>
-                                                    {{ percentage_of_today_from_total }} %
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row" id="fuelapp-last-log-file-content">
+                        <div class="row" id="fuelapp-main-settings">
                             <div class="col-md-12">
                                 <div class="main-card mb-3 card">
                                     <div class="card-header">
-                                        <b>Last Log File:</b> &nbsp;&nbsp; {{ file_name_all[5:] }}
+                                        <b>Main Settings</b>
                                     </div>
                                     <div class="table-responsive">
                                         <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                                             <thead>
                                                 <tr>
-
-                                                    <!-- Not showing the count -->
-                                                    <!-- <th class="text-center">#</th> -->
-
-                                                    <th>User Agent</th>
-                                                    <th class="text-center">IP</th>
-                                                    <th class="text-center">Route</th>
-                                                    <th class="text-center">Time</th>
+                                                    <th>Key</th>
+                                                    <th class="text-center">Value</th>
+                                                    <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {% for one_log_line_all in latest_log_last_lines %}
                                                 <tr>
-
-                                                    <!-- Not showing the count -->
-                                                    <!-- <td class="text-center text-muted"></td> -->
-
                                                     <td>
                                                         <div class="widget-content p-0">
                                                             <div class="widget-content-wrapper">
                                                                 <div class="widget-content-left flex2">
                                                                     <div class="widget-heading">
-                                                                        {{ one_log_line_all.split(' - ')[-2] }}
+                                                                        Flask Secret
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
-
                                                     <td class="text-center">
-                                                        {{ one_log_line_all.split(" - ")[1] }}
+                                                        <input id="s-i-flask-secret" type="text" value="{{ settings_flasksecret }}" placeholder="Flask Secret" disabled>
                                                     </td>
-
                                                     <td class="text-center">
-                                                        <div class="badge badge-info">
-                                                            {{ one_log_line_all.split(' - ')[-1] }}
-                                                        </div>
+                                                        <a href="#">
+                                                            <button class="btn-wide btn btn-success" disabled>
+                                                                Update
+                                                            </button>
+                                                        </a>
+                                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" 
+                                                        onclick="document.getElementById('s-i-flask-secret').value = ''" disabled>
+                                                            Clear
+                                                        </button>
                                                     </td>
-
-                                                    <td class="text-center">
-                                                        {{ one_log_line_all.split(" - ")[0] }}
-                                                    </td>
-
                                                 </tr>
-                                                {% endfor %}
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <div class="d-block text-center card-footer">
-                                        <a href="#">
-                                            <button class="btn-wide btn btn-success">
-                                                Download
-                                            </button>
-                                        </a>
-                                        <!-- This funcationality will be available in the future versions soon -->
-                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" disabled>
-                                            Delete
-                                        </button>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" id="fuelapp-last-log-file-content">
-                            <div class="col-md-12">
-                                <div class="main-card mb-3 card">
-                                    <div class="card-header">
-                                        <b>Last Log File:</b> &nbsp;&nbsp; {{ file_name_unique[5:] }}
-                                    </div>
-                                    <div class="table-responsive">
-                                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                                            <thead>
                                                 <tr>
-
-                                                    <!-- Not showing the count -->
-                                                    <!-- <th class="text-center">#</th> -->
-
-                                                    <th class="text-center">IP</th>
-                                                    <th>User Agent</th>
-                                                    <th class="text-center">Time</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for one_log_line_unique in unique_log_last_lines %}
-                                                <tr>
-
-                                                    <!-- Not showing the count -->
-                                                    <!-- <td class="text-center text-muted"></td> -->
-
                                                     <td>
                                                         <div class="widget-content p-0">
                                                             <div class="widget-content-wrapper">
                                                                 <div class="widget-content-left flex2">
                                                                     <div class="widget-heading">
-                                                                        {{ one_log_line_unique.split(' - ')[1] }}
+                                                                        Jawg Token
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
-
                                                     <td class="text-center">
-                                                        {{ one_log_line_unique.split(" - ")[-1] }}
+                                                        <input id="s-i-jawg-token" type="text" value="{{ settings_jawgtoken }}" placeholder="Jawg Token" >
                                                     </td>
-
                                                     <td class="text-center">
-                                                        {{ one_log_line_unique.split(' - ')[0] }}
+                                                        <a href="#">
+                                                            <button class="btn-wide btn btn-success">
+                                                                Update
+                                                            </button>
+                                                        </a>
+                                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" 
+                                                        onclick="document.getElementById('s-i-jawg-token').value = ''">
+                                                            Clear
+                                                        </button>
                                                     </td>
-
                                                 </tr>
-                                                {% endfor %}
-
+                                                <tr>
+                                                    <td>
+                                                        <div class="widget-content p-0">
+                                                            <div class="widget-content-wrapper">
+                                                                <div class="widget-content-left flex2">
+                                                                    <div class="widget-heading">
+                                                                        Contact Email
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input id="s-i-contact-email" type="text" value="{{ settings_contactemail }}" placeholder="Contact Email" >
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="#">
+                                                            <button class="btn-wide btn btn-success">
+                                                                Update
+                                                            </button>
+                                                        </a>
+                                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" 
+                                                        onclick="document.getElementById('s-i-contact-email').value = ''">
+                                                            Clear
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                
                                             </tbody>
                                         </table>
                                     </div>

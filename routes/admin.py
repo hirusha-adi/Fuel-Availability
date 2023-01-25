@@ -10,15 +10,14 @@ from flask import redirect
 from flask import jsonify
 
 from generate import makeMap
+from database import settings
 from database.mongo import Pending
 from database.mongo import Stations
 from database.mongo import Users
-from database.settings import adminkey
-from database.settings import Admin
 
 def isAdmin(user):
     # The in user's information matches with the info in the backend
-    return ((user['email'] == Admin.username) or (user['email'] == Admin.email)) and (user['id'] == Admin.id) and (user['password'] == Admin.password)
+    return ((user['email'] == settings.Admin.username) or (user['email'] == settings.Admin.email)) and (user['id'] == settings.Admin.id) and (user['password'] == settings.Admin.password)
 
 
 def admin_home():
@@ -89,6 +88,13 @@ def admin_panel_catergory(category):
             data['total_no_users'] = len(Users.getAllUsers())
             data["total_pending_stations"] = len(Pending.getAllStations())
             data["total_approved_stations"] = len(Stations.getAllStations())
+
+    if data['wmode'] == "settings":
+        data['settings_flasksecret'] = settings.flaskSecret
+        data['settings_jawgtoken'] = settings.JawgToken
+        data['settings_contactemail'] = settings.contactEmail
+    
+    
     
     return render_template("admin.panel.html", **data)
 
@@ -238,3 +244,6 @@ def admin_delete_file(logfilename):
         return jsonify({"status": "Deleted"})
     except:
         return jsonify({"status": "Failed"})
+
+def amdin_settings_change(what):
+    return "hi"
