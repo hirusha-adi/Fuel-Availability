@@ -96,8 +96,14 @@ app.add_url_rule("/admin/approve", 'admin_approve', admin_approve, methods=['GET
 
 app.add_url_rule("/admin/panel", 'admin_panel', admin_panel, methods=['GET'])
 
-app.add_url_rule("/admin/download/log", 'admin_download_log_noargs', admin_download_log_noargs, methods=['GET'])
-app.add_url_rule("/admin/download/log/<logtype>", 'admin_download_log', admin_download_log, methods=['GET'])
+app.add_url_rule("/admin/download/log/latest", 'admin_download_log_noargs', admin_download_log_noargs, methods=['GET'])
+app.add_url_rule("/admin/download/log/latest/<logtype>", 'admin_download_log', admin_download_log, methods=['GET'])
+
+app.add_url_rule("/admin/download/log/old", 'admin_download_file_no_arg', admin_download_file_no_arg, methods=['GET'])
+app.add_url_rule("/admin/download/log/old/<logfilename>", 'admin_download_file', admin_download_file, methods=['GET'])
+
+app.add_url_rule("/admin/delete/log/old", 'admin_delete_file_no_arg', admin_delete_file_no_arg, methods=['GET'])
+app.add_url_rule("/admin/delete/log/old/<logfilename>", 'admin_delete_file', admin_delete_file, methods=['GET'])
 
 
 def runApp():

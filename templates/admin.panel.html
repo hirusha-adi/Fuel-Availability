@@ -1624,16 +1624,18 @@
                                                             </div>
                                                         </td>
                                                         <td class="text-center">
-                                                            <a href="#">
+                                                            <a href="{{ url_for('admin_download_file', logfilename=log_file_name) }}">
                                                                 <button class="btn-wide btn btn-success">
                                                                     Download
                                                                 </button>
-                                                                <a href="#">
-                                                                    <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger">
+                                                            </a>
+                                                                <!-- <a href="#"> -->
+                                                                    <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger"
+                                                                        data-value="{{ log_file_name }}" id="delete-button-lfl" onclick="deleteOneFile(this)">
                                                                         Delete
                                                                     </button>
-                                                                </a>
-                                                            </a>
+                                                                <!-- </a> -->
+                                                            
                                                         </td>
                                                     </tr>
                                                     {% endfor %}
@@ -1689,6 +1691,33 @@
     <!-- Custom JS -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/admin.panel.js') }}"></script>
 
+    <!-- Custom JS -->
+    <script>
+
+        function deleteOneFile(element){
+            var value = element.getAttribute("data-value");
+            var flaskurl = "{{ url_for('admin_delete_file', logfilename='') }}"
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", flaskurl + value, true);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    if (data["status"] === "Deleted") {
+                        element.innerHTML = "Deleted";
+                        element.disabled = true;
+                    } else {
+                        element.innerHTML = "Failed";
+                        element.disabled = true;
+                    }
+                }
+            };
+
+            xhr.send();
+        }
+
+    </script>
 </body>
 
 </html>

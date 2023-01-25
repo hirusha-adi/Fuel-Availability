@@ -193,3 +193,44 @@ def admin_approve():
         data['pending'] = Pending.getAllStations()
         data['pending_length'] = len(data['pending'])
         return render_template('accept.html', **data)
+
+def admin_download_file_no_arg():
+    return redirect(url_for('admin_panel'))
+
+def admin_download_file(logfilename):
+    # login to redirect page if not logged in
+    if not g.user:
+        return redirect(url_for('login'))
+    
+    # send the currently logged in user
+    adminAccess = isAdmin(user=g.user)
+    
+    # Login with account with admin access if you have not
+    if not(adminAccess):
+        return redirect(url_for('login'))
+     
+    return send_file(os.path.join("logs", logfilename))
+
+def admin_delete_file_no_arg():
+    return redirect(url_for('admin_panel'))
+
+def admin_delete_file(logfilename):
+    
+    # login to redirect page if not logged in
+    if not g.user:
+        return redirect(url_for('login'))
+    
+    # send the currently logged in user
+    adminAccess = isAdmin(user=g.user)
+    
+    # Login with account with admin access if you have not
+    if not(adminAccess):
+        return redirect(url_for('login'))
+    
+    finalfname = os.path.join("logs", logfilename)
+    
+    try:
+        os.remove(finalfname)
+        return jsonify({"status": "Deleted"})
+    except:
+        return jsonify({"status": "Failed"})
