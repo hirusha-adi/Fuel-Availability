@@ -46,8 +46,9 @@ def admin_panel():
         settings
         alllogs
         uniquelogs
+        fileslogs
     """
-    data['wmode'] = "uniquelogs"
+    data['wmode'] = "fileslogs"
 
     # TODAY's LOG FILES
     # -------------------------------------
@@ -82,6 +83,9 @@ def admin_panel():
     
     data['unique_requests_percentage'] = str((data['unique_log_last_length']/data['latest_log_last_length'])*100)[:4]
 
+    # if fileslog:
+    data['all_log_file_list'] = os.listdir("logs")
+    
     return render_template("admin.panel.html", **data)
 
 
