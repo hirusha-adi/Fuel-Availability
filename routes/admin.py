@@ -54,11 +54,11 @@ def admin_panel_catergory(category):
     
     data = {}
 
-    if category.lower() in ("overview", "settings", "alllogs", "uniquelogs", "filelogs"):
+    if category.lower() in ("overview", "settings", "alllogs", "uniquelogs", "fileslogs"):
         data['wmode'] = category.lower()
     else:
         data['wmode'] = "overview"
-        
+    
     # TODAY's LOG FILES
     # -------------------------------------
 
