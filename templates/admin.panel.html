@@ -63,9 +63,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ url_for('admin_panel') }}" class="nav-link">
                                 <i class="nav-link-icon fa fa-cog"></i>
-                                Settings
+                                Admin Panel
                             </a>
                         </li>
                         <li class="dropdown nav-item">
@@ -86,28 +86,11 @@
                                     <div class="btn-group">
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                             class="p-0 btn">
-                                            <img width="42" class="rounded-circle"
-                                                src="{{ url_for('static', filename='images/hirusha.jpeg') }}" alt="">
+                                                <img src="{{ url_for('static', filename='images/logo-text.png') }}" alt="pfp" style="max-width: 140px;">
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true"
                                             class="dropdown-menu dropdown-menu-right">
-                                            <h6 tabindex="-1" class="dropdown-header">Sections</h6>
-                                            <a href="#fuelapp-request-stats">
-                                                <button type="button" tabindex="0"
-                                                    class="dropdown-item">Requests</button>
-                                            </a>
-                                            <a href="#fuelapp-last-log-file-content">
-                                                <button type="button" tabindex="0" class="dropdown-item">
-                                                    Latest Log
-                                                </button>
-                                            </a>
-                                            <a href="#fuelapp-target-info">
-                                                <button type="button" tabindex="0" class="dropdown-item">
-                                                    Targets
-                                                </button>
-                                            </a>
-                                            <div tabindex="-1" class="dropdown-divider"></div>
                                             <h6 tabindex="-1" class="dropdown-header">Page</h6>
                                             <a href="#">
                                                 <button type="button" tabindex="0" class="dropdown-item">
@@ -131,8 +114,8 @@
                                         @hirushaadi
                                     </div>
                                 </div>
-                                <div class="widget-content-right header-user-info ml-3">
-                                    <img src="{{ admin_profile_picture }}" alt="pfp" style="max-width: 45px;">
+                                <div class="widget-content-right header-user-info ml-3 rounded-circle">
+                                    <img width="42" class="rounded-circle"src="{{ url_for('static', filename='images/hirusha.jpeg') }}" alt="">
                                 </div>
                             </div>
                         </div>
@@ -717,6 +700,7 @@
                     </div>
                 </div>
             </div>
+            <!-- Side Bar ENDS HERE -->
 
             {% if wmode == "overview" %}
             <!-- Overview MAIN BODY STARTS HERE -->
@@ -1465,9 +1449,8 @@
                                             <b>Last Log File:</b> &nbsp;&nbsp; {{ file_name_unique[5:] }}
                                         {% elif wmode == "fileslogs" %}
                                             <b>Last Log Files:</b> &nbsp;&nbsp; 
-                                            <a href="#">{{ file_name_all[5:] }}</a>,&nbsp;
-                                            <a href="#">{{ file_name_unique[5:] }}</a>
-                                                
+                                            <a href="{{ url_for('admin_panel_catergory', category='alllogs') }}">{{ file_name_all[5:] }}</a>,&nbsp;
+                                            <a href="{{ url_for('admin_panel_catergory', category='uniquelogs') }}">{{ file_name_unique[5:] }}</a>
                                         {% endif %}
                                     </div>
                                     <div class="table-responsive">
@@ -1616,6 +1599,7 @@
 
             {% endif %}
         </div>
+        
     </div>
 
     <!-- Custom JS -->
