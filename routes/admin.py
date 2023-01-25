@@ -84,7 +84,7 @@ def admin_panel():
     data['unique_requests_percentage'] = str((data['unique_log_last_length']/data['latest_log_last_length'])*100)[:4]
 
     # if fileslog:
-    data['all_log_file_list'] = os.listdir("logs")
+    data['all_log_file_list'] = [filename for filename in os.listdir("logs") if filename not in (data['file_name_all'][5:], data['file_name_unique'][5:])]
     
     return render_template("admin.panel.html", **data)
 
