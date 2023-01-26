@@ -251,4 +251,35 @@ def admin_delete_file(logfilename):
         return jsonify({"status": "Failed"})
 
 def amdin_settings_change(what):
-    return "hi"
+    if request.is_json:
+        newval = request.json['newval']
+        
+    try:
+        if what == "s-i-jawg-token":
+            settings.uJawgToken(new=newval)
+        elif what == "s-i-contact-email":
+            settings.ucontactEmail(new=newval)
+
+        elif what == "s-i-mongo-ip":
+            settings.MongoDB.uip(new=newval)
+        elif what == "s-i-mongo-username":
+            settings.MongoDB.uusername(new=newval)
+        elif what == "s-i-mongo-password":
+            settings.MongoDB.upassword(new=newval)
+        
+        elif what == "s-i-web-host":
+            settings.WebServer.uhost(new=newval)
+        elif what == "s-i-web-port":
+            settings.WebServer.uport(new=newval)
+        elif what == "s-i-web-debug":
+            if newval == "on":
+                settings.WebServer.udebug(new=True)
+            else:
+                settings.WebServer.udebug(new=False)
+
+        return jsonify({"wstatus": "ok"})
+    
+    except Exception as e:
+        return jsonify({"wstatus": f"[Backend Error] -> {e}"})
+    
+    
