@@ -16,7 +16,6 @@ from database.mongo import Stations
 from database.mongo import Users
 
 def isAdmin(user):
-    # The in user's information matches with the info in the backend
     return ((user['email'] == settings.Admin.username) or (user['email'] == settings.Admin.email)) and (user['id'] == settings.Admin.id) and (user['password'] == settings.Admin.password)
 
 
@@ -108,14 +107,12 @@ def admin_download_log_noargs():
     return redirect(url_for('admin_panel'))
 
 def admin_download_log(logtype):
-    # login to redirect page if not logged in
+    
     if not g.user:
         return redirect(url_for('login'))
-    
-    # send the currently logged in user
+
     adminAccess = isAdmin(user=g.user)
-    
-    # Login with account with admin access if you have not
+
     if not(adminAccess):
         return redirect(url_for('login'))
     
@@ -141,14 +138,12 @@ def admin_download_log(logtype):
         return redirect(url_for('admin_panel'))
 
 def admin_update():
-    # login to redirect page if not logged in
+    
     if not g.user:
         return redirect(url_for('login'))
-    
-    # send the currently logged in user
+
     adminAccess = isAdmin(user=g.user)
-    
-    # Login with account with admin access if you have not
+
     if not(adminAccess):
         return redirect(url_for('login'))
     
@@ -157,14 +152,12 @@ def admin_update():
     return redirect(url_for('map'))
 
 def admin_approve():
-    # login to redirect page if not logged in
+    
     if not g.user:
         return redirect(url_for('login'))
-    
-    # send the currently logged in user
+
     adminAccess = isAdmin(user=g.user)
-    
-    # Login with account with admin access if you have not
+
     if not(adminAccess):
         return redirect(url_for('login'))
     
@@ -213,14 +206,12 @@ def admin_download_file_no_arg():
     return redirect(url_for('admin_panel'))
 
 def admin_download_file(logfilename):
-    # login to redirect page if not logged in
+    
     if not g.user:
         return redirect(url_for('login'))
-    
-    # send the currently logged in user
+
     adminAccess = isAdmin(user=g.user)
-    
-    # Login with account with admin access if you have not
+
     if not(adminAccess):
         return redirect(url_for('login'))
      
@@ -231,14 +222,11 @@ def admin_delete_file_no_arg():
 
 def admin_delete_file(logfilename):
     
-    # login to redirect page if not logged in
     if not g.user:
         return redirect(url_for('login'))
-    
-    # send the currently logged in user
+
     adminAccess = isAdmin(user=g.user)
-    
-    # Login with account with admin access if you have not
+
     if not(adminAccess):
         return redirect(url_for('login'))
     
