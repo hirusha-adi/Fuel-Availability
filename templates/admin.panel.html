@@ -1200,7 +1200,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success">
+                                                            <button class="btn-wide btn btn-success" data-target="s-i-jawg-token" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1227,7 +1227,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success">
+                                                            <button class="btn-wide btn btn-success" data-target="s-i-contact-email" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1290,7 +1290,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success">
+                                                            <button class="btn-wide btn btn-success" data-target="s-i-mongo-ip" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1317,7 +1317,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success">
+                                                            <button class="btn-wide btn btn-success" data-target="s-i-mongo-username" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1344,7 +1344,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success">
+                                                            <button class="btn-wide btn btn-success" data-target="s-i-mongo-password" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1407,7 +1407,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success">
+                                                            <button class="btn-wide btn btn-success" data-target="s-i-web-host" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1434,7 +1434,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success">
+                                                            <button class="btn-wide btn btn-success" data-target="s-i-web-port" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1461,7 +1461,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success">
+                                                            <button class="btn-wide btn btn-success" data-target="s-i-web-debug" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1773,7 +1773,7 @@
     <!-- Custom JS -->
     <script>
 
-        function deleteOneFile(element){
+        function deleteOneFile(element) {
             var value = element.getAttribute("data-value");
             var flaskurl = "{{ url_for('admin_delete_file', logfilename='') }}"
 
@@ -1812,6 +1812,35 @@
             document.getElementById("s-i-web-port").value = "";
             document.getElementById("s-i-web-debug").value = "off";
             document.getElementById("s-i-web-debug").checked = false;
+        }
+
+        function updateSettingInputText(element) {
+
+            var targetId = element.getAttribute("data-target")
+            var value = document.getElementById(targetId).value
+            var weburl = "{{ url_for('amdin_settings_change', what='') }}" + targetId
+            console.log(weburl)
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", weburl);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            const requestBody = JSON.stringify(
+                { 
+                    newval: value 
+                }
+            );
+            xhr.send(requestBody);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                  const response = JSON.parse(xhr.responseText);
+                  if (response.wstatus === "ok") {
+                    element.innerHTML = "Updated"
+                  }
+                } else {
+                    element.innerHTML = "Error: " + xhr.status
+                    console.log(response.wstatus)
+                }
+            };
         }
 
     </script>
