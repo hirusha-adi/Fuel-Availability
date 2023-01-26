@@ -19,6 +19,48 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://kit.fontawesome.com/2a2e95598a.js" crossorigin="anonymous"></script>
 
+    <style>
+        input[type="text"] {
+            background-color: #dbdbdb;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 8px;
+            font-size: 14px;
+        }
+
+        .select-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        select {
+            background-color: #dbdbdb;
+            color: #444;
+            font-size: 14px;
+            padding: 8px 8px;
+            border: none;
+            border-radius: 5px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        select::after {
+            content: "";
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0; 
+            height: 0; 
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #444;
+        }
+
+        
+    </style>
+
 </head>
 
 <body>
@@ -533,6 +575,17 @@
                                 {% endif %}
                                     <i class="fa-solid fa-gear"></i>
                                     Settings
+                                </a>
+                            </li>
+                            
+                            <li>
+                                {% if wmode == "users" %}
+                                    <a href="#" class="mm-active">
+                                {% else %}
+                                    <a href="{{ url_for('admin_panel_catergory', category='users') }}" class="mm">
+                                {% endif %}
+                                    <i class="fa-solid fa-user"></i>
+                                    Users
                                 </a>
                             </li>
 
@@ -1761,6 +1814,177 @@
 
                 </div>
             <!-- All Logs MAIN BODY ENDS HERE -->
+
+            {% elif wmode == "users" %} 
+            <!-- Users MAIN BODY STARTS HERE -->
+                <div class="app-main__outer">
+                    <div class="app-main__inner">
+
+                        <!-- first row -->
+                        <div class="app-page-title">
+                            <div class="page-title-wrapper">
+
+                                <!-- page info starts here -->
+                                <div class="page-title-heading">
+                                    <div class="page-title-icon">
+                                        <i class="fa-solid fa-gauge"></i>
+                                    </div>
+                                    <div>
+                                        Users
+                                        <div class="page-title-subheading">
+                                            This is Admin Dashboard of <a href="{{ url_for('index') }}">Fuel App</a>.
+                                            You can manage the users here
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- page info ends here -->
+
+                                <!-- pins start here -->
+                                <div class="page-title-actions">
+                                    <div class="d-inline-block dropdown">
+                                        <button type="button" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
+                                            <span class="btn-icon-wrapper pr-2 opacity-7">
+                                                <i class="fa-solid fa-location-pin"></i>
+                                            </span>
+                                            Jump To
+                                        </button>
+                                        <div tabindex="-1" role="menu" aria-hidden="true"
+                                            class="dropdown-menu dropdown-menu-right">
+                                            <ul class="nav flex-column">
+
+                                                <li class="nav-item">
+                                                    <a href="#" class="nav-link">
+                                                        <i class="nav-link-icon lnr-inbox"></i>
+                                                        <span>
+                                                            Request Stats
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- pins end here -->
+
+                            </div>
+                        </div>
+
+                        <div class="row" id="fuelapp-last-log-file-all-content">
+                            <div class="col-md-12">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-header" style="display: flex; justify-content: center; align-items: center;">
+
+
+                                        &nbsp;
+                                        <button class="btn-wide btn btn-success" style="padding-top: 8px; padding-bottom: 8px;">
+                                            Search
+                                        </button>
+                                        &nbsp;&nbsp;for&nbsp;&nbsp;
+                                        <input id="" type="text" placeholder="Something">
+                                        &nbsp;&nbsp;in&nbsp;&nbsp;
+                                        <div class="select-container">
+                                            <select id="">
+                                              <option value="id">ID</option>
+                                              <option value="email">Email</option>
+                                              <option value="name">Name</option>
+                                            </select>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th class="text-center">Full Name</th>
+                                                    <th class="text-center">Email/Username</th>
+                                                    <th class="text-center">Password</th>
+                                                    <th class="text-center">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for one_user in users_all %}
+                                                    <tr>
+
+                                                        <td>
+                                                            <div class="widget-content p-0">
+                                                                <div class="widget-content-wrapper">
+                                                                    <div class="widget-content-left flex2">
+                                                                        <div class="widget-heading">
+                                                                            {% if one_user['id'] == user_admin_id %}
+                                                                                {{ one_user['id'] }}
+                                                                                <div class="badge badge-info">( ADMIN )</div>
+                                                                            {% else %}
+                                                                                {{ one_user['id'] }}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            <input type="text" value="{{ one_user['name'] }}">
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            <input type="text" value="{{ one_user['email'] }}">
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            <input type="text" value="{{ one_user['password'] }}">
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            <button class="btn-wide btn btn-success">
+                                                                Update
+                                                            </button>
+                                                            <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger">
+                                                                Delete
+                                                            </button>
+                                                        </td>
+
+                                                    </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="d-block text-center card-footer">
+                                        <!-- SETUP PAGINATION HERE -->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="app-wrapper-footer" id="fuelapp-footer-page-end">
+                        <div class="app-footer">
+                            <div class="app-footer__inner">
+                                <div class="app-footer-left">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="https://github.com/hirusha-adi" class="nav-link">
+                                                Made with &nbsp;
+                                                <i class="fa-solid fa-heart"></i>
+                                                &nbsp;
+                                                by @hirushaadi
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            <!-- Users MAIN BODY ENDS HERE -->
 
             {% endif %}
         </div>

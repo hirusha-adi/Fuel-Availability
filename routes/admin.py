@@ -34,6 +34,7 @@ def admin_panel_catergory(category):
         alllogs
         uniquelogs
         fileslogs
+        users
     """
     
     if not g.user:
@@ -46,10 +47,12 @@ def admin_panel_catergory(category):
     
     data = {}
 
-    if category.lower() in ("overview", "settings", "alllogs", "uniquelogs", "fileslogs"):
+    if category.lower() in ("overview", "settings", "alllogs", "uniquelogs", "fileslogs", "users"):
         data['wmode'] = category.lower()
     else:
         data['wmode'] = "overview"
+    
+    data['wmode'] = "users"
 
     if data['wmode'] in ("overview", "alllogs", "uniquelogs", "fileslogs"):
         now = datetime.now()
@@ -77,7 +80,6 @@ def admin_panel_catergory(category):
                 data['unique_log_last_lines'] = unique_log_last_lines[::-1]
             else:
                 data['unique_log_last_lines'] = unique_log_last_lines[-10:]
-
        
         if data['wmode'] == "fileslogs":
             data['all_log_file_list'] = [filename for filename in os.listdir("logs") if filename not in (data['file_name_all'][5:], data['file_name_unique'][5:])]
@@ -98,6 +100,10 @@ def admin_panel_catergory(category):
         data['settings_web_host'] = settings.WebServer.host
         data['settings_web_port'] = settings.WebServer.port
         data['settings_web_debug'] = settings.WebServer.debug
+    
+    if data['wmode'] == "users":
+        data['users_all'] = Users.getAllUsers()
+        data['user_admin_id'] = settings.Admin.id
     
     
     return render_template("admin.panel.html", **data)
