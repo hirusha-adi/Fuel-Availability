@@ -1815,6 +1815,7 @@
         }
 
         function updateSettingInputText(element) {
+            element.innerHTML = "Processing"
 
             var targetId = element.getAttribute("data-target")
             var value = document.getElementById(targetId).value
@@ -1841,6 +1842,11 @@
                     console.log(response.wstatus)
                 }
             };
+
+            setTimeout(function() {
+                    element.innerHTML = "Update"
+                }, 500
+            );
         }
 
     </script>
