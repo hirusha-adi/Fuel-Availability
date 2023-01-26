@@ -13,7 +13,7 @@ def uflaskSecret(new):
     flaskSecret = new
     data['flaskSecret'] = new
     with open(FILENAME, "w") as sf:
-        json.dump(data, sf)
+        json.dump(data, sf, indent=4)
 
 JawgToken = data['JawgToken']
 
@@ -22,7 +22,7 @@ def uJawgToken(new):
     JawgToken = new
     data['JawgToken'] = new
     with open(FILENAME, "w") as sf:
-        json.dump(data, sf)
+        json.dump(data, sf, indent=4)
         
 contactEmail = data['contactEmail']
 
@@ -31,7 +31,7 @@ def ucontactEmail(new):
     contactEmail = new
     data['contactEmail'] = new
     with open(FILENAME, "w") as sf:
-        json.dump(data, sf)
+        json.dump(data, sf, indent=4)
 
 uploadPath = os.path.join(os.getcwd(), 'static', 'uploads')
 if not (os.path.isdir(uploadPath)):
@@ -49,7 +49,7 @@ class MongoDB:
         MongoDB.ip = new
         data['mongodb']['ip'] = new
         with open(FILENAME, "w") as sf:
-            json.dump(data, sf)
+            json.dump(data, sf, indent=4)
         
     username: str = mongodb["username"]
     
@@ -57,7 +57,7 @@ class MongoDB:
         MongoDB.username = new
         data['mongodb']['username'] = new
         with open(FILENAME, "w") as sf:
-            json.dump(data, sf)
+            json.dump(data, sf, indent=4)
             
     password: str = mongodb["password"]
     
@@ -65,7 +65,7 @@ class MongoDB:
         MongoDB.password = new
         data['mongodb']['password'] = new
         with open(FILENAME, "w") as sf:
-            json.dump(data, sf)
+            json.dump(data, sf, indent=4)
     
 
 class WebServer:
@@ -77,7 +77,7 @@ class WebServer:
         WebServer.host = new
         data['webserver']['host'] = new
         with open(FILENAME, "w") as sf:
-            json.dump(data, sf)
+            json.dump(data, sf, indent=4)
             
     port = webserver['port']
     
@@ -85,7 +85,7 @@ class WebServer:
         WebServer.port = new
         data['webserver']['port'] = new
         with open(FILENAME, "w") as sf:
-            json.dump(data, sf)
+            json.dump(data, sf, indent=4)
             
             
     debug = webserver['debug']
@@ -94,7 +94,7 @@ class WebServer:
         WebServer.debug = new
         data['webserver']['debug'] = new
         with open(FILENAME, "w") as sf:
-            json.dump(data, sf)
+            json.dump(data, sf, indent=4)
 
 class Admin:
     admin = data["admin"]
