@@ -93,7 +93,12 @@ def admin_panel_catergory(category):
         data['settings_flasksecret'] = settings.flaskSecret
         data['settings_jawgtoken'] = settings.JawgToken
         data['settings_contactemail'] = settings.contactEmail
-    
+        data['settings_mongo_ip'] = settings.MongoDB.ip
+        data['settings_mongo_username'] = settings.MongoDB.username
+        data['settings_mongo_password'] = settings.MongoDB.password
+        data['settings_web_host'] = settings.WebServer.host
+        data['settings_web_port'] = settings.WebServer.port
+        data['settings_web_debug'] = settings.WebServer.debug
     
     
     return render_template("admin.panel.html", **data)

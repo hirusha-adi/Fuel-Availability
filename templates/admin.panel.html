@@ -1107,10 +1107,26 @@
                                             <ul class="nav flex-column">
 
                                                 <li class="nav-item">
-                                                    <a href="#" class="nav-link">
+                                                    <a href="#fuelapp-main-settings" class="nav-link">
                                                         <i class="nav-link-icon lnr-inbox"></i>
                                                         <span>
-                                                            Start
+                                                            Main
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#fuelapp-mongo-settings" class="nav-link">
+                                                        <i class="nav-link-icon lnr-inbox"></i>
+                                                        <span>
+                                                            MongoDB
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#fuelapp-web-settings" class="nav-link">
+                                                        <i class="nav-link-icon lnr-inbox"></i>
+                                                        <span>
+                                                            Web
                                                         </span>
                                                     </a>
                                                 </li>
@@ -1229,12 +1245,245 @@
                                     <div class="d-block text-center card-footer">
                                         <a href="#">
                                             <button class="btn-wide btn btn-success">
-                                                Download
+                                                Update All
                                             </button>
                                         </a>
-                                        <!-- This funcationality will be available in the future versions soon -->
-                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" disabled>
-                                            Delete
+                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" onclick="clearMainSettingsEverything()">
+                                            Clear All
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" id="fuelapp-mongo-settings">
+                            <div class="col-md-12">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-header">
+                                        <b>Mongo DB Settings</b>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Key</th>
+                                                    <th class="text-center">Value</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="widget-content p-0">
+                                                            <div class="widget-content-wrapper">
+                                                                <div class="widget-content-left flex2">
+                                                                    <div class="widget-heading">
+                                                                        Server IP
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input id="s-i-mongo-ip" type="text" value="{{ settings_mongo_ip }}" placeholder="Server IP" >
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="#">
+                                                            <button class="btn-wide btn btn-success">
+                                                                Update
+                                                            </button>
+                                                        </a>
+                                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" 
+                                                        onclick="document.getElementById('s-i-mongo-ip').value = ''">
+                                                            Clear
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="widget-content p-0">
+                                                            <div class="widget-content-wrapper">
+                                                                <div class="widget-content-left flex2">
+                                                                    <div class="widget-heading">
+                                                                        Server Username
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input id="s-i-mongo-username" type="text" value="{{ settings_mongo_username }}" placeholder="Contact Email" >
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="#">
+                                                            <button class="btn-wide btn btn-success">
+                                                                Update
+                                                            </button>
+                                                        </a>
+                                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" 
+                                                        onclick="document.getElementById('s-i-mongo-username').value = ''">
+                                                            Clear
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="widget-content p-0">
+                                                            <div class="widget-content-wrapper">
+                                                                <div class="widget-content-left flex2">
+                                                                    <div class="widget-heading">
+                                                                        Server Password
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input id="s-i-mongo-password" type="text" value="{{ settings_mongo_password }}" placeholder="Contact Email" >
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="#">
+                                                            <button class="btn-wide btn btn-success">
+                                                                Update
+                                                            </button>
+                                                        </a>
+                                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" 
+                                                        onclick="document.getElementById('s-i-mongo-password').value = ''">
+                                                            Clear
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="d-block text-center card-footer">
+                                        <a href="#">
+                                            <button class="btn-wide btn btn-success">
+                                                Update All
+                                            </button>
+                                        </a>
+                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" onclick="clearMongoSettingsEverything()">
+                                            Clear All
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" id="fuelapp-web-settings">
+                            <div class="col-md-12">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-header">
+                                        <b>Web Serer Settings</b>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Key</th>
+                                                    <th class="text-center">Value</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="widget-content p-0">
+                                                            <div class="widget-content-wrapper">
+                                                                <div class="widget-content-left flex2">
+                                                                    <div class="widget-heading">
+                                                                        Server IP
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input id="s-i-web-host" type="text" value="{{ settings_web_host }}" placeholder="Server IP" >
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="#">
+                                                            <button class="btn-wide btn btn-success">
+                                                                Update
+                                                            </button>
+                                                        </a>
+                                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" 
+                                                        onclick="document.getElementById('s-i-web-host').value = ''">
+                                                            Clear
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="widget-content p-0">
+                                                            <div class="widget-content-wrapper">
+                                                                <div class="widget-content-left flex2">
+                                                                    <div class="widget-heading">
+                                                                        Server Port
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input id="s-i-web-port" type="text" value="{{ settings_web_port }}" placeholder="Contact Email" >
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="#">
+                                                            <button class="btn-wide btn btn-success">
+                                                                Update
+                                                            </button>
+                                                        </a>
+                                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" 
+                                                        onclick="document.getElementById('s-i-web-port').value = ''">
+                                                            Clear
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="widget-content p-0">
+                                                            <div class="widget-content-wrapper">
+                                                                <div class="widget-content-left flex2">
+                                                                    <div class="widget-heading">
+                                                                        Debug Mode
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input id="s-i-web-debug" type="checkbox" {% if settings_web_debug %} checked {% endif %} value={{ 'on' if settings_web_debug else 'off' }} >
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="#">
+                                                            <button class="btn-wide btn btn-success">
+                                                                Update
+                                                            </button>
+                                                        </a>
+                                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" 
+                                                        onclick="document.getElementById('s-i-web-debug').value = 'off'; document.getElementById('s-i-web-debug').checked=false">
+                                                            Clear
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="d-block text-center card-footer">
+                                        <a href="#">
+                                            <button class="btn-wide btn btn-success">
+                                                Update All
+                                            </button>
+                                        </a>
+                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" onclick="clearWebSettingsEverything()">
+                                            Clear All
                                         </button>
                                     </div>
 
@@ -1545,6 +1794,24 @@
             };
 
             xhr.send();
+        }
+
+        function clearMainSettingsEverything() {
+            document.getElementById("s-i-jawg-token").value = ""
+            document.getElementById("s-i-contact-email").value = ""
+        }
+
+        function clearMongoSettingsEverything() {
+            document.getElementById("s-i-mongo-ip").value = ""
+            document.getElementById("s-i-mongo-username").value = ""
+            document.getElementById("s-i-mongo-password").value = ""
+        }
+
+        function clearWebSettingsEverything() {
+            document.getElementById("s-i-web-host").value = "";
+            document.getElementById("s-i-web-port").value = "";
+            document.getElementById("s-i-web-debug").value = "off";
+            document.getElementById("s-i-web-debug").checked = false;
         }
 
     </script>
