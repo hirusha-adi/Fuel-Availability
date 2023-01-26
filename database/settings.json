@@ -4,8 +4,14 @@
         "port": "7879",
         "debug": true
     },
-    "adminkey": "",
-    "flaskSecret": "",
+    "admin": {
+        "id": 1,
+        "fullname": "",
+        "username": "",
+        "email": "",
+        "password": ""
+    },
+    "flaskSecret": "123",
     "JawgToken": "",
     "contactEmail": "",
     "mongodb": {
