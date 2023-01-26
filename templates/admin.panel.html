@@ -1200,7 +1200,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success" data-target="s-i-jawg-token" onclick="updateSettingInputText(this)">
+                                                            <button id="s-b-jawg-token" class="btn-wide btn btn-success" data-target="s-i-jawg-token" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1227,7 +1227,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success" data-target="s-i-contact-email" onclick="updateSettingInputText(this)">
+                                                            <button id="s-b-contact-email" class="btn-wide btn btn-success" data-target="s-i-contact-email" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1244,7 +1244,7 @@
 
                                     <div class="d-block text-center card-footer">
                                         <a href="#">
-                                            <button class="btn-wide btn btn-success">
+                                            <button class="btn-wide btn btn-success" onclick="updateAllMainSettings()">
                                                 Update All
                                             </button>
                                         </a>
@@ -1290,7 +1290,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success" data-target="s-i-mongo-ip" onclick="updateSettingInputText(this)">
+                                                            <button id="s-b-mongo-ip" class="btn-wide btn btn-success" data-target="s-i-mongo-ip" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1317,7 +1317,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success" data-target="s-i-mongo-username" onclick="updateSettingInputText(this)">
+                                                            <button id="s-b-mongo-username" class="btn-wide btn btn-success" data-target="s-i-mongo-username" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1344,7 +1344,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success" data-target="s-i-mongo-password" onclick="updateSettingInputText(this)">
+                                                            <button id="s-b-mongo-password" class="btn-wide btn btn-success" data-target="s-i-mongo-password" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1361,7 +1361,7 @@
 
                                     <div class="d-block text-center card-footer">
                                         <a href="#">
-                                            <button class="btn-wide btn btn-success">
+                                            <button class="btn-wide btn btn-success" onclick="updateAllMongoSettings()">
                                                 Update All
                                             </button>
                                         </a>
@@ -1407,7 +1407,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success" data-target="s-i-web-host" onclick="updateSettingInputText(this)">
+                                                            <button id="s-b-web-host" class="btn-wide btn btn-success" data-target="s-i-web-host" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1434,7 +1434,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success" data-target="s-i-web-port" onclick="updateSettingInputText(this)">
+                                                            <button id="s-b-web-port" class="btn-wide btn btn-success" data-target="s-i-web-port" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1461,7 +1461,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="#">
-                                                            <button class="btn-wide btn btn-success" data-target="s-i-web-debug" onclick="updateSettingInputText(this)">
+                                                            <button id="s-b-web-debug" class="btn-wide btn btn-success" data-target="s-i-web-debug" onclick="updateSettingInputText(this)">
                                                                 Update
                                                             </button>
                                                         </a>
@@ -1820,7 +1820,6 @@
             var targetId = element.getAttribute("data-target")
             var value = document.getElementById(targetId).value
             var weburl = "{{ url_for('amdin_settings_change', what='') }}" + targetId
-            console.log(weburl)
 
             const xhr = new XMLHttpRequest();
             xhr.open("POST", weburl);
@@ -1849,6 +1848,22 @@
             );
         }
 
+        function updateAllMainSettings() {
+            updateSettingInputText(document.getElementById("s-b-jawg-token"))
+            updateSettingInputText(document.getElementById("s-b-contact-email"))
+        } 
+
+        function updateAllMongoSettings() {
+            updateSettingInputText(document.getElementById("s-b-mongo-ip"))
+            updateSettingInputText(document.getElementById("s-b-mongo-username"))
+            updateSettingInputText(document.getElementById("s-b-mongo-password"))
+        }
+
+        function updateAllWebSettings() {
+            updateSettingInputText(document.getElementById("s-b-web-host"))
+            updateSettingInputText(document.getElementById("s-b-web-port"))
+            updateSettingInputText(document.getElementById("s-b-web-debug"))
+        }
     </script>
 </body>
 
