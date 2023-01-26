@@ -105,6 +105,8 @@ app.add_url_rule("/admin/download/log/old/<logfilename>", 'admin_download_file',
 
 app.add_url_rule("/admin/delete/log/old", 'admin_delete_file_no_arg', admin_delete_file_no_arg, methods=['GET'])
 app.add_url_rule("/admin/delete/log/old/<logfilename>", 'admin_delete_file', admin_delete_file, methods=['GET'])
+app.add_url_rule("/admin/update/<what>", 'amdin_settings_change', amdin_settings_change, methods=['GET', 'POST'])
+
 
 
 def runApp():
