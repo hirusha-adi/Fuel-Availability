@@ -1,10 +1,89 @@
+"""
+Access and Manage data from the MonogoDB Server
 
-import urllib.parse
-from pymongo import MongoClient
-from bson import ObjectId
-from database.settings import MongoDB
+Guide ->
+    Users: - User Information
+        `getAllUsers()`
+        `getLastUser()`
+        `getUserByEmail(email)`
+        `getUserByID(id)`
+        `getUserByName(name)`
+        `addUser(name, email, password)`
+        `updateUser(name, email, password)`
+    
+    Stations:
+        `getAllStations()`
+        `getLastStation()`
+        `addStation(
+            name,
+            registration,
+            phone,
+            email,
+            coordinates,
+            city,
+            petrol,
+            diesel,
+            lastupdated,
+            apetrol,
+            adiesel,
+            capacity_petrol,
+            capacity_diesle
+        )`
+        `getByEmail(email)`
+        `getByPhone(phone)`
+        `getByRegistration(registration)`
+        `getByID(id)`
+        `getByCity(city)`
+        `updateAvailability(id, petrol, diesel)`
+        `updateAmount(id, petrol, diesel)`
+    
+    Pending:
+        `getAllStations()`
+        `getLastStation()`
+        `addStation(
+            name,
+            registration,
+            phone,
+            email,
+            coordinates,
+            city,
+            petrol,
+            diesel,
+            lastupdated,
+            apetrol,
+            adiesel,
+            capacity_petrol,
+            capacity_diesle, 
+            lastupdated
+        )`
+        `getByEmail(email)`
+        `getByPhone(phone)`
+        `getByRegistration(registration)`
+        `getByID(id)`
+        `deleteByID(id)`
+        `getByCity(city)`
+
+
+Usage (Examples) ->
+    from database.mongo import Users
+    from database.mongo import Stations
+    from database.mongo import Pending
+    
+    Users.getAllUsers()
+    Stations.getAllStations()
+    Pending.getAllStations()
+
+"""
+
+
 import typing as t
+import urllib.parse
 from datetime import datetime
+
+from bson import ObjectId
+from pymongo import MongoClient
+
+from database.settings import MongoDB
 
 client = MongoClient('mongodb://%s:%s@%s:27017/' % (
     urllib.parse.quote_plus(MongoDB.username),
