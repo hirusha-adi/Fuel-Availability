@@ -42,7 +42,11 @@
     </div>
 </nav>
 
+{% if empty == True %}
 
+<h1>Nothing to show here</h1>
+
+{% else %}
 <h1 style="color: white; padding-top:20px">{{ data.name }}</h1>
 <h3 style="color: white; padding-top:20px">{{ data.city }}</h3>
 
@@ -123,7 +127,7 @@
     <br>
     {{ (data.lastupdated|string).split('.')[0] }}
 </h4>
-
+{% endif %}
 {% endblock %}
 
 {% block endbody %}

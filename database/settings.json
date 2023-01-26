@@ -1,6 +1,17 @@
 {
-    "adminkey": "",
-    "flaskSecret": "",
+    "webserver": {
+        "host": "0.0.0.0",
+        "port": "7879",
+        "debug": true
+    },
+    "admin": {
+        "id": 1,
+        "fullname": "",
+        "username": "",
+        "email": "",
+        "password": ""
+    },
+    "flaskSecret": "123",
     "JawgToken": "",
     "contactEmail": "",
     "mongodb": {
