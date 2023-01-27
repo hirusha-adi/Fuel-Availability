@@ -232,6 +232,22 @@ class Users:
             upsert=True
         )
         return True
+    
+    def updateUserNewEmail(name: t.Union[str, bytes], email: t.Union[str, bytes], newEmail: t.Union[str, bytes], password: t.Union[str, bytes]):
+        users.find_one_and_update(
+            {
+                "email": email
+            },
+            {
+                "$set": {
+                    'name': name,
+                    'email': newEmail,
+                    'password': password
+                }
+            },
+            upsert=True
+        )
+        return True
 
 
 class Stations:
