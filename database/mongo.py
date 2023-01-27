@@ -132,43 +132,49 @@ class Users:
             temp.append(user)
         return temp[-1]
 
-    def getUserByEmail(email: t.Union[str, bytes]):
+    def getUserByEmail(email: t.Union[str, bytes], all=False):
         """
         return a dict with a user
         """
         temp = []
         for user in users.find({'email': email}):
             temp.append(user)
+        if all:
+            return temp
         try:
             return temp[0]
         except:
             return False
     
-    def getUserByPassword(password: t.Union[str, bytes]):
+    def getUserByPassword(password: t.Union[str, bytes], all=False):
         """
         return a dict with a user
         """
         temp = []
         for user in users.find({'password': password}):
             temp.append(user)
+        if all:
+            return temp
         try:
             return temp[0]
         except:
             return False
 
-    def getUserByID(id: t.Union[int, str]):
+    def getUserByID(id: t.Union[int, str], all=False):
         """
         return a dict with a user
         """
         temp = []
         for user in users.find({'id': id}):
             temp.append(user)
+        if all:
+            return temp
         try:
             return temp[0]
         except:
             return False
 
-    def getUserByName(name: t.Union[str, bytes]):
+    def getUserByName(name: t.Union[str, bytes], all=False):
         """
         return a list of users
         """
