@@ -19,6 +19,7 @@ from database.mongo import Stations
 from database.mongo import Users
 from database.settings import ALLOWED_EXTENSIONS
 from database.settings import uploadPath
+from database.settings import Admin
 
 
 def _allowed_file(filename):
@@ -102,6 +103,7 @@ def panel():
     data['pending_length'] = len(data['pending'])
     data['stations'] = Stations.getByEmail(email=g.user['email'])
     data['stations_length'] = len(data['stations'])
+    data['user_admin_id'] = Admin.id
     return render_template("panel.html", **data)
 
 

@@ -19,6 +19,48 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://kit.fontawesome.com/2a2e95598a.js" crossorigin="anonymous"></script>
 
+    <style>
+        input[type="text"] {
+            background-color: #dbdbdb;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 8px;
+            font-size: 14px;
+        }
+
+        .select-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        select {
+            background-color: #dbdbdb;
+            color: #444;
+            font-size: 14px;
+            padding: 8px 8px;
+            border: none;
+            border-radius: 5px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        select::after {
+            content: "";
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0; 
+            height: 0; 
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #444;
+        }
+
+        
+    </style>
+
 </head>
 
 <body>
@@ -533,6 +575,17 @@
                                 {% endif %}
                                     <i class="fa-solid fa-gear"></i>
                                     Settings
+                                </a>
+                            </li>
+                            
+                            <li>
+                                {% if wmode == "users" %}
+                                    <a href="#" class="mm-active">
+                                {% else %}
+                                    <a href="{{ url_for('admin_panel_catergory', category='users') }}" class="mm">
+                                {% endif %}
+                                    <i class="fa-solid fa-user"></i>
+                                    Users
                                 </a>
                             </li>
 
@@ -1172,15 +1225,7 @@
                                                         <input id="s-i-flask-secret" type="text" value="{{ settings_flasksecret }}" placeholder="Flask Secret" disabled>
                                                     </td>
                                                     <td class="text-center">
-                                                        <a href="#">
-                                                            <button class="btn-wide btn btn-success" disabled>
-                                                                Update
-                                                            </button>
-                                                        </a>
-                                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" 
-                                                        onclick="document.getElementById('s-i-flask-secret').value = ''" disabled>
-                                                            Clear
-                                                        </button>
+                                                        Unavailable
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -1721,19 +1766,29 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    {% if not wmode == "fileslogs" %}
+                                    
                                         <div class="d-block text-center card-footer">
+
+                                            <!-- Always Have -->
+                                            <div class="d-block text-center card-footer">
+                                                <div style="display: flex; justify-content: center; align-items: center;">
+                                                    {{ pagination.links }}
+                                                </div>
+                                                {{ pagination.info }}
+                                            </div>
+                                            {% if not wmode == "fileslogs" %}
                                             {% if wmode == "alllogs" %}
                                                 <a href="{{ url_for('admin_download_log', logtype='all') }}">
                                             {% elif wmode == "uniquelogs" %}
                                                 <a href="{{ url_for('admin_download_log', logtype='unique') }}">
                                             {% endif %}
                                                     <button class="btn-wide btn btn-success">
-                                                        Download
+                                                        Download Full File
                                                     </button>
                                                 </a>
+                                            {% endif %}
+
                                         </div>
-                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -1762,6 +1817,205 @@
                 </div>
             <!-- All Logs MAIN BODY ENDS HERE -->
 
+            {% elif wmode == "users" %} 
+            <!-- Users MAIN BODY STARTS HERE -->
+                <div class="app-main__outer">
+                    <div class="app-main__inner">
+
+                        <!-- first row -->
+                        <div class="app-page-title">
+                            <div class="page-title-wrapper">
+
+                                <!-- page info starts here -->
+                                <div class="page-title-heading">
+                                    <div class="page-title-icon">
+                                        <i class="fa-solid fa-gauge"></i>
+                                    </div>
+                                    <div>
+                                        Users
+                                        <div class="page-title-subheading">
+                                            This is Admin Dashboard of <a href="{{ url_for('index') }}">Fuel App</a>.
+                                            You can manage the users here
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- page info ends here -->
+
+                                <!-- pins start here -->
+                                <div class="page-title-actions">
+                                    <div class="d-inline-block dropdown">
+                                        <button type="button" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
+                                            <span class="btn-icon-wrapper pr-2 opacity-7">
+                                                <i class="fa-solid fa-location-pin"></i>
+                                            </span>
+                                            Jump To
+                                        </button>
+                                        <div tabindex="-1" role="menu" aria-hidden="true"
+                                            class="dropdown-menu dropdown-menu-right">
+                                            <ul class="nav flex-column">
+
+                                                <li class="nav-item">
+                                                    <a href="#" class="nav-link">
+                                                        <i class="nav-link-icon lnr-inbox"></i>
+                                                        <span>
+                                                            Request Stats
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- pins end here -->
+
+                            </div>
+                        </div>
+
+                        <div class="row" id="fuelapp-last-log-file-all-content">
+                            <div class="col-md-12">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-header" style="display: flex; justify-content: center; align-items: center;">
+
+
+                                        &nbsp;
+                                        <button onclick="searchUserByFilter()" class="btn-wide btn btn-success" style="padding-top: 8px; padding-bottom: 8px;">
+                                            Search
+                                        </button>
+                                        &nbsp;&nbsp;for&nbsp;&nbsp;
+                                        <input id="i-u-query" type="text" placeholder="Something">
+                                        &nbsp;&nbsp;in&nbsp;&nbsp;
+                                        <div class="select-container">
+                                            <select id="i-u-ftype">
+                                              <option value="id">ID</option>
+                                              <option value="email">Email</option>
+                                              <option value="name">Name</option>
+                                              <option value="password">Password</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th class="text-center">Full Name</th>
+                                                    <th class="text-center">Email/Username</th>
+                                                    <th class="text-center">Password</th>
+                                                    <th class="text-center">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for one_user in users_all %}
+                                                    {% if one_user == False %}
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                        </tr>
+                                                    {% else %}
+                                                    <tr>
+
+                                                        <td>
+                                                            <div class="widget-content p-0">
+                                                                <div class="widget-content-wrapper">
+                                                                    <div class="widget-content-left flex2">
+                                                                        <div class="widget-heading">
+                                                                            {% if one_user['id'] == user_admin_id %}
+                                                                                {{ one_user['id'] }}
+                                                                                <div class="badge badge-info">ADMIN</div>
+                                                                            {% else %}
+                                                                                {{ one_user['id'] }}
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            <input id="{{ one_user['id'] }}-name" type="text" value="{{ one_user['name'] }}" {% if one_user['id'] == user_admin_id %}disabled{% endif %}>
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            <input id="{{ one_user['id'] }}-email" type="text" value="{{ one_user['email'] }}" {% if one_user['id'] == user_admin_id %}disabled{% endif %}>
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            <input id="{{ one_user['id'] }}-password" type="text" value="{{ one_user['password'] }}" {% if one_user['id'] == user_admin_id %}disabled{% endif %}>
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            {% if one_user['id'] == user_admin_id %}
+                                                                <a href="{{ url_for('panel') }}">
+                                                                    <button class="btn-wide btn btn-success">
+                                                                        Visit Dashboard
+                                                                    </button>
+                                                                </a>
+                                                            {% else %}
+                                                                <button class="btn-wide btn btn-success" 
+                                                                id="{{ one_user['id'] }}-gbutton"
+                                                                data-target-original-email="{{ one_user['email'] }}"
+                                                                data-target-name="{{ one_user['id'] }}-name"
+                                                                data-target-email="{{ one_user['id'] }}-email"
+                                                                data-target-password="{{ one_user['id'] }}-password"
+                                                                onclick="updateUserInputs(this)"
+                                                                >
+                                                                    Update
+                                                                </button>
+                                                                <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" onclick="deleteOneUserbyID(this)" data-target-id="{{ one_user['id'] }}">
+                                                                    Delete
+                                                                </button>
+                                                            {% endif %}
+                                                        </td>
+
+                                                    </tr>
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="d-block text-center card-footer">
+                                        <div style="display: flex; justify-content: center; align-items: center;">
+                                            {{ pagination.links }}
+                                        </div>
+                                        {{ pagination.info }}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="app-wrapper-footer" id="fuelapp-footer-page-end">
+                        <div class="app-footer">
+                            <div class="app-footer__inner">
+                                <div class="app-footer-left">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="https://github.com/hirusha-adi" class="nav-link">
+                                                Made with &nbsp;
+                                                <i class="fa-solid fa-heart"></i>
+                                                &nbsp;
+                                                by @hirushaadi
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            <!-- Users MAIN BODY ENDS HERE -->
+
             {% endif %}
         </div>
         
@@ -1786,6 +2040,37 @@
                     if (data["status"] === "Deleted") {
                         element.innerHTML = "Deleted";
                         element.disabled = true;
+                    } else {
+                        element.innerHTML = "Failed";
+                        element.disabled = true;
+                    }
+                }
+            };
+
+            xhr.send();
+        }
+
+        function deleteOneUserbyID(element) {
+            var uid = element.getAttribute("data-target-id");
+            var flaskurl = "{{ url_for('admin_delete_user', uid='') }}";
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", flaskurl + uid, true);
+            console.log(uid, flaskurl)
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    if (data["status"] === "Deleted") {
+                        element.innerHTML = "Deleted";
+                        element.disabled = true;
+                        document.getElementById(uid+"-name").value = "DELETED";
+                        document.getElementById(uid+"-name").disabled = true;
+                        document.getElementById(uid+"-email").value = "DELETED";
+                        document.getElementById(uid+"-email").disabled = true;
+                        document.getElementById(uid+"-password").value = "DELETED";
+                        document.getElementById(uid+"-password").disabled = true;
+                        document.getElementById(uid+"-gbutton").innerHTML = "Deleted";
+                        document.getElementById(uid+"-gbutton").disabled = true;
                     } else {
                         element.innerHTML = "Failed";
                         element.disabled = true;
@@ -1847,6 +2132,47 @@
                 }, 500
             );
         }
+        
+        function updateUserInputs(element) {
+            element.innerHTML = "Processing"
+
+            var tIDname = element.getAttribute("data-target-name")
+            var tIDemail = element.getAttribute("data-target-email")
+            var tIDpassword = element.getAttribute("data-target-password")
+
+            var weburl = "{{ url_for('amdin_settings_change', what='users') }}"
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", weburl);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            const requestBody = JSON.stringify(
+                { 
+                    newval: "users",
+                    newname: document.getElementById(tIDname).value,
+                    oldemail: element.getAttribute("data-target-original-email"),
+                    newemail: document.getElementById(tIDemail).value,
+                    newpassword: document.getElementById(tIDpassword).value
+                }
+            );
+            xhr.send(requestBody);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                  const response = JSON.parse(xhr.responseText);
+                  if (response.wstatus === "ok") {
+                    element.innerHTML = "Updated"
+                  }
+                } else {
+                    element.innerHTML = "Error: " + xhr.status
+                    console.log(response.wstatus)
+                }
+            };
+
+            setTimeout(function() {
+                    element.innerHTML = "Update"
+                }, 500
+            );
+
+        }
 
         function updateAllMainSettings() {
             updateSettingInputText(document.getElementById("s-b-jawg-token"))
@@ -1863,6 +2189,14 @@
             updateSettingInputText(document.getElementById("s-b-web-host"))
             updateSettingInputText(document.getElementById("s-b-web-port"))
             updateSettingInputText(document.getElementById("s-b-web-debug"))
+        }
+        function searchUserByFilter() {
+            
+            final_url = "{{ url_for('admin_panel_catergory', category='users', page=1) }}" + "&filter=" + document.getElementById("i-u-ftype").value + "&q=" + document.getElementById("i-u-query").value 
+            
+            window.location = final_url
+
+
         }
     </script>
 </body>

@@ -10,6 +10,8 @@ Guide ->
         `getUserByName(name)`
         `addUser(name, email, password)`
         `updateUser(name, email, password)`
+        `updateUserNewEmail(name, email, newEmail, password)`
+        `deleteByID(id)`
     
     Stations:
         `getAllStations()`
@@ -130,31 +132,49 @@ class Users:
             temp.append(user)
         return temp[-1]
 
-    def getUserByEmail(email: t.Union[str, bytes]):
+    def getUserByEmail(email: t.Union[str, bytes], all=False):
         """
         return a dict with a user
         """
         temp = []
         for user in users.find({'email': email}):
             temp.append(user)
+        if all:
+            return temp
+        try:
+            return temp[0]
+        except:
+            return False
+    
+    def getUserByPassword(password: t.Union[str, bytes], all=False):
+        """
+        return a dict with a user
+        """
+        temp = []
+        for user in users.find({'password': password}):
+            temp.append(user)
+        if all:
+            return temp
         try:
             return temp[0]
         except:
             return False
 
-    def getUserByID(id: t.Union[int, str]):
+    def getUserByID(id: t.Union[int, str], all=False):
         """
         return a dict with a user
         """
         temp = []
         for user in users.find({'id': id}):
             temp.append(user)
+        if all:
+            return temp
         try:
             return temp[0]
         except:
             return False
 
-    def getUserByName(name: t.Union[str, bytes]):
+    def getUserByName(name: t.Union[str, bytes], all=False):
         """
         return a list of users
         """
@@ -232,7 +252,25 @@ class Users:
             upsert=True
         )
         return True
+    
+    def updateUserNewEmail(name: t.Union[str, bytes], email: t.Union[str, bytes], newEmail: t.Union[str, bytes], password: t.Union[str, bytes]):
+        users.find_one_and_update(
+            {
+                "email": email
+            },
+            {
+                "$set": {
+                    'name': name,
+                    'email': newEmail,
+                    'password': password
+                }
+            },
+            upsert=True
+        )
+        return True
 
+    def deleteByID(id: t.Union[int, str, bytes]):
+        users.delete_one({"id": int(id)})
 
 class Stations:
     """

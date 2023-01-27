@@ -8,12 +8,14 @@ from flask import url_for
 from flask import send_file
 from flask import redirect
 from flask import jsonify
+from flask_paginate import Pagination
 
 from generate import makeMap
 from database import settings
 from database.mongo import Pending
 from database.mongo import Stations
 from database.mongo import Users
+
 
 def isAdmin(user):
     return ((user['email'] == settings.Admin.username) or (user['email'] == settings.Admin.email)) and (user['id'] == settings.Admin.id) and (user['password'] == settings.Admin.password)
@@ -34,6 +36,7 @@ def admin_panel_catergory(category):
         alllogs
         uniquelogs
         fileslogs
+        users
     """
     
     if not g.user:
@@ -46,7 +49,7 @@ def admin_panel_catergory(category):
     
     data = {}
 
-    if category.lower() in ("overview", "settings", "alllogs", "uniquelogs", "fileslogs"):
+    if category.lower() in ("overview", "settings", "alllogs", "uniquelogs", "fileslogs", "users"):
         data['wmode'] = category.lower()
     else:
         data['wmode'] = "overview"
@@ -66,7 +69,27 @@ def admin_panel_catergory(category):
             latest_log_last_lines = _latest_log_all.readlines()
             data['latest_log_last_length'] = len(latest_log_last_lines)
             if data['wmode'] == "alllogs":
-                data['latest_log_last_lines'] = latest_log_last_lines[::-1]
+                try:
+                    current_page = int(request.args.get("page"))
+                except:
+                    current_page  = 1
+                list_all = latest_log_last_lines[::-1]
+                list_length = len(list_all)
+                per_page = 25
+                max_possible_page = (list_length // per_page)+1
+                if current_page > max_possible_page:
+                    current_page = max_possible_page
+                data['pagination'] = Pagination(
+                    per_page=per_page,
+                    page=current_page,
+                    total=list_length,
+                    href=str(url_for('admin_panel_catergory', category='fileslogs', page=1))[:-1] + "{0}"
+                )
+                min_index = (current_page*per_page) - \
+                    per_page 
+                max_index = (min_index + per_page) 
+                data['latest_log_last_lines'] =  list_all[min_index:max_index]
+                
             else:
                 data['latest_log_last_lines'] = latest_log_last_lines[-10:]
 
@@ -74,13 +97,54 @@ def admin_panel_catergory(category):
             unique_log_last_lines = _latest_log_unique.readlines()
             data['unique_log_last_length'] = len(unique_log_last_lines)
             if data['wmode'] == "uniquelogs":
-                data['unique_log_last_lines'] = unique_log_last_lines[::-1]
+                try:
+                    current_page = int(request.args.get("page"))
+                except:
+                    current_page  = 1
+                list_all = unique_log_last_lines[::-1]
+                list_length = len(list_all)
+                per_page = 25
+                max_possible_page = (list_length // per_page)+1
+                if current_page > max_possible_page:
+                    current_page = max_possible_page
+                data['pagination'] = Pagination(
+                    per_page=per_page,
+                    page=current_page,
+                    total=list_length,
+                    href=str(url_for('admin_panel_catergory', category='fileslogs', page=1))[:-1] + "{0}"
+                )
+                min_index = (current_page*per_page) - \
+                    per_page 
+                max_index = (min_index + per_page) 
+                data['unique_log_last_lines'] =  list_all[min_index:max_index]
+                
             else:
                 data['unique_log_last_lines'] = unique_log_last_lines[-10:]
-
+        
        
         if data['wmode'] == "fileslogs":
-            data['all_log_file_list'] = [filename for filename in os.listdir("logs") if filename not in (data['file_name_all'][5:], data['file_name_unique'][5:])]
+            try:
+                current_page = int(request.args.get("page"))
+            except:
+                current_page  = 1
+                
+            list_all = [filename for filename in os.listdir("logs") if filename not in (data['file_name_all'][5:], data['file_name_unique'][5:])]
+            
+            list_length = len(list_all)
+            per_page = 10
+            max_possible_page = (list_length // per_page)+1
+            if current_page > max_possible_page:
+                current_page = max_possible_page
+            data['pagination'] = Pagination(
+                per_page=per_page,
+                page=current_page,
+                total=list_length,
+                href=str(url_for('admin_panel_catergory', category='fileslogs', page=1))[:-1] + "{0}"
+            )
+            min_index = (current_page*per_page) - \
+                per_page 
+            max_index = (min_index + per_page) 
+            data['all_log_file_list'] =  list_all[min_index:max_index]
     
         if data['wmode'] == "overview":
             data['unique_requests_percentage'] = str((data['unique_log_last_length']/data['latest_log_last_length'])*100)[:4]
@@ -99,9 +163,88 @@ def admin_panel_catergory(category):
         data['settings_web_port'] = settings.WebServer.port
         data['settings_web_debug'] = settings.WebServer.debug
     
+    if data['wmode'] == "users":
+        data['user_admin_id'] = settings.Admin.id
+        
+        try:
+            current_page = int(request.args.get("page"))
+        except:
+            current_page  = 1
+        
+        try:
+            filter = request.args.get("filter")
+        except:
+            pass
+            
+        try:
+            q = request.args.get("q")
+        except:
+            pass
+
+        try:
+            if (filter and q):
+                if q:
+                    if filter == "id":
+                        temp = Users.getUserByID(id=int(q), all=True)
+                        
+                    elif filter == "email":
+                        temp = Users.getUserByEmail(email=q, all=True)
+                    elif filter == "name":
+                        temp = Users.getUserByEmail(email=q, all=True)
+                    elif filter == "password":
+                        temp = Users.getUserByPassword(password=q, all=True)
+                    else:
+                        temp = Users.getAllUsers()
+                        
+                    if isinstance(temp, list):
+                        list_all = temp
+                    else:
+                        list_all = [temp]
+            else:
+                list_all = Users.getAllUsers()
+        except:
+            list_all = Users.getAllUsers()
+            
+        try:
+            list_length = len(list_all)
+        except TypeError:
+            list_all = Users.getAllUsers()
+            list_length = len(list_all)
+            
+        per_page = 20
+        max_possible_page = (list_length // per_page)+1
+        if current_page > max_possible_page:
+            current_page = max_possible_page
+        data['pagination'] = Pagination(
+            per_page=per_page,
+            page=current_page,
+            total=list_length,
+            href=str(url_for('admin_panel_catergory', category='users', page=1))[:-1] + "{0}"
+        )
+        min_index = (current_page*per_page) - \
+            per_page 
+        max_index = (min_index + per_page) 
+        data['users_all'] =  list_all[min_index:max_index]
+        
+        print(data['users_all'])
     
     return render_template("admin.panel.html", **data)
 
+def admin_delete_user(uid):
+    if not g.user:
+        return redirect(url_for('login'))
+
+    adminAccess = isAdmin(user=g.user)
+
+    if not(adminAccess):
+        return redirect(url_for('login'))
+    
+    try:
+        Users.deleteByID(id=uid)
+        return jsonify({"status": "Deleted"})
+    
+    except Exception as e:
+        return jsonify({"status": f"[Backend Error]: {e}"})
 
 def admin_download_log_noargs():
     return redirect(url_for('admin_panel'))
@@ -239,6 +382,16 @@ def admin_delete_file(logfilename):
         return jsonify({"status": "Failed"})
 
 def amdin_settings_change(what):
+    
+    if not g.user:
+        return redirect(url_for('login'))
+
+    adminAccess = isAdmin(user=g.user)
+
+    if not(adminAccess):
+        return redirect(url_for('login'))
+    
+    
     if request.is_json:
         newval = request.json['newval']
         
@@ -264,10 +417,17 @@ def amdin_settings_change(what):
                 settings.WebServer.udebug(new=True)
             else:
                 settings.WebServer.udebug(new=False)
+        
+        elif what == "users":
+            Users.updateUserNewEmail(
+                name=str(request.json['newname']),
+                email=str(request.json['oldemail']),
+                newEmail=str(request.json['newemail']),
+                password=str(request.json['newpassword']),
+            )
 
         return jsonify({"wstatus": "ok"})
     
     except Exception as e:
         return jsonify({"wstatus": f"[Backend Error] -> {e}"})
-    
-    
+     
