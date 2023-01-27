@@ -170,11 +170,46 @@ def admin_panel_catergory(category):
             current_page = int(request.args.get("page"))
         except:
             current_page  = 1
-            
-        list_all = Users.getAllUsers()
         
-        list_length = len(list_all)
-        per_page = 10
+        try:
+            filter = request.args.get("filter")
+        except:
+            pass
+            
+        try:
+            q = request.args.get("q")
+        except:
+            pass
+            
+        print(request.args.to_dict())
+
+        try:
+            if (filter and q):
+                if q:
+                    if filter == "id":
+                        list_all = [Users.getUserByID(id=int(q))]
+                    elif filter == "email":
+                        list_all = [Users.getUserByEmail(email=q)]
+                    elif filter == "name":
+                        list_all = [Users.getUserByEmail(email=q)]
+                    elif list_all == "password":
+                        list_all = [Users.getUserByPassword(password=q)]
+                    else:
+                        list_all = Users.getAllUsers()
+            else:
+                list_all = Users.getAllUsers()
+        except:
+            list_all = Users.getAllUsers()
+        
+        print(list_all)
+            
+        try:
+            list_length = len(list_all)
+        except TypeError:
+            list_all = Users.getAllUsers()
+            list_length = len(list_all)
+            
+        per_page = 20
         max_possible_page = (list_length // per_page)+1
         if current_page > max_possible_page:
             current_page = max_possible_page

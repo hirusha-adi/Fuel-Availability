@@ -1880,17 +1880,18 @@
 
 
                                         &nbsp;
-                                        <button class="btn-wide btn btn-success" style="padding-top: 8px; padding-bottom: 8px;">
+                                        <button onclick="searchUserByFilter()" class="btn-wide btn btn-success" style="padding-top: 8px; padding-bottom: 8px;">
                                             Search
                                         </button>
                                         &nbsp;&nbsp;for&nbsp;&nbsp;
-                                        <input id="" type="text" placeholder="Something">
+                                        <input id="i-u-query" type="text" placeholder="Something">
                                         &nbsp;&nbsp;in&nbsp;&nbsp;
                                         <div class="select-container">
-                                            <select id="">
+                                            <select id="i-u-ftype">
                                               <option value="id">ID</option>
                                               <option value="email">Email</option>
                                               <option value="name">Name</option>
+                                              <option value="password">Password</option>
                                             </select>
                                         </div>
 
@@ -1909,6 +1910,9 @@
                                             </thead>
                                             <tbody>
                                                 {% for one_user in users_all %}
+                                                    {% if one_user == False %}
+                                                        
+                                                    {% else %}
                                                     <tr>
 
                                                         <td>
@@ -1965,6 +1969,7 @@
                                                         </td>
 
                                                     </tr>
+                                                    {% endif %}
                                                 {% endfor %}
 
                                             </tbody>
@@ -2179,6 +2184,14 @@
             updateSettingInputText(document.getElementById("s-b-web-host"))
             updateSettingInputText(document.getElementById("s-b-web-port"))
             updateSettingInputText(document.getElementById("s-b-web-debug"))
+        }
+        function searchUserByFilter() {
+            
+            final_url = "{{ url_for('admin_panel_catergory', category='users', page=1) }}" + "&filter=" + document.getElementById("i-u-ftype").value + "&q=" + document.getElementById("i-u-query").value 
+            
+            window.location = final_url
+
+
         }
     </script>
 </body>

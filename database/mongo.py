@@ -143,6 +143,18 @@ class Users:
             return temp[0]
         except:
             return False
+    
+    def getUserByPassword(password: t.Union[str, bytes]):
+        """
+        return a dict with a user
+        """
+        temp = []
+        for user in users.find({'password': password}):
+            temp.append(user)
+        try:
+            return temp[0]
+        except:
+            return False
 
     def getUserByID(id: t.Union[int, str]):
         """
