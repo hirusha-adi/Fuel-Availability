@@ -16,6 +16,7 @@ from database.mongo import Pending
 from database.mongo import Stations
 from database.mongo import Users
 
+
 def isAdmin(user):
     return ((user['email'] == settings.Admin.username) or (user['email'] == settings.Admin.email)) and (user['id'] == settings.Admin.id) and (user['password'] == settings.Admin.password)
 
@@ -81,7 +82,28 @@ def admin_panel_catergory(category):
                 data['unique_log_last_lines'] = unique_log_last_lines[-10:]
        
         if data['wmode'] == "fileslogs":
-            data['all_log_file_list'] = [filename for filename in os.listdir("logs") if filename not in (data['file_name_all'][5:], data['file_name_unique'][5:])]
+            try:
+                current_page = int(request.args.get("page"))
+            except:
+                current_page  = 1
+                
+            list_all = [filename for filename in os.listdir("logs") if filename not in (data['file_name_all'][5:], data['file_name_unique'][5:])]
+            
+            list_length = len(list_all)
+            per_page = 10
+            max_possible_page = (list_length // per_page)+1
+            if current_page > max_possible_page:
+                current_page = max_possible_page
+            data['pagination'] = Pagination(
+                per_page=per_page,
+                page=current_page,
+                total=list_length,
+                href=str(url_for('admin_panel_catergory', category='fileslogs', page=1))[:-1] + "{0}"
+            )
+            min_index = (current_page*per_page) - \
+                per_page 
+            max_index = (min_index + per_page) 
+            data['all_log_file_list'] =  list_all[min_index:max_index]
     
         if data['wmode'] == "overview":
             data['unique_requests_percentage'] = str((data['unique_log_last_length']/data['latest_log_last_length'])*100)[:4]

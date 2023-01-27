@@ -1778,6 +1778,13 @@
                                                     </button>
                                                 </a>
                                         </div>
+                                    {% else %}
+                                    <div class="d-block text-center card-footer">
+                                        <div style="display: flex; justify-content: center; align-items: center;">
+                                            {{ pagination.links }}
+                                        </div>
+                                        {{ pagination.info }}
+                                    </div>
                                     {% endif %}
                                 </div>
                             </div>
