@@ -8,6 +8,7 @@ from flask import url_for
 from flask import send_file
 from flask import redirect
 from flask import jsonify
+from flask_paginate import Pagination
 
 from generate import makeMap
 from database import settings
@@ -102,9 +103,27 @@ def admin_panel_catergory(category):
         data['settings_web_debug'] = settings.WebServer.debug
     
     if data['wmode'] == "users":
-        data['users_all'] = Users.getAllUsers()
         data['user_admin_id'] = settings.Admin.id
-    
+        try:
+            current_page = int(request.args.get("page"))
+        except:
+            current_page  = 1
+        list_all = Users.getAllUsers()
+        list_length = len(list_all)
+        per_page = 10
+        max_possible_page = (list_length // per_page)+1
+        if current_page > max_possible_page:
+            current_page = max_possible_page
+        data['pagination'] = Pagination(
+            per_page=per_page,
+            page=current_page,
+            total=list_length,
+            href=str(url_for('admin_panel_catergory', category='users', page=1))[:-1] + "{0}"
+        )
+        min_index = (current_page*per_page) - \
+            per_page 
+        max_index = (min_index + per_page) 
+        data['users_all'] =  list_all[min_index:max_index]
     
     return render_template("admin.panel.html", **data)
 
