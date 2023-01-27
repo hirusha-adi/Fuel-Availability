@@ -204,9 +204,6 @@ def admin_panel_catergory(category):
                 list_all = Users.getAllUsers()
         except:
             list_all = Users.getAllUsers()
-        
-        print(list_all)
-        
             
         try:
             list_length = len(list_all)
