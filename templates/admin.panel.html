@@ -1916,7 +1916,7 @@
                                                                         <div class="widget-heading">
                                                                             {% if one_user['id'] == user_admin_id %}
                                                                                 {{ one_user['id'] }}
-                                                                                <div class="badge badge-info">( ADMIN )</div>
+                                                                                <div class="badge badge-info">ADMIN</div>
                                                                             {% else %}
                                                                                 {{ one_user['id'] }}
                                                                             {% endif %}
@@ -1927,24 +1927,38 @@
                                                         </td>
 
                                                         <td class="text-center">
-                                                            <input type="text" value="{{ one_user['name'] }}">
+                                                            <input id="{{ one_user['id'] }}-name" type="text" value="{{ one_user['name'] }}">
                                                         </td>
 
                                                         <td class="text-center">
-                                                            <input type="text" value="{{ one_user['email'] }}">
+                                                            <input id="{{ one_user['id'] }}-email" type="text" value="{{ one_user['email'] }}">
                                                         </td>
 
                                                         <td class="text-center">
-                                                            <input type="text" value="{{ one_user['password'] }}">
+                                                            <input id="{{ one_user['id'] }}-password" type="text" value="{{ one_user['password'] }}">
                                                         </td>
 
                                                         <td class="text-center">
-                                                            <button class="btn-wide btn btn-success">
-                                                                Update
-                                                            </button>
-                                                            <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger">
-                                                                Delete
-                                                            </button>
+                                                            {% if one_user['id'] == user_admin_id %}
+                                                                <a href="{{ url_for('panel') }}">
+                                                                    <button class="btn-wide btn btn-success">
+                                                                        Visit Dashboard
+                                                                    </button>
+                                                                </a>
+                                                            {% else %}
+                                                                <button class="btn-wide btn btn-success" {% if one_user['id'] == user_admin_id %}disabled{% endif %}
+                                                                data-target-original-email="{{ one_user['email'] }}"
+                                                                data-target-name="{{ one_user['id'] }}-name"
+                                                                data-target-email="{{ one_user['id'] }}-email"
+                                                                data-target-password="{{ one_user['id'] }}-password"
+                                                                onclick="updateUserInputs(this)"
+                                                                >
+                                                                    Update
+                                                                </button>
+                                                                <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" {% if one_user['id'] == user_admin_id %}disabled{% endif %}>
+                                                                    Delete
+                                                                </button>
+                                                            {% endif %}
                                                         </td>
 
                                                     </tr>
@@ -2073,6 +2087,48 @@
                     element.innerHTML = "Update"
                 }, 500
             );
+        }
+        
+        function updateUserInputs(element) {
+            element.innerHTML = "Processing"
+
+            var tIDname = element.getAttribute("data-target-name")
+            var tIDemail = element.getAttribute("data-target-email")
+            var tIDpassword = element.getAttribute("data-target-password")
+
+            var weburl = "{{ url_for('amdin_settings_change', what='users') }}"
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", weburl);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            const requestBody = JSON.stringify(
+                { 
+                    newval: "users",
+                    newname: document.getElementById(tIDname).value,
+                    oldemail: element.getAttribute("data-target-original-email"),
+                    newemail: document.getElementById(tIDemail).value,
+                    newpassword: document.getElementById(tIDpassword).value
+                }
+            );
+            xhr.send(requestBody);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                  const response = JSON.parse(xhr.responseText);
+                  if (response.wstatus === "ok") {
+                    element.innerHTML = "Updated"
+                  }
+                } else {
+                    element.innerHTML = "Error: " + xhr.status
+                    console.log(response.wstatus)
+                }
+            };
+
+            setTimeout(function() {
+                    element.innerHTML = "Update"
+                }, 500
+            );
+
+
         }
 
         function updateAllMainSettings() {

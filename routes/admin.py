@@ -289,10 +289,17 @@ def amdin_settings_change(what):
                 settings.WebServer.udebug(new=True)
             else:
                 settings.WebServer.udebug(new=False)
+        
+        elif what == "users":
+            Users.updateUserNewEmail(
+                name=str(request.json['newname']),
+                email=str(request.json['oldemail']),
+                newEmail=str(request.json['newemail']),
+                password=str(request.json['newpassword']),
+            )
 
         return jsonify({"wstatus": "ok"})
     
     except Exception as e:
         return jsonify({"wstatus": f"[Backend Error] -> {e}"})
-    
     
