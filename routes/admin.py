@@ -180,28 +180,33 @@ def admin_panel_catergory(category):
             q = request.args.get("q")
         except:
             pass
-            
-        print(request.args.to_dict())
 
         try:
             if (filter and q):
                 if q:
                     if filter == "id":
-                        list_all = [Users.getUserByID(id=int(q))]
+                        temp = Users.getUserByID(id=int(q), all=True)
+                        
                     elif filter == "email":
-                        list_all = [Users.getUserByEmail(email=q)]
+                        temp = Users.getUserByEmail(email=q, all=True)
                     elif filter == "name":
-                        list_all = [Users.getUserByEmail(email=q)]
-                    elif list_all == "password":
-                        list_all = [Users.getUserByPassword(password=q)]
+                        temp = Users.getUserByEmail(email=q, all=True)
+                    elif filter == "password":
+                        temp = Users.getUserByPassword(password=q, all=True)
                     else:
-                        list_all = Users.getAllUsers()
+                        temp = Users.getAllUsers()
+                        
+                    if isinstance(temp, list):
+                        list_all = temp
+                    else:
+                        list_all = [temp]
             else:
                 list_all = Users.getAllUsers()
         except:
             list_all = Users.getAllUsers()
         
         print(list_all)
+        
             
         try:
             list_length = len(list_all)
@@ -223,6 +228,8 @@ def admin_panel_catergory(category):
             per_page 
         max_index = (min_index + per_page) 
         data['users_all'] =  list_all[min_index:max_index]
+        
+        print(data['users_all'])
     
     return render_template("admin.panel.html", **data)
 

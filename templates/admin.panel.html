@@ -1895,7 +1895,6 @@
                                             </select>
                                         </div>
 
-
                                     </div>
                                     <div class="table-responsive">
                                         <table class="align-middle mb-0 table table-borderless table-striped table-hover">
@@ -1911,7 +1910,13 @@
                                             <tbody>
                                                 {% for one_user in users_all %}
                                                     {% if one_user == False %}
-                                                        
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                        </tr>
                                                     {% else %}
                                                     <tr>
 
