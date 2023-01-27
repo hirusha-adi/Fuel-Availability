@@ -53,6 +53,16 @@
                                     </div>
                                 </a>
 
+                                {% if user_admin_id == user['id'] %}
+                                    <a  href="{{ url_for('admin_home') }}"
+                                        class="tabs list-group-item bg-dark">
+                                        <div class="list-div my-2">
+                                            <div class="fa fa-credit-card"></div>
+                                            &nbsp;&nbsp; Adminstration
+                                        </div>
+                                    </a>
+                                {% endif %}
+
                                 <a data-toggle="tab" href="{{ url_for('index') }}" id="tab5"
                                     class="tabs list-group-item bg-dark"
                                     style="background-color: rgb(10, 190, 82) !important;">
