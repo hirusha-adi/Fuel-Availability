@@ -1766,26 +1766,29 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    {% if not wmode == "fileslogs" %}
+                                    
                                         <div class="d-block text-center card-footer">
+
+                                            <!-- Always Have -->
+                                            <div class="d-block text-center card-footer">
+                                                <div style="display: flex; justify-content: center; align-items: center;">
+                                                    {{ pagination.links }}
+                                                </div>
+                                                {{ pagination.info }}
+                                            </div>
+                                            {% if not wmode == "fileslogs" %}
                                             {% if wmode == "alllogs" %}
                                                 <a href="{{ url_for('admin_download_log', logtype='all') }}">
                                             {% elif wmode == "uniquelogs" %}
                                                 <a href="{{ url_for('admin_download_log', logtype='unique') }}">
                                             {% endif %}
                                                     <button class="btn-wide btn btn-success">
-                                                        Download
+                                                        Download Full File
                                                     </button>
                                                 </a>
+                                            {% endif %}
+
                                         </div>
-                                    {% else %}
-                                    <div class="d-block text-center card-footer">
-                                        <div style="display: flex; justify-content: center; align-items: center;">
-                                            {{ pagination.links }}
-                                        </div>
-                                        {{ pagination.info }}
-                                    </div>
-                                    {% endif %}
                                 </div>
                             </div>
                         </div>

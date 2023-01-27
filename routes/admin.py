@@ -69,7 +69,27 @@ def admin_panel_catergory(category):
             latest_log_last_lines = _latest_log_all.readlines()
             data['latest_log_last_length'] = len(latest_log_last_lines)
             if data['wmode'] == "alllogs":
-                data['latest_log_last_lines'] = latest_log_last_lines[::-1]
+                try:
+                    current_page = int(request.args.get("page"))
+                except:
+                    current_page  = 1
+                list_all = latest_log_last_lines[::-1]
+                list_length = len(list_all)
+                per_page = 25
+                max_possible_page = (list_length // per_page)+1
+                if current_page > max_possible_page:
+                    current_page = max_possible_page
+                data['pagination'] = Pagination(
+                    per_page=per_page,
+                    page=current_page,
+                    total=list_length,
+                    href=str(url_for('admin_panel_catergory', category='fileslogs', page=1))[:-1] + "{0}"
+                )
+                min_index = (current_page*per_page) - \
+                    per_page 
+                max_index = (min_index + per_page) 
+                data['latest_log_last_lines'] =  list_all[min_index:max_index]
+                
             else:
                 data['latest_log_last_lines'] = latest_log_last_lines[-10:]
 
@@ -77,9 +97,30 @@ def admin_panel_catergory(category):
             unique_log_last_lines = _latest_log_unique.readlines()
             data['unique_log_last_length'] = len(unique_log_last_lines)
             if data['wmode'] == "uniquelogs":
-                data['unique_log_last_lines'] = unique_log_last_lines[::-1]
+                try:
+                    current_page = int(request.args.get("page"))
+                except:
+                    current_page  = 1
+                list_all = unique_log_last_lines[::-1]
+                list_length = len(list_all)
+                per_page = 25
+                max_possible_page = (list_length // per_page)+1
+                if current_page > max_possible_page:
+                    current_page = max_possible_page
+                data['pagination'] = Pagination(
+                    per_page=per_page,
+                    page=current_page,
+                    total=list_length,
+                    href=str(url_for('admin_panel_catergory', category='fileslogs', page=1))[:-1] + "{0}"
+                )
+                min_index = (current_page*per_page) - \
+                    per_page 
+                max_index = (min_index + per_page) 
+                data['unique_log_last_lines'] =  list_all[min_index:max_index]
+                
             else:
                 data['unique_log_last_lines'] = unique_log_last_lines[-10:]
+        
        
         if data['wmode'] == "fileslogs":
             try:
