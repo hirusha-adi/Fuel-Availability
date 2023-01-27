@@ -1225,15 +1225,7 @@
                                                         <input id="s-i-flask-secret" type="text" value="{{ settings_flasksecret }}" placeholder="Flask Secret" disabled>
                                                     </td>
                                                     <td class="text-center">
-                                                        <a href="#">
-                                                            <button class="btn-wide btn btn-success" disabled>
-                                                                Update
-                                                            </button>
-                                                        </a>
-                                                        <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" 
-                                                        onclick="document.getElementById('s-i-flask-secret').value = ''" disabled>
-                                                            Clear
-                                                        </button>
+                                                        Unavailable
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -1927,15 +1919,15 @@
                                                         </td>
 
                                                         <td class="text-center">
-                                                            <input id="{{ one_user['id'] }}-name" type="text" value="{{ one_user['name'] }}">
+                                                            <input id="{{ one_user['id'] }}-name" type="text" value="{{ one_user['name'] }}" {% if one_user['id'] == user_admin_id %}disabled{% endif %}>
                                                         </td>
 
                                                         <td class="text-center">
-                                                            <input id="{{ one_user['id'] }}-email" type="text" value="{{ one_user['email'] }}">
+                                                            <input id="{{ one_user['id'] }}-email" type="text" value="{{ one_user['email'] }}" {% if one_user['id'] == user_admin_id %}disabled{% endif %}>
                                                         </td>
 
                                                         <td class="text-center">
-                                                            <input id="{{ one_user['id'] }}-password" type="text" value="{{ one_user['password'] }}">
+                                                            <input id="{{ one_user['id'] }}-password" type="text" value="{{ one_user['password'] }}" {% if one_user['id'] == user_admin_id %}disabled{% endif %}>
                                                         </td>
 
                                                         <td class="text-center">
@@ -1946,7 +1938,8 @@
                                                                     </button>
                                                                 </a>
                                                             {% else %}
-                                                                <button class="btn-wide btn btn-success" {% if one_user['id'] == user_admin_id %}disabled{% endif %}
+                                                                <button class="btn-wide btn btn-success" 
+                                                                id="{{ one_user['id'] }}-gbutton"
                                                                 data-target-original-email="{{ one_user['email'] }}"
                                                                 data-target-name="{{ one_user['id'] }}-name"
                                                                 data-target-email="{{ one_user['id'] }}-email"
@@ -1955,7 +1948,7 @@
                                                                 >
                                                                     Update
                                                                 </button>
-                                                                <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" {% if one_user['id'] == user_admin_id %}disabled{% endif %}>
+                                                                <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" onclick="deleteOneUserbyID(this)" data-target-id="{{ one_user['id'] }}">
                                                                     Delete
                                                                 </button>
                                                             {% endif %}
@@ -2027,6 +2020,37 @@
                     if (data["status"] === "Deleted") {
                         element.innerHTML = "Deleted";
                         element.disabled = true;
+                    } else {
+                        element.innerHTML = "Failed";
+                        element.disabled = true;
+                    }
+                }
+            };
+
+            xhr.send();
+        }
+
+        function deleteOneUserbyID(element) {
+            var uid = element.getAttribute("data-target-id");
+            var flaskurl = "{{ url_for('admin_delete_user', uid='') }}";
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", flaskurl + uid, true);
+            console.log(uid, flaskurl)
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    if (data["status"] === "Deleted") {
+                        element.innerHTML = "Deleted";
+                        element.disabled = true;
+                        document.getElementById(uid+"-name").value = "DELETED";
+                        document.getElementById(uid+"-name").disabled = true;
+                        document.getElementById(uid+"-email").value = "DELETED";
+                        document.getElementById(uid+"-email").disabled = true;
+                        document.getElementById(uid+"-password").value = "DELETED";
+                        document.getElementById(uid+"-password").disabled = true;
+                        document.getElementById(uid+"-gbutton").innerHTML = "Deleted";
+                        document.getElementById(uid+"-gbutton").disabled = true;
                     } else {
                         element.innerHTML = "Failed";
                         element.disabled = true;
@@ -2127,7 +2151,6 @@
                     element.innerHTML = "Update"
                 }, 500
             );
-
 
         }
 

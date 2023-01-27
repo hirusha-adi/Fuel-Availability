@@ -10,6 +10,8 @@ Guide ->
         `getUserByName(name)`
         `addUser(name, email, password)`
         `updateUser(name, email, password)`
+        `updateUserNewEmail(name, email, newEmail, password)`
+        `deleteByID(id)`
     
     Stations:
         `getAllStations()`
@@ -249,6 +251,8 @@ class Users:
         )
         return True
 
+    def deleteByID(id: t.Union[int, str, bytes]):
+        users.delete_one({"id": int(id)})
 
 class Stations:
     """

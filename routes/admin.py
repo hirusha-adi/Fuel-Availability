@@ -52,8 +52,6 @@ def admin_panel_catergory(category):
         data['wmode'] = category.lower()
     else:
         data['wmode'] = "overview"
-    
-    data['wmode'] = "users"
 
     if data['wmode'] in ("overview", "alllogs", "uniquelogs", "fileslogs"):
         now = datetime.now()
@@ -104,11 +102,14 @@ def admin_panel_catergory(category):
     
     if data['wmode'] == "users":
         data['user_admin_id'] = settings.Admin.id
+        
         try:
             current_page = int(request.args.get("page"))
         except:
             current_page  = 1
+            
         list_all = Users.getAllUsers()
+        
         list_length = len(list_all)
         per_page = 10
         max_possible_page = (list_length // per_page)+1
@@ -127,6 +128,21 @@ def admin_panel_catergory(category):
     
     return render_template("admin.panel.html", **data)
 
+def admin_delete_user(uid):
+    if not g.user:
+        return redirect(url_for('login'))
+
+    adminAccess = isAdmin(user=g.user)
+
+    if not(adminAccess):
+        return redirect(url_for('login'))
+    
+    try:
+        Users.deleteByID(id=uid)
+        return jsonify({"status": "Deleted"})
+    
+    except Exception as e:
+        return jsonify({"status": f"[Backend Error]: {e}"})
 
 def admin_download_log_noargs():
     return redirect(url_for('admin_panel'))
@@ -264,6 +280,16 @@ def admin_delete_file(logfilename):
         return jsonify({"status": "Failed"})
 
 def amdin_settings_change(what):
+    
+    if not g.user:
+        return redirect(url_for('login'))
+
+    adminAccess = isAdmin(user=g.user)
+
+    if not(adminAccess):
+        return redirect(url_for('login'))
+    
+    
     if request.is_json:
         newval = request.json['newval']
         
@@ -302,4 +328,4 @@ def amdin_settings_change(what):
     
     except Exception as e:
         return jsonify({"wstatus": f"[Backend Error] -> {e}"})
-    
+     
