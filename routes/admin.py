@@ -37,6 +37,7 @@ def admin_panel_catergory(category):
         uniquelogs
         fileslogs
         users
+        stations
     """
     
     if not g.user:
@@ -49,7 +50,7 @@ def admin_panel_catergory(category):
     
     data = {}
 
-    if category.lower() in ("overview", "settings", "alllogs", "uniquelogs", "fileslogs", "users"):
+    if category.lower() in ("overview", "settings", "alllogs", "uniquelogs", "fileslogs", "users", "stations", "pending"):
         data['wmode'] = category.lower()
     else:
         data['wmode'] = "overview"
@@ -227,6 +228,13 @@ def admin_panel_catergory(category):
         data['users_all'] =  list_all[min_index:max_index]
         
         print(data['users_all'])
+    
+    if data['wmode'] == "stations":
+        data['stations_all'] = Stations.getAllStations()
+    
+    if data['wmode'] == "pending":
+        pass
+        
     
     return render_template("admin.panel.html", **data)
 

@@ -590,6 +590,31 @@
                             </li>
 
                             <li>
+                                {% if wmode.endswith("stations") or wmode.endswith("pending") %}
+                                    <a href="#" class="mm-active">
+                                {% else %}
+                                    <a href="#" class="mm">
+                                {% endif %}
+                                    <i class="fa-solid fa-house"></i>
+                                    Stations
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="{{ url_for('admin_panel_catergory', category='stations') }}">
+                                            <i class="metismenu-icon"></i>
+                                            Approved
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('admin_panel_catergory', category='pending') }}">
+                                            <i class="metismenu-icon"></i>
+                                            Pending
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li>
                                 {% if wmode.endswith("logs") %}
                                     <a href="#" class="mm-active">
                                 {% else %}
