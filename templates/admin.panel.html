@@ -1146,7 +1146,6 @@
             <!-- Overview MAIN BODY ENDS HERE -->
             
             {% elif wmode == "settings" %} 
-            <!-- COMPLETE THIS*** -->
             <!-- Settings MAIN BODY STARTS HERE -->
                 <div class="app-main__outer">
                     <div class="app-main__inner">
@@ -2040,6 +2039,222 @@
 
                 </div>
             <!-- Users MAIN BODY ENDS HERE -->
+
+            {% elif wmode == "stations" or wmode == "pending" %}
+            <!-- Stations/Pending MAIN BODY STARTS HERE -->
+                <div class="app-main__outer">
+                    <div class="app-main__inner">
+
+                        <!-- first row -->
+                        <div class="app-page-title">
+                            <div class="page-title-wrapper">
+
+                                <!-- page info starts here -->
+                                <div class="page-title-heading">
+                                    <div class="page-title-icon">
+                                        <i class="fa-solid fa-gauge"></i>
+                                    </div>
+                                    <div>
+                                        {% if wmode == "stations" %}Stations{% else %}Pending{% endif %}
+                                        <div class="page-title-subheading">
+                                            This is Admin Dashboard of <a href="{{ url_for('index') }}">Fuel App</a>.
+                                            You can manage the {% if wmode == "stations" %}Stations{% else %}Pending{% endif %} here
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- page info ends here -->
+
+                                <!-- pins start here -->
+                                <div class="page-title-actions">
+                                    <div class="d-inline-block dropdown">
+                                        <button type="button" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
+                                            <span class="btn-icon-wrapper pr-2 opacity-7">
+                                                <i class="fa-solid fa-location-pin"></i>
+                                            </span>
+                                            Jump To
+                                        </button>
+                                        <div tabindex="-1" role="menu" aria-hidden="true"
+                                            class="dropdown-menu dropdown-menu-right">
+                                            <ul class="nav flex-column">
+
+                                                <li class="nav-item">
+                                                    <a href="#" class="nav-link">
+                                                        <i class="nav-link-icon lnr-inbox"></i>
+                                                        <span>
+                                                            Request Stats
+                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- pins end here -->
+
+                            </div>
+                        </div>
+
+                        <div class="row" id="fuelapp-last-log-file-all-content">
+                            <div class="col-md-12">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-header" style="display: flex; justify-content: center; align-items: center;">
+
+
+                                        &nbsp;
+                                        <button onclick="searchUserByFilter()" class="btn-wide btn btn-success" style="padding-top: 8px; padding-bottom: 8px;">
+                                            Search
+                                        </button>
+                                        &nbsp;&nbsp;for&nbsp;&nbsp;
+                                        <input id="i-u-query" type="text" placeholder="Something">
+                                        &nbsp;&nbsp;in&nbsp;&nbsp;
+                                        <div class="select-container">
+                                            <select id="i-u-ftype">
+                                            <option value="id">ID</option>
+                                            <option value="name">Name</option>
+                                            <option value="email">Email</option>
+                                            <option value="phone">Phone</option>
+                                            <option value="city">City</option>
+                                            <option value="registration">Registration</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="align-middle mb-0 table table-borderless table-striped table-hover" style="overflow: scroll;">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th class="text-center">Name</th>
+                                                    <th class="text-center">Registration</th>
+                                                    <th class="text-center">Phone</th>
+                                                    <th class="text-center">Email</th>
+                                                    <th class="text-center">Coordinates</th>
+                                                    <th class="text-center">City</th>
+                                                    <th class="text-center">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for one_station in stations_all %}
+                                                    {% if one_station == False %}
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                            <td>-</td>
+                                                        </tr>
+                                                    {% else %}
+                                                    <tr>
+
+                                                        <td>
+                                                            <div class="widget-content p-0">
+                                                                <div class="widget-content-wrapper">
+                                                                    <div class="widget-content-left flex2">
+                                                                        <div class="widget-heading">
+                                                                                {{ one_station['id'] }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            <input id="{{ one_station['id'] }}-name" type="text" value="{{ one_station['name'] }}">
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            <input id="{{ one_station['id'] }}-registration" type="text" value="{{ one_station['registration'] }}">
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            <input id="{{ one_station['id'] }}-phone" type="text" value="{{ one_station['phone'] }}">
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            <input id="{{ one_station['id'] }}-email" type="text" value="{{ one_station['email'] }}">
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            <input id="{{ one_station['id'] }}-coordinates" type="text" value="{{ one_station['coordinates'][0] }},{{ one_station['coordinates'][1] }}">
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            <input id="{{ one_station['id'] }}-city" type="text" value="{{ one_station['city'] }}">
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                            {% if one_station['id'] == user_admin_id %}
+                                                                <a href="{{ url_for('panel') }}">
+                                                                    <button class="btn-wide btn btn-success">
+                                                                        Visit Dashboard
+                                                                    </button>
+                                                                </a>
+                                                            {% else %}
+                                                                <button class="btn-wide btn btn-success" 
+                                                                id="{{ one_station['id'] }}-gbutton"
+                                                                data-target-email="{{ one_station['email'] }}"
+                                                                data-target-name="{{ one_station['id'] }}-name"
+                                                                data-target-registration="{{ one_station['id'] }}-registration"
+                                                                data-target-phone="{{ one_station['id'] }}-phone"
+                                                                data-target-email="{{ one_station['id'] }}-email"
+                                                                data-target-coordinates="{{ one_station['id'] }}-coordinates"
+                                                                data-target-city="{{ one_station['id'] }}-city"
+                                                                onclick="updateUserInputs(this)"
+                                                                >
+                                                                    Update
+                                                                </button>
+                                                                <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" onclick="deleteOneUserbyID(this)" data-target-id="{{ one_station['id'] }}">
+                                                                    Delete
+                                                                </button>
+                                                            {% endif %}
+                                                        </td>
+
+                                                    </tr>
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="d-block text-center card-footer">
+                                        <div style="display: flex; justify-content: center; align-items: center;">
+                                            {{ pagination.links }}
+                                        </div>
+                                        {{ pagination.info }}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="app-wrapper-footer" id="fuelapp-footer-page-end">
+                        <div class="app-footer">
+                            <div class="app-footer__inner">
+                                <div class="app-footer-left">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="https://github.com/hirusha-adi" class="nav-link">
+                                                Made with &nbsp;
+                                                <i class="fa-solid fa-heart"></i>
+                                                &nbsp;
+                                                by @hirushaadi
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            <!-- Stations/Pending MAIN BODY ENDS HERE -->
 
             {% endif %}
         </div>

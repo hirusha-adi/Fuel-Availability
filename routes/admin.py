@@ -227,10 +227,69 @@ def admin_panel_catergory(category):
         max_index = (min_index + per_page) 
         data['users_all'] =  list_all[min_index:max_index]
         
-        print(data['users_all'])
     
     if data['wmode'] == "stations":
-        data['stations_all'] = Stations.getAllStations()
+        try:
+            current_page = int(request.args.get("page"))
+        except:
+            current_page  = 1
+        
+        try:
+            filter = request.args.get("filter")
+        except:
+            pass
+            
+        try:
+            q = request.args.get("q")
+        except:
+            pass
+        
+        try:
+            if (filter and q):
+                if q:
+                    if filter == "id":
+                        temp = Stations.getByID(id=q)
+                    elif filter == "email":
+                        temp = Stations.getByEmail(email=q)
+                    elif filter == "city":
+                        temp = Stations.getByCity(city=q)
+                    elif filter == "phone":
+                        temp = Stations.getByPhone(phone=q)
+                    elif filter == "registration":
+                        temp = Stations.getByRegistration(registration=q)
+                    else:
+                        temp = Stations.getAllStations()
+                        
+                    if isinstance(temp, list):
+                        list_all = temp
+                    else:
+                        list_all = [temp]
+            else:
+                list_all = Stations.getAllStations()
+        except:
+            list_all = Stations.getAllStations()
+            
+        try:
+            list_length = len(list_all)
+        except TypeError:
+            list_all = Stations.getAllStations()
+            list_length = len(list_all)
+            
+        per_page = 20
+        max_possible_page = (list_length // per_page)+1
+        if current_page > max_possible_page:
+            current_page = max_possible_page
+        data['pagination'] = Pagination(
+            per_page=per_page,
+            page=current_page,
+            total=list_length,
+            href=str(url_for('admin_panel_catergory', category='stations', page=1))[:-1] + "{0}"
+        )
+        min_index = (current_page*per_page) - \
+            per_page 
+        max_index = (min_index + per_page) 
+        data['stations_all'] =  list_all[min_index:max_index]
+    
     
     if data['wmode'] == "pending":
         pass
