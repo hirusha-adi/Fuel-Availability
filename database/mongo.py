@@ -443,6 +443,51 @@ class Stations:
                     }
                 )
 
+    def updateStation(id: int, 
+            name: t.Union[str, bytes],
+            registration: t.Union[str, bytes],
+            phone: t.Union[str, bytes],
+            email: t.Union[str, bytes],
+            coordinates: t.List[str],
+            city: t.Union[str, bytes],
+            petrol: bool,
+            diesel: bool,
+            apetrol: str,
+            adiesel: str,
+            capacity_petrol,
+            capacity_diesle,):
+        stations.find_one_and_update(
+            {
+                "id": id
+            },
+            {
+                "$set": {
+                        'id': 1,
+                        "name": name,
+                        "registration": registration,
+                        "phone": phone,
+                        "email": email,
+                        "coordinates": coordinates,
+                        "city": city,
+                        "availablitiy": {
+                            "petrol": petrol,
+                            "diesel": diesel
+                        },
+                        "amount": {
+                            "petrol": apetrol,
+                            "diesel": adiesel
+                        },
+                        "capacity": {
+                            "petrol": capacity_petrol,
+                            "diesel": capacity_diesle
+                        },
+                        'lastupdated': datetime.now()
+                }
+            },
+            upsert=True
+        )
+        return True
+    
     def getByEmail(email: t.Union[str, bytes]):
         temp = []
         for station in stations.find({'email': email}):
