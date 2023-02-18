@@ -443,19 +443,29 @@ class Stations:
                     }
                 )
 
-    def updateStation(id: int, 
+    def updateStation(
+            id: int, 
+            
+            # Updated using web UI
             name: t.Union[str, bytes],
             registration: t.Union[str, bytes],
             phone: t.Union[str, bytes],
             email: t.Union[str, bytes],
             coordinates: t.List[str],
             city: t.Union[str, bytes],
-            petrol: bool,
-            diesel: bool,
-            apetrol: str,
-            adiesel: str,
-            capacity_petrol,
-            capacity_diesle,):
+            
+            # Not updated using web UI
+            apetrol: str=None,
+            adiesel: str=None,
+            diesel: bool=None,
+            petrol: bool=None,
+            capacity_petrol=None,
+            capacity_diesle=None
+        ):
+        
+        if (apetrol is None) or (adiesel is None) or (diesel is None) or (petrol is None) or (capacity_petrol is None) or (capacity_diesle is None):
+            missing_data = Stations.getByID(id=id)
+        
         stations.find_one_and_update(
             {
                 "id": id
@@ -470,16 +480,16 @@ class Stations:
                         "coordinates": coordinates,
                         "city": city,
                         "availablitiy": {
-                            "petrol": petrol,
-                            "diesel": diesel
+                            "petrol": petrol or missing_data['availablitiy']['petrol'],
+                            "diesel": diesel or missing_data['availablitiy']['diesel']
                         },
                         "amount": {
-                            "petrol": apetrol,
-                            "diesel": adiesel
+                            "petrol": apetrol or missing_data['amount']['petrol'],
+                            "diesel": adiesel or missing_data['amount']['diesel']
                         },
                         "capacity": {
-                            "petrol": capacity_petrol,
-                            "diesel": capacity_diesle
+                            "petrol": capacity_petrol or missing_data['capacity']['petrol'],
+                            "diesel": capacity_diesle or missing_data['capacity']['diesel']
                         },
                         'lastupdated': datetime.now()
                 }
