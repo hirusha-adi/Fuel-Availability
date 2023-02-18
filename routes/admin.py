@@ -490,11 +490,38 @@ def amdin_settings_change(what):
                 name=str(request.json['newname']),
                 email=str(request.json['oldemail']),
                 newEmail=str(request.json['newemail']),
-                password=str(request.json['newpassword']),
+                password=str(request.json['newpassword'])
+            )
+        
+        elif what == "stationsapproved":
+            Stations.updateStation(
+                id=int(request.json['sameid']),
+                name=str(request.json['newname']),
+                registration=str(request.json['newregistration']),
+                phone=str(request.json['newphone']),
+                email=str(request.json['newemail']),
+                coordinates=str(request.json['newcoordinates']),
+                city=str(request.json['newcity'])
             )
 
         return jsonify({"wstatus": "ok"})
     
     except Exception as e:
         return jsonify({"wstatus": f"[Backend Error] -> {e}"})
-     
+
+def admin_delete_station(sid):
+    if not g.user:
+        return redirect(url_for('login'))
+
+    adminAccess = isAdmin(user=g.user)
+
+    if not(adminAccess):
+        return redirect(url_for('login'))
+    
+    try:
+        Stations.deleteByID(id=sid)
+        return jsonify({"status": "Deleted"})
+    except Exception as e:
+        return jsonify({"status": f"[Backend Error]: {e}"})
+
+    
