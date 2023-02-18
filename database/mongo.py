@@ -585,6 +585,8 @@ class Stations:
         )
         return True
 
+    def deleteByID(id: t.Union[int, str, bytes]):
+        stations.delete_one({"id": int(id)})
 
 class Pending:
     """
