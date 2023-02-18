@@ -31,6 +31,21 @@ Guide ->
             capacity_petrol,
             capacity_diesle
         )`
+        `updateStation(
+            name,
+            registration,
+            phone,
+            email,
+            coordinates,
+            city,
+            petrol,
+            diesel,
+            lastupdated,
+            apetrol,
+            adiesel,
+            capacity_petrol,
+            capacity_diesle
+        )`
         `getByEmail(email)`
         `getByPhone(phone)`
         `getByRegistration(registration)`
