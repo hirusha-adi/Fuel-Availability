@@ -2195,19 +2195,19 @@
                                                                 </a>
                                                             {% else %}
                                                                 <button class="btn-wide btn btn-success" 
-                                                                id="{{ one_station['id'] }}-gbutton"
-                                                                data-target-email="{{ one_station['email'] }}"
-                                                                data-target-name="{{ one_station['id'] }}-name"
-                                                                data-target-registration="{{ one_station['id'] }}-registration"
-                                                                data-target-phone="{{ one_station['id'] }}-phone"
-                                                                data-target-email="{{ one_station['id'] }}-email"
-                                                                data-target-coordinates="{{ one_station['id'] }}-coordinates"
-                                                                data-target-city="{{ one_station['id'] }}-city"
-                                                                onclick="updateUserInputs(this)"
+                                                                    id="{{ one_station['id'] }}-gbutton"
+                                                                    data-target-id="{{ one_station['id'] }}"
+                                                                    data-target-name="{{ one_station['id'] }}-name"
+                                                                    data-target-email="{{ one_station['email'] }}"
+                                                                    data-target-registration="{{ one_station['id'] }}-registration"
+                                                                    data-target-phone="{{ one_station['id'] }}-phone"
+                                                                    data-target-coordinates="{{ one_station['id'] }}-coordinates"
+                                                                    data-target-city="{{ one_station['id'] }}-city"
+                                                                    onclick="updateStationApproved(this)"
                                                                 >
                                                                     Update
                                                                 </button>
-                                                                <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" onclick="deleteOneUserbyID(this)" data-target-id="{{ one_station['id'] }}">
+                                                                <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger" onclick="deleteStationApproved(this)" data-target-id="{{ one_station['id'] }}">
                                                                     Delete
                                                                 </button>
                                                             {% endif %}
@@ -2412,6 +2412,89 @@
                 }, 500
             );
 
+        }
+
+        function updateStationApproved(element) {
+            element.innerHTML = "Processing"
+
+            var tIDname = element.getAttribute("data-target-name")
+            var tIDemail = element.getAttribute("data-target-email")
+            var tIDregistration = element.getAttribute("data-target-registration")
+            var tIDphone = element.getAttribute("data-target-phone")
+            var tIDcoordinates = element.getAttribute("data-target-coordinates")
+            var tIDcity = element.getAttribute("data-target-city")
+
+            var weburl = "{{ url_for('amdin_settings_change', what='stationsapproved') }}"
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", weburl);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            const requestBody = JSON.stringify(
+                { 
+                    newval: "stationsapproved",
+                    sameid: element.getAttribute("data-target-id"),
+                    newname: document.getElementById(tIDname).value,
+                    newemail: document.getElementById(tIDemail).value,
+                    newregistration: document.getElementById(tIDregistration).value,
+                    newphone: document.getElementById(tIDphone).value,
+                    newcoordinates: document.getElementById(tIDcoordinates).value,
+                    newcity: document.getElementById(tIDcity).value
+                }
+            );
+            xhr.send(requestBody);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                  const response = JSON.parse(xhr.responseText);
+                  if (response.wstatus === "ok") {
+                    element.innerHTML = "Updated"
+                  }
+                } else {
+                    element.innerHTML = "Error: " + xhr.status
+                    console.log(response.wstatus)
+                }
+            };
+
+            setTimeout(function() {
+                    element.innerHTML = "Update"
+                }, 500
+            );
+        }
+
+        function deleteStationApproved(element) {
+            var uid = element.getAttribute("data-target-id");
+            var flaskurl = "{{ url_for('admin_delete_station', uid='') }}";
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", flaskurl + uid, true);
+            console.log(uid, flaskurl)
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    if (data["status"] === "Deleted") {
+                        element.innerHTML = "Deleted";
+                        element.disabled = true;
+                        document.getElementById(uid+"-name").value = "DELETED";
+                        document.getElementById(uid+"-name").disabled = true;
+                        document.getElementById(uid+"-email").value = "DELETED";
+                        document.getElementById(uid+"-email").disabled = true;
+                        document.getElementById(uid+"-registration").value = "DELETED";
+                        document.getElementById(uid+"-registration").disabled = true;
+                        document.getElementById(uid+"-phone").value = "DELETED";
+                        document.getElementById(uid+"-phone").disabled = true;
+                        document.getElementById(uid+"-coordinates").value = "DELETED";
+                        document.getElementById(uid+"-coordinates").disabled = true;
+                        document.getElementById(uid+"-city").value = "DELETED";
+                        document.getElementById(uid+"-city").disabled = true;
+                        document.getElementById(uid+"-gbutton").innerHTML = "Deleted";
+                        document.getElementById(uid+"-gbutton").disabled = true;
+                    } else {
+                        element.innerHTML = "Failed";
+                        element.disabled = true;
+                    }
+                }
+            };
+
+            xhr.send();
         }
 
         function updateAllMainSettings() {
