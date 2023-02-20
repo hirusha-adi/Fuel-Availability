@@ -2155,20 +2155,21 @@
 
 
                                     &nbsp;
-                                    <button onclick="searchUserByFilter()" class="btn-wide btn btn-success"
+                                    <button onclick="searchStationByFilter()" class="btn-wide btn btn-success"
                                         style="padding-top: 8px; padding-bottom: 8px;">
                                         Search
                                     </button>
                                     &nbsp;&nbsp;for&nbsp;&nbsp;
-                                    <input id="i-u-query" type="text" placeholder="Something">
+                                    <input id="i-stationap-query" type="text" placeholder="Something">
                                     &nbsp;&nbsp;in&nbsp;&nbsp;
                                     <div class="select-container">
-                                        <select id="i-u-ftype">
+                                        <select id="i-stationap-ftype">
                                             <option value="id">ID</option>
                                             <option value="name">Name</option>
                                             <option value="email">Email</option>
                                             <option value="phone">Phone</option>
                                             <option value="city">City</option>
+                                            <option value="coordinates">Coordinates</option>
                                             <option value="registration">Registration</option>
                                         </select>
                                     </div>
@@ -2575,12 +2576,13 @@
             updateSettingInputText(document.getElementById("s-b-web-debug"))
         }
         function searchUserByFilter() {
-
             final_url = "{{ url_for('admin_panel_catergory', category='users', page=1) }}" + "&filter=" + document.getElementById("i-u-ftype").value + "&q=" + document.getElementById("i-u-query").value
-
             window.location = final_url
+        }
 
-
+        function searchStationByFilter() {
+            final_url = "{{ url_for('admin_panel_catergory', category='stations', page=1) }}" + "&filter=" + document.getElementById("i-stationap-ftype").value + "&q=" + document.getElementById("i-stationap-query").value
+            window.location = final_url
         }
     </script>
 </body>
