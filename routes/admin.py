@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 
 from flask import g
-from flask import request 
+from flask import request
 from flask import render_template
 from flask import url_for
 from flask import send_file
@@ -24,11 +24,12 @@ def isAdmin(user):
 def admin_home():
     return render_template("admin.html")
 
+
 def admin_panel():
     return redirect(url_for('admin_panel_catergory', category='overview'))
 
+
 def admin_panel_catergory(category):
-    
     """
     category:
         overview
@@ -39,15 +40,15 @@ def admin_panel_catergory(category):
         users
         stations
     """
-    
+
     if not g.user:
         return redirect(url_for('login'))
     adminAccess = isAdmin(user=g.user)
-    if not(adminAccess):
+    if not (adminAccess):
         return redirect(url_for('login'))
-    
+
     category = str(category)
-    
+
     data = {}
 
     if category.lower() in ("overview", "settings", "alllogs", "uniquelogs", "fileslogs", "users", "stations", "pending"):
@@ -73,7 +74,7 @@ def admin_panel_catergory(category):
                 try:
                     current_page = int(request.args.get("page"))
                 except:
-                    current_page  = 1
+                    current_page = 1
                 list_all = latest_log_last_lines[::-1]
                 list_length = len(list_all)
                 per_page = 25
@@ -84,13 +85,14 @@ def admin_panel_catergory(category):
                     per_page=per_page,
                     page=current_page,
                     total=list_length,
-                    href=str(url_for('admin_panel_catergory', category='fileslogs', page=1))[:-1] + "{0}"
+                    href=str(url_for('admin_panel_catergory',
+                             category='fileslogs', page=1))[:-1] + "{0}"
                 )
                 min_index = (current_page*per_page) - \
-                    per_page 
-                max_index = (min_index + per_page) 
-                data['latest_log_last_lines'] =  list_all[min_index:max_index]
-                
+                    per_page
+                max_index = (min_index + per_page)
+                data['latest_log_last_lines'] = list_all[min_index:max_index]
+
             else:
                 data['latest_log_last_lines'] = latest_log_last_lines[-10:]
 
@@ -101,7 +103,7 @@ def admin_panel_catergory(category):
                 try:
                     current_page = int(request.args.get("page"))
                 except:
-                    current_page  = 1
+                    current_page = 1
                 list_all = unique_log_last_lines[::-1]
                 list_length = len(list_all)
                 per_page = 25
@@ -112,25 +114,26 @@ def admin_panel_catergory(category):
                     per_page=per_page,
                     page=current_page,
                     total=list_length,
-                    href=str(url_for('admin_panel_catergory', category='fileslogs', page=1))[:-1] + "{0}"
+                    href=str(url_for('admin_panel_catergory',
+                             category='fileslogs', page=1))[:-1] + "{0}"
                 )
                 min_index = (current_page*per_page) - \
-                    per_page 
-                max_index = (min_index + per_page) 
-                data['unique_log_last_lines'] =  list_all[min_index:max_index]
-                
+                    per_page
+                max_index = (min_index + per_page)
+                data['unique_log_last_lines'] = list_all[min_index:max_index]
+
             else:
                 data['unique_log_last_lines'] = unique_log_last_lines[-10:]
-        
-       
+
         if data['wmode'] == "fileslogs":
             try:
                 current_page = int(request.args.get("page"))
             except:
-                current_page  = 1
-                
-            list_all = [filename for filename in os.listdir("logs") if filename not in (data['file_name_all'][5:], data['file_name_unique'][5:])]
-            
+                current_page = 1
+
+            list_all = [filename for filename in os.listdir("logs") if filename not in (
+                data['file_name_all'][5:], data['file_name_unique'][5:])]
+
             list_length = len(list_all)
             per_page = 10
             max_possible_page = (list_length // per_page)+1
@@ -140,15 +143,17 @@ def admin_panel_catergory(category):
                 per_page=per_page,
                 page=current_page,
                 total=list_length,
-                href=str(url_for('admin_panel_catergory', category='fileslogs', page=1))[:-1] + "{0}"
+                href=str(url_for('admin_panel_catergory',
+                         category='fileslogs', page=1))[:-1] + "{0}"
             )
             min_index = (current_page*per_page) - \
-                per_page 
-            max_index = (min_index + per_page) 
-            data['all_log_file_list'] =  list_all[min_index:max_index]
-    
+                per_page
+            max_index = (min_index + per_page)
+            data['all_log_file_list'] = list_all[min_index:max_index]
+
         if data['wmode'] == "overview":
-            data['unique_requests_percentage'] = str((data['unique_log_last_length']/data['latest_log_last_length'])*100)[:4]
+            data['unique_requests_percentage'] = str(
+                (data['unique_log_last_length']/data['latest_log_last_length'])*100)[:4]
             data['total_no_users'] = len(Users.getAllUsers())
             data["total_pending_stations"] = len(Pending.getAllStations())
             data["total_approved_stations"] = len(Stations.getAllStations())
@@ -163,20 +168,20 @@ def admin_panel_catergory(category):
         data['settings_web_host'] = settings.WebServer.host
         data['settings_web_port'] = settings.WebServer.port
         data['settings_web_debug'] = settings.WebServer.debug
-    
+
     if data['wmode'] == "users":
         data['user_admin_id'] = settings.Admin.id
-        
+
         try:
             current_page = int(request.args.get("page"))
         except:
-            current_page  = 1
-        
+            current_page = 1
+
         try:
             filter = request.args.get("filter")
         except:
             pass
-            
+
         try:
             q = request.args.get("q")
         except:
@@ -187,7 +192,7 @@ def admin_panel_catergory(category):
                 if q:
                     if filter == "id":
                         temp = Users.getUserByID(id=int(q), all=True)
-                        
+
                     elif filter == "email":
                         temp = Users.getUserByEmail(email=q, all=True)
                     elif filter == "name":
@@ -196,7 +201,7 @@ def admin_panel_catergory(category):
                         temp = Users.getUserByPassword(password=q, all=True)
                     else:
                         temp = Users.getAllUsers()
-                        
+
                     if isinstance(temp, list):
                         list_all = temp
                     else:
@@ -205,13 +210,13 @@ def admin_panel_catergory(category):
                 list_all = Users.getAllUsers()
         except:
             list_all = Users.getAllUsers()
-            
+
         try:
             list_length = len(list_all)
         except TypeError:
             list_all = Users.getAllUsers()
             list_length = len(list_all)
-            
+
         per_page = 20
         max_possible_page = (list_length // per_page)+1
         if current_page > max_possible_page:
@@ -220,30 +225,30 @@ def admin_panel_catergory(category):
             per_page=per_page,
             page=current_page,
             total=list_length,
-            href=str(url_for('admin_panel_catergory', category='users', page=1))[:-1] + "{0}"
+            href=str(url_for('admin_panel_catergory',
+                     category='users', page=1))[:-1] + "{0}"
         )
         min_index = (current_page*per_page) - \
-            per_page 
-        max_index = (min_index + per_page) 
-        data['users_all'] =  list_all[min_index:max_index]
-        
-    
+            per_page
+        max_index = (min_index + per_page)
+        data['users_all'] = list_all[min_index:max_index]
+
     if data['wmode'] == "stations":
         try:
             current_page = int(request.args.get("page"))
         except:
-            current_page  = 1
-        
+            current_page = 1
+
         try:
             filter = request.args.get("filter")
         except:
             pass
-            
+
         try:
             q = request.args.get("q")
         except:
             pass
-        
+
         try:
             if (filter and q):
                 if q:
@@ -259,7 +264,7 @@ def admin_panel_catergory(category):
                         temp = Stations.getByRegistration(registration=q)
                     else:
                         temp = Stations.getAllStations()
-                        
+
                     if isinstance(temp, list):
                         list_all = temp
                     else:
@@ -268,13 +273,13 @@ def admin_panel_catergory(category):
                 list_all = Stations.getAllStations()
         except:
             list_all = Stations.getAllStations()
-            
+
         try:
             list_length = len(list_all)
         except TypeError:
             list_all = Stations.getAllStations()
             list_length = len(list_all)
-            
+
         per_page = 20
         max_possible_page = (list_length // per_page)+1
         if current_page > max_possible_page:
@@ -283,19 +288,19 @@ def admin_panel_catergory(category):
             per_page=per_page,
             page=current_page,
             total=list_length,
-            href=str(url_for('admin_panel_catergory', category='stations', page=1))[:-1] + "{0}"
+            href=str(url_for('admin_panel_catergory',
+                     category='stations', page=1))[:-1] + "{0}"
         )
         min_index = (current_page*per_page) - \
-            per_page 
-        max_index = (min_index + per_page) 
-        data['stations_all'] =  list_all[min_index:max_index]
-    
-    
+            per_page
+        max_index = (min_index + per_page)
+        data['stations_all'] = list_all[min_index:max_index]
+
     if data['wmode'] == "pending":
         pass
-        
-    
+
     return render_template("admin.panel.html", **data)
+
 
 def admin_delete_user(uid):
     if not g.user:
@@ -303,29 +308,31 @@ def admin_delete_user(uid):
 
     adminAccess = isAdmin(user=g.user)
 
-    if not(adminAccess):
+    if not (adminAccess):
         return redirect(url_for('login'))
-    
+
     try:
         Users.deleteByID(id=uid)
         return jsonify({"status": "Deleted"})
-    
+
     except Exception as e:
         return jsonify({"status": f"[Backend Error]: {e}"})
+
 
 def admin_download_log_noargs():
     return redirect(url_for('admin_panel'))
 
+
 def admin_download_log(logtype):
-    
+
     if not g.user:
         return redirect(url_for('login'))
 
     adminAccess = isAdmin(user=g.user)
 
-    if not(adminAccess):
+    if not (adminAccess):
         return redirect(url_for('login'))
-    
+
     # Get File Names
     now = datetime.now()
     file_name_all = os.path.join(
@@ -336,41 +343,43 @@ def admin_download_log(logtype):
         "logs",
         now.strftime("unique_%Y_%m_%d.log")
     )
-    
+
     # Return Files
-    if logtype in ("all", "a"): # All
+    if logtype in ("all", "a"):  # All
         return send_file(file_name_all)
-    
-    elif logtype in ("unique", "u"): # Unique
+
+    elif logtype in ("unique", "u"):  # Unique
         return send_file(file_name_unique)
 
-    else: # Redirect to admin page if none
+    else:  # Redirect to admin page if none
         return redirect(url_for('admin_panel'))
 
+
 def admin_update():
-    
+
     if not g.user:
         return redirect(url_for('login'))
 
     adminAccess = isAdmin(user=g.user)
 
-    if not(adminAccess):
+    if not (adminAccess):
         return redirect(url_for('login'))
-    
+
     # ReMake the map and redirect to /map
     makeMap()
     return redirect(url_for('map'))
 
+
 def admin_approve():
-    
+
     if not g.user:
         return redirect(url_for('login'))
 
     adminAccess = isAdmin(user=g.user)
 
-    if not(adminAccess):
+    if not (adminAccess):
         return redirect(url_for('login'))
-    
+
     # Proceed if Admin
     if request.method == 'POST':
         itemid = request.form.get('itemid')
@@ -412,56 +421,60 @@ def admin_approve():
         data['pending_length'] = len(data['pending'])
         return render_template('accept.html', **data)
 
+
 def admin_download_file_no_arg():
     return redirect(url_for('admin_panel'))
 
+
 def admin_download_file(logfilename):
-    
+
     if not g.user:
         return redirect(url_for('login'))
 
     adminAccess = isAdmin(user=g.user)
 
-    if not(adminAccess):
+    if not (adminAccess):
         return redirect(url_for('login'))
-     
+
     return send_file(os.path.join("logs", logfilename))
+
 
 def admin_delete_file_no_arg():
     return redirect(url_for('admin_panel'))
 
+
 def admin_delete_file(logfilename):
-    
+
     if not g.user:
         return redirect(url_for('login'))
 
     adminAccess = isAdmin(user=g.user)
 
-    if not(adminAccess):
+    if not (adminAccess):
         return redirect(url_for('login'))
-    
+
     finalfname = os.path.join("logs", logfilename)
-    
+
     try:
         os.remove(finalfname)
         return jsonify({"status": "Deleted"})
     except:
         return jsonify({"status": "Failed"})
 
+
 def amdin_settings_change(what):
-    
+
     if not g.user:
         return redirect(url_for('login'))
 
     adminAccess = isAdmin(user=g.user)
 
-    if not(adminAccess):
+    if not (adminAccess):
         return redirect(url_for('login'))
-    
-    
+
     if request.is_json:
         newval = request.json['newval']
-        
+
     try:
         if what == "s-i-jawg-token":
             settings.uJawgToken(new=newval)
@@ -474,7 +487,7 @@ def amdin_settings_change(what):
             settings.MongoDB.uusername(new=newval)
         elif what == "s-i-mongo-password":
             settings.MongoDB.upassword(new=newval)
-        
+
         elif what == "s-i-web-host":
             settings.WebServer.uhost(new=newval)
         elif what == "s-i-web-port":
@@ -484,7 +497,7 @@ def amdin_settings_change(what):
                 settings.WebServer.udebug(new=True)
             else:
                 settings.WebServer.udebug(new=False)
-        
+
         elif what == "users":
             Users.updateUserNewEmail(
                 name=str(request.json['newname']),
@@ -492,7 +505,7 @@ def amdin_settings_change(what):
                 newEmail=str(request.json['newemail']),
                 password=str(request.json['newpassword'])
             )
-        
+
         elif what == "stationsapproved":
             Stations.updateStation(
                 id=int(request.json['sameid']),
@@ -505,9 +518,10 @@ def amdin_settings_change(what):
             )
 
         return jsonify({"wstatus": "ok"})
-    
+
     except Exception as e:
         return jsonify({"wstatus": f"[Backend Error] -> {e}"})
+
 
 def admin_delete_station(sid):
     if not g.user:
@@ -515,13 +529,11 @@ def admin_delete_station(sid):
 
     adminAccess = isAdmin(user=g.user)
 
-    if not(adminAccess):
+    if not (adminAccess):
         return redirect(url_for('login'))
-    
+
     try:
         Stations.deleteByID(id=sid)
         return jsonify({"status": "Deleted"})
     except Exception as e:
         return jsonify({"status": f"[Backend Error]: {e}"})
-
-    

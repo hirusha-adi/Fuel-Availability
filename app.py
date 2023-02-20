@@ -85,30 +85,45 @@ app.add_url_rule("/login", 'login', login, methods=['GET', 'POST'])
 app.add_url_rule("/signup", 'signup', signup, methods=['GET', 'POST'])
 app.add_url_rule("/logout", 'logout', logout, methods=['GET'])
 app.add_url_rule("/dashboard", 'panel', panel, methods=['GET'])
-app.add_url_rule("/edit/user", 'panel_edit_user', panel_edit_user, methods=['GET', 'POST'])
-app.add_url_rule("/edit/station", 'panel_edit_station', panel_edit_station, methods=['GET', 'POST'])
-app.add_url_rule("/add/station", 'add_new_station', add_new_station, methods=['GET', 'POST'])
+app.add_url_rule("/edit/user", 'panel_edit_user',
+                 panel_edit_user, methods=['GET', 'POST'])
+app.add_url_rule("/edit/station", 'panel_edit_station',
+                 panel_edit_station, methods=['GET', 'POST'])
+app.add_url_rule("/add/station", 'add_new_station',
+                 add_new_station, methods=['GET', 'POST'])
 
 # Admin
 app.add_url_rule("/admin", 'admin_home', admin_home, methods=['GET'])
-app.add_url_rule("/admin/update", 'admin_update', admin_update, methods=['GET'])
-app.add_url_rule("/admin/approve", 'admin_approve', admin_approve, methods=['GET', 'POST'])
+app.add_url_rule("/admin/update", 'admin_update',
+                 admin_update, methods=['GET'])
+app.add_url_rule("/admin/approve", 'admin_approve',
+                 admin_approve, methods=['GET', 'POST'])
 
 app.add_url_rule("/admin/panel", 'admin_panel', admin_panel, methods=['GET'])
-app.add_url_rule("/admin/panel/<category>", 'admin_panel_catergory', admin_panel_catergory, methods=['GET'])
+app.add_url_rule("/admin/panel/<category>", 'admin_panel_catergory',
+                 admin_panel_catergory, methods=['GET'])
 
-app.add_url_rule("/admin/download/log/latest", 'admin_download_log_noargs', admin_download_log_noargs, methods=['GET'])
-app.add_url_rule("/admin/download/log/latest/<logtype>", 'admin_download_log', admin_download_log, methods=['GET'])
+app.add_url_rule("/admin/download/log/latest", 'admin_download_log_noargs',
+                 admin_download_log_noargs, methods=['GET'])
+app.add_url_rule("/admin/download/log/latest/<logtype>",
+                 'admin_download_log', admin_download_log, methods=['GET'])
 
-app.add_url_rule("/admin/download/log/old", 'admin_download_file_no_arg', admin_download_file_no_arg, methods=['GET'])
-app.add_url_rule("/admin/download/log/old/<logfilename>", 'admin_download_file', admin_download_file, methods=['GET'])
+app.add_url_rule("/admin/download/log/old", 'admin_download_file_no_arg',
+                 admin_download_file_no_arg, methods=['GET'])
+app.add_url_rule("/admin/download/log/old/<logfilename>",
+                 'admin_download_file', admin_download_file, methods=['GET'])
 
-app.add_url_rule("/admin/delete/log/old", 'admin_delete_file_no_arg', admin_delete_file_no_arg, methods=['GET'])
-app.add_url_rule("/admin/delete/log/old/<logfilename>", 'admin_delete_file', admin_delete_file, methods=['GET'])
-app.add_url_rule("/admin/delete/user/<uid>", 'admin_delete_user', admin_delete_user, methods=['GET'])
+app.add_url_rule("/admin/delete/log/old", 'admin_delete_file_no_arg',
+                 admin_delete_file_no_arg, methods=['GET'])
+app.add_url_rule("/admin/delete/log/old/<logfilename>",
+                 'admin_delete_file', admin_delete_file, methods=['GET'])
+app.add_url_rule("/admin/delete/user/<uid>", 'admin_delete_user',
+                 admin_delete_user, methods=['GET'])
+app.add_url_rule("/admin/delete/station/<sid>",
+                 'admin_delete_station', admin_delete_station, methods=['GET'])
 
-app.add_url_rule("/admin/update/<what>", 'amdin_settings_change', amdin_settings_change, methods=['GET', 'POST'])
-
+app.add_url_rule("/admin/update/<what>", 'amdin_settings_change',
+                 amdin_settings_change, methods=['GET', 'POST'])
 
 
 def runApp():
