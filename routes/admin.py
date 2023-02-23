@@ -254,12 +254,16 @@ def admin_panel_catergory(category):
                 if q:
                     if filter == "id":
                         temp = Stations.getByID(id=q)
+                    elif filter == "name":
+                        temp = Stations.getByName(name=q)
                     elif filter == "email":
                         temp = Stations.getByEmail(email=q)
                     elif filter == "city":
                         temp = Stations.getByCity(city=q)
                     elif filter == "phone":
                         temp = Stations.getByPhone(phone=q)
+                    elif filter == "coordinates":
+                        temp = Stations.getByCoordinates(coordinates=q)
                     elif filter == "registration":
                         temp = Stations.getByRegistration(registration=q)
                     else:
