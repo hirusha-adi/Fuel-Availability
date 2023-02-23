@@ -466,7 +466,7 @@ class Stations:
             registration: t.Union[str, bytes],
             phone: t.Union[str, bytes],
             email: t.Union[str, bytes],
-            coordinates: t.List[str],
+            coordinates: t.Union[str, t.List[str]],
             city: t.Union[str, bytes],
             
             # Not updated using web UI
@@ -480,6 +480,9 @@ class Stations:
         
         if (apetrol is None) or (adiesel is None) or (diesel is None) or (petrol is None) or (capacity_petrol is None) or (capacity_diesle is None):
             missing_data = Stations.getByID(id=id)
+        
+        if isinstance(coordinates, str):
+            coordinates = coordinates.split(",")
         
         stations.find_one_and_update(
             {
