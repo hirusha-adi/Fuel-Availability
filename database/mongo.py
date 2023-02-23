@@ -764,6 +764,25 @@ class Pending:
                     }
                 )
 
+    def getByCoordinates(coordinates: t.Any):
+        temp = []
+        coordinates_list = str(coordinates).split(",") 
+        for station in pending.find({'coordinates': coordinates_list}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
+
+    def getByName(name: t.Any):
+        temp = []
+        for station in pending.find({'name': str(name)}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
+    
     def getByEmail(email: t.Union[str, bytes]):
         temp = []
         for station in pending.find({'email': email}):
