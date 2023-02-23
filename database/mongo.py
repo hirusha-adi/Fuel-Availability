@@ -543,6 +543,25 @@ class Stations:
         except:
             return False
 
+    def getByName(name: t.Any):
+        temp = []
+        for station in stations.find({'name': str(name)}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
+    
+    def getByCoordinates(coordinates: t.Any):
+        temp = []
+        coordinates_list = str(coordinates).split(",") 
+        for station in stations.find({'coordinates': coordinates_list}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
+
     def getByCity(city: t.Union[str, bytes]):
         temp = []
         for station in stations.find({'city': city}):
