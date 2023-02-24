@@ -22,7 +22,7 @@ def isAdmin(user):
 
 
 def admin_home():
-    return render_template("admin.html")
+    return redirect(url_for('admin_panel'))
 
 
 def admin_panel():
@@ -426,11 +426,7 @@ def admin_approve():
             return jsonify({'wstatus': f'{e}'})
 
     else:
-        # if GET
-        data = {}
-        data['pending'] = Pending.getAllStations()
-        data['pending_length'] = len(data['pending'])
-        return render_template('accept.html', **data)
+        return redirect(url_for('admin_panel_catergory', category='pending'))
 
 
 def admin_download_file_no_arg():
