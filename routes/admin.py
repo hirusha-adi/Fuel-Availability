@@ -545,6 +545,7 @@ def admin_delete_station(sid):
     except Exception as e:
         return jsonify({"status": f"[Backend Error]: {e}"})
 
+
 def admin_stations_pending_image_no_args():
     if not g.user:
         return redirect(url_for('login'))
@@ -570,4 +571,9 @@ def admin_stations_pending_image(image):
     if len(station) == 0:
         return redirect(url_for('admin_panel_catergory', category='pending'))
     
-    return "hi"
+    data = {}
+    data['title'] = f"{image} | Pending Station"
+    data['image'] = image
+    data['station'] = station[0]
+    
+    return render_template('image.html', **data)
