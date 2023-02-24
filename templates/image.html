@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+
+{% block head %}
+<!-- Nothing Here -->
+{% endblock %}
+
+{% block body %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">
+        <img src="{{ url_for('static', filename='images/logo-text.png') }}" alt="Fuel Availability" width="200px">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/map">
+                    Map
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    Home
+                </a>
+            </li>
+        </ul>
+        <div>
+            <div class="form-inline my-2 my-lg-0">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                    <a href="{{ url_for('login') }}" style="color: #fff;text-decoration: none;">
+                        Dashboard
+                    </a>
+                </button>
+                &nbsp;
+                &nbsp;
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                    <a href="{{ url_for('admin_panel_catergory', category='pending') }}"
+                        style="color: #fff;text-decoration: none;">
+                        Back
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-6">
+            <img class="w-100 shadow" src="{{ url_for('static', filename='uploads/'+image) }}" />
+        </div>
+        <div class="col-lg-6">
+            <div class="p-5 mt-4">
+                <h1 class="display-4">{{ station.name }}</h1>
+                <p class="lead" style="text-align: left;">
+                    Phone Number: {{ station.phone }}
+                    <br>
+                    Email: {{ station.email }}
+                    <br>
+                    Registration: {{ station.registration }}
+                    <br>
+                    City: {{ station.city }}
+                    <br>
+                    Coordinates: {{ station.coordinates[0] }},{{ station.coordinates[1] }}
+                    <br>
+                    Availability:
+                <ul style="text-align: left;">
+                    <li>
+                        {% if station.availablitiy.petrol %}Petrol ( {{ station.capacity.petrol }} L ){% endif %}
+                    </li>
+                    <li>
+                        {% if station.availablitiy.diesel %}Diesel ( {{ station.capacity.diesel }} L ){% endif %}
+                    </li>
+                </ul>
+                <br>
+                </p>
+                <a href="{{ url_for('admin_panel_catergory', category='pending') }}" class="btn btn-success">
+                    Back
+                </a>
+                <br>
+                <br>
+                Uploaded At: {{ station.lastupdated }}
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</div>
+
+{% endblock %}
