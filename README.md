@@ -1,5 +1,9 @@
 # Fuel Availability / Fuel App / Fuel Check
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/36286877/221199340-5c903ab2-a56d-4ff7-a21b-850ea52af338.png" />
+</p>
+
 Fuel App is an innovative solution inspired by the fuel crisis that occurred in Sri Lanka from late 2021 to mid 2022. Fuel App was developed to provide an effective solution that simplifies the management of fuel usage and availability of fuel in filling stations.
 
 Fuel App is a web-based platform that enables fuel stations to manage their fuel availability in a simple and user-friendly way. Designed with the needs of fuel stations in mind, this app provides a seamless experience for station owners, allowing them to manage their fuel stock with ease and efficiency once the station has been approved by the Administrator.
