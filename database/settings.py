@@ -174,7 +174,6 @@ def init():
     else:
         print("[+] '.env' file not found, defaulting to settings.json")
         
-    exit()
 
 init() # run this initially
 
