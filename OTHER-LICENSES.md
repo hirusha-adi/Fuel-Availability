@@ -437,7 +437,7 @@ Neither the name of the copyright holder nor the names of its contributors may b
 We would appreciate that you make the image a link to https://palletsprojects.com/p/flask/ if you use it in a medium that supports links.
 ```
 
-- [pymongo by mher](https://github.com/mongodb/mongo-python-driver)
+- [pymongo](https://github.com/mongodb/mongo-python-driver)
 
 ```
                                  Apache License
