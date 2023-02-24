@@ -39,6 +39,7 @@ def admin_panel_catergory(category):
         fileslogs
         users
         stations
+        pending
     """
 
     if not g.user:
@@ -233,7 +234,12 @@ def admin_panel_catergory(category):
         max_index = (min_index + per_page)
         data['users_all'] = list_all[min_index:max_index]
 
-    if data['wmode'] == "stations":
+    if data['wmode'] == "stations" or data['wmode'] == "pending":
+        isstations = False
+        if data['wmode'] == "stations":
+            isstations = True
+        data['isstations'] = isstations
+        
         try:
             current_page = int(request.args.get("page"))
         except:
@@ -253,19 +259,19 @@ def admin_panel_catergory(category):
             if (filter and q):
                 if q:
                     if filter == "id":
-                        temp = Stations.getByID(id=q)
+                        temp = Stations.getByID(id=q) if isstations else Pending.getByID(id=q)
                     elif filter == "name":
-                        temp = Stations.getByName(name=q)
+                        temp = Stations.getByName(name=q) if isstations else Pending.getByName(name=q)
                     elif filter == "email":
-                        temp = Stations.getByEmail(email=q)
+                        temp = Stations.getByEmail(email=q) if isstations else Pending.getByEmail(email=q)
                     elif filter == "city":
-                        temp = Stations.getByCity(city=q)
+                        temp = Stations.getByCity(city=q) if isstations else Pending.getByCity(city=q)
                     elif filter == "phone":
-                        temp = Stations.getByPhone(phone=q)
+                        temp = Stations.getByPhone(phone=q) if isstations else Pending.getByPhone(phone=q)
                     elif filter == "coordinates":
-                        temp = Stations.getByCoordinates(coordinates=q)
+                        temp = Stations.getByCoordinates(coordinates=q) if isstations else Pending.getByCoordinates(coordinates=q)
                     elif filter == "registration":
-                        temp = Stations.getByRegistration(registration=q)
+                        temp = Stations.getByRegistration(registration=q) if isstations else Pending.getByRegistration(registration=q)
                     else:
                         temp = Stations.getAllStations()
 
@@ -274,14 +280,14 @@ def admin_panel_catergory(category):
                     else:
                         list_all = [temp]
             else:
-                list_all = Stations.getAllStations()
+                list_all = Stations.getAllStations() if isstations else Pending.getAllStations()
         except:
-            list_all = Stations.getAllStations()
+            list_all = Stations.getAllStations() if isstations else Pending.getAllStations()
 
         try:
             list_length = len(list_all)
         except TypeError:
-            list_all = Stations.getAllStations()
+            list_all = Stations.getAllStations() if isstations else Pending.getAllStations()
             list_length = len(list_all)
 
         per_page = 20
@@ -293,15 +299,12 @@ def admin_panel_catergory(category):
             page=current_page,
             total=list_length,
             href=str(url_for('admin_panel_catergory',
-                     category='stations', page=1))[:-1] + "{0}"
+                     category='pending', page=1))[:-1] + "{0}"
         )
         min_index = (current_page*per_page) - \
             per_page
         max_index = (min_index + per_page)
         data['stations_all'] = list_all[min_index:max_index]
-
-    if data['wmode'] == "pending":
-        pass
 
     return render_template("admin.panel.html", **data)
 
@@ -541,3 +544,30 @@ def admin_delete_station(sid):
         return jsonify({"status": "Deleted"})
     except Exception as e:
         return jsonify({"status": f"[Backend Error]: {e}"})
+
+def admin_stations_pending_image_no_args():
+    if not g.user:
+        return redirect(url_for('login'))
+
+    adminAccess = isAdmin(user=g.user)
+
+    if not (adminAccess):
+        return redirect(url_for('login'))
+    
+    return redirect(url_for('admin_panel_catergory', category='pending'))
+    
+    
+def admin_stations_pending_image(image): 
+    if not g.user:
+        return redirect(url_for('login'))
+
+    adminAccess = isAdmin(user=g.user)
+
+    if not (adminAccess):
+        return redirect(url_for('login'))
+
+    station = Pending.getByImage(image=image)
+    if len(station) == 0:
+        return redirect(url_for('admin_panel_catergory', category='pending'))
+    
+    return "hi"
