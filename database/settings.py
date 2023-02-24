@@ -1,5 +1,9 @@
 import os
 import json
+import re
+import typing as t
+
+
 
 """
 Has all the variables and has functions to update them properly
@@ -68,6 +72,111 @@ Usage (Examples) ->
 """
 
 FILENAME = os.path.join(os.getcwd(), 'database', 'settings.json')
+FILENAME_ENV = os.path.join(os.getcwd(), '.env')
+FILENAME_ENV_new = os.path.join(os.getcwd(), '.env.old')
+
+def get_env(name: str, default: t.Optional[t.Union[str,int,bool]] = None) -> t.Union[int,str,bool]:
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+    except:
+            os.system('pip install python-dotenv' if os.name == 'nt' else 'pip3 install python-dotenv')
+            from dotenv import load_dotenv
+            load_dotenv()
+    value: str | None = os.getenv(name, None)
+    if value is None:
+        if default is None:
+            return "ERROR"
+        else:
+            return default
+    else:
+        if (name == 'WEBSERVER_HOST') or (name == 'MONGO_IP'):
+            ipv4_regex = r"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+            if re.match(ipv4_regex, value):
+                return str(value)
+            
+        elif name == 'WEBSERVER_PORT':
+            port_regex = r"^[1-9]\d{0,3}$|^0$|^6553[0-5]$|^655[0-2]\d$|^65[0-4]\d{2}$|^6[0-4]\d{3}$|^[1-5]\d{4}$|^6[0-5][0-4][0-9]{2}$"
+            if re.match(port_regex, value):
+                return str(value)
+            
+        elif name == 'WEBSERVER_DEBUG':
+            true_ = ('true', '1', 't', 'on', 'e', 'enable')
+            if value in true_:
+                return True
+            else:            
+                return False 
+            
+        elif (name == 'CONTACT_EMAIL') or (name == 'ADMIN_EMAIL') or (name == 'ADMIN_USERNAME'):
+            email_regex = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+            if re.match(email_regex, value):
+                return str(value)
+        
+        elif name == 'ADMIN_ID':
+            try:
+                return int(value) 
+            except:
+                if default is None:
+                    return 7879
+                else:
+                    return default
+        else:
+            return str(value)
+
+def init():
+    if os.path.isfile(FILENAME_ENV):
+        print("[+] Found '.env' file, loading and dumping data to './database/settings.json'")
+        FLASK_SECRET: str = get_env('FLASK_SECRET', None)
+        JAWG_TOKEN: str = get_env('JAWG_TOKEN', None)
+        CONTACT_EMAIL: str = get_env('CONTACT_EMAIL', 'hirushaadi@gmail.com')
+        
+        WEBSERVER_HOST: str = get_env('WEBSERVER_HOST', '0.0.0.0')
+        WEBSERVER_PORT: str = get_env('WEBSERVER_PORT', "7879")
+        WEBSERVER_DEBUG: bool = get_env('WEBSERVER_DEBUG', False)
+        
+        ADMIN_ID: int  = get_env('ADMIN_ID', None)
+        ADMIN_FULLNAME: str  = get_env('ADMIN_FULLNAME', None)
+        ADMIN_USERNAME: str  = get_env('ADMIN_USERNAME', None)
+        ADMIN_EMAIL: str  = get_env('ADMIN_EMAIL', None)
+        ADMIN_PASSWORD: str  = get_env('ADMIN_PASSWORD', None)
+        
+        MONGO_IP: str  = get_env('MONGO_IP', None)
+        MONGO_USERNAME: str  = get_env('MONGO_USERNAME', None)
+        MONGO_PASSWORD: str  = get_env('MONGO_PASSWORD', None)
+        
+        with open(FILENAME, 'w', encoding='utf-8') as file:
+            tmp = {
+                "webserver": {
+                    "host": WEBSERVER_HOST,
+                    "port": WEBSERVER_PORT,
+                    "debug": WEBSERVER_DEBUG
+                },
+                "admin": {
+                    "id": ADMIN_ID,
+                    "fullname": ADMIN_FULLNAME,
+                    "username": ADMIN_USERNAME,
+                    "email": ADMIN_EMAIL,
+                    "password": ADMIN_PASSWORD
+                },
+                "flaskSecret": FLASK_SECRET,
+                "JawgToken": JAWG_TOKEN,
+                "contactEmail": CONTACT_EMAIL,
+                "mongodb": {
+                    "ip": MONGO_IP,
+                    "username": MONGO_USERNAME,
+                    "password": MONGO_PASSWORD
+                }
+            }
+            json.dump(tmp, file, indent=4)
+        
+        os.rename(FILENAME_ENV, FILENAME_ENV_new)
+    
+    else:
+        print("[+] '.env' file not found, defaulting to settings.json")
+        
+    exit()
+
+init() # run this initially
 
 with open(FILENAME, 'r', encoding='utf-8') as _file:
     data = json.load(_file)
@@ -169,4 +278,6 @@ class Admin:
     email: str = admin['email']
     password: str = admin['password']
     fullname: str = admin['fullname']
-    
+
+
+        
