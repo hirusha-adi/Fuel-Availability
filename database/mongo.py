@@ -789,6 +789,12 @@ class Pending:
             temp.append(station)
         return temp
 
+    def getByImage(image: t.Union[str, bytes]):
+        temp = []
+        for station in pending.find({'image': image}):
+            temp.append(station)
+        return temp
+
     def getByPhone(phone: t.Union[str, bytes]):
         temp = []
         for station in pending.find({'phone': phone}):
