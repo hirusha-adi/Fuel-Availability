@@ -31,6 +31,21 @@ Guide ->
             capacity_petrol,
             capacity_diesle
         )`
+        `updateStation(
+            name,
+            registration,
+            phone,
+            email,
+            coordinates,
+            city,
+            petrol,
+            diesel,
+            lastupdated,
+            apetrol,
+            adiesel,
+            capacity_petrol,
+            capacity_diesle
+        )`
         `getByEmail(email)`
         `getByPhone(phone)`
         `getByRegistration(registration)`
@@ -443,6 +458,64 @@ class Stations:
                     }
                 )
 
+    def updateStation(
+            id: int, 
+            
+            # Updated using web UI
+            name: t.Union[str, bytes],
+            registration: t.Union[str, bytes],
+            phone: t.Union[str, bytes],
+            email: t.Union[str, bytes],
+            coordinates: t.Union[str, t.List[str]],
+            city: t.Union[str, bytes],
+            
+            # Not updated using web UI
+            apetrol: str=None,
+            adiesel: str=None,
+            diesel: bool=None,
+            petrol: bool=None,
+            capacity_petrol=None,
+            capacity_diesle=None
+        ):
+        
+        if (apetrol is None) or (adiesel is None) or (diesel is None) or (petrol is None) or (capacity_petrol is None) or (capacity_diesle is None):
+            missing_data = Stations.getByID(id=id)
+        
+        if isinstance(coordinates, str):
+            coordinates = coordinates.split(",")
+        
+        stations.find_one_and_update(
+            {
+                "id": id
+            },
+            {
+                "$set": {
+                        'id': 1,
+                        "name": name,
+                        "registration": registration,
+                        "phone": phone,
+                        "email": email,
+                        "coordinates": coordinates,
+                        "city": city,
+                        "availablitiy": {
+                            "petrol": petrol or missing_data['availablitiy']['petrol'],
+                            "diesel": diesel or missing_data['availablitiy']['diesel']
+                        },
+                        "amount": {
+                            "petrol": apetrol or missing_data['amount']['petrol'],
+                            "diesel": adiesel or missing_data['amount']['diesel']
+                        },
+                        "capacity": {
+                            "petrol": capacity_petrol or missing_data['capacity']['petrol'],
+                            "diesel": capacity_diesle or missing_data['capacity']['diesel']
+                        },
+                        'lastupdated': datetime.now()
+                }
+            },
+            upsert=True
+        )
+        return True
+    
     def getByEmail(email: t.Union[str, bytes]):
         temp = []
         for station in stations.find({'email': email}):
@@ -467,6 +540,25 @@ class Stations:
     def getByID(id: t.Any):
         temp = []
         for station in stations.find({'id': int(id)}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
+
+    def getByName(name: t.Any):
+        temp = []
+        for station in stations.find({'name': str(name)}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
+    
+    def getByCoordinates(coordinates: t.Any):
+        temp = []
+        coordinates_list = str(coordinates).split(",") 
+        for station in stations.find({'coordinates': coordinates_list}):
             temp.append(station)
         try:
             return temp[0]
@@ -515,6 +607,8 @@ class Stations:
         )
         return True
 
+    def deleteByID(id: t.Union[int, str, bytes]):
+        stations.delete_one({"id": int(id)})
 
 class Pending:
     """
@@ -670,9 +764,34 @@ class Pending:
                     }
                 )
 
+    def getByCoordinates(coordinates: t.Any):
+        temp = []
+        coordinates_list = str(coordinates).split(",") 
+        for station in pending.find({'coordinates': coordinates_list}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
+
+    def getByName(name: t.Any):
+        temp = []
+        for station in pending.find({'name': str(name)}):
+            temp.append(station)
+        try:
+            return temp[0]
+        except:
+            return False
+    
     def getByEmail(email: t.Union[str, bytes]):
         temp = []
         for station in pending.find({'email': email}):
+            temp.append(station)
+        return temp
+
+    def getByImage(image: t.Union[str, bytes]):
+        temp = []
+        for station in pending.find({'image': image}):
             temp.append(station)
         return temp
 
