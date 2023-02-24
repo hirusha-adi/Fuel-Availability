@@ -1,4 +1,6 @@
-# Fuel-Availability (Under Development)
+# README.md is OUTDATED!! This will be updated soon!
+
+# Fuel-Availability (Completed)
 
 A simple responsive web app made as a solution for the current fuel crisis in Sri Lanka
 
