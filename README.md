@@ -158,7 +158,7 @@ The new user is created, Now, You have to make logging-in required
    python3 app.py
    ```
 
-# Images (Outdated)
+# Images
 
 ![image](https://user-images.githubusercontent.com/36286877/221196517-8425670e-6f88-4e61-bc49-36981048105a.png)
 
