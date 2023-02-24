@@ -1,4 +1,4 @@
-# Fuel Availability / Fuel App
+# Fuel Availability / Fuel App / Fuel Check
 
 Fuel App is an innovative solution inspired by the fuel crisis that occurred in Sri Lanka from late 2021 to mid 2022. Fuel App was developed to provide an effective solution that simplifies the management of fuel usage and availability of fuel in filling stations.
 
