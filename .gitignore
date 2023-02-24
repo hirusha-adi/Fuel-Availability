@@ -4,6 +4,8 @@ templates/map.html
 templates/map_petrol.html
 templates/map_diesel.html
 *.log
+test.html
+test.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -32,3 +34,4 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.env.old
