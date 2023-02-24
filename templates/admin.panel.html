@@ -2581,7 +2581,7 @@
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     const response = JSON.parse(xhr.responseText);
-                    if (response.wstatus === "ok") {
+                    if (response.wstatus === "success") {
                         element.innerHTML = "Accepted"
                     }
                 } else {
