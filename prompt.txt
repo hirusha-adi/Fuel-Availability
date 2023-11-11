@@ -1,0 +1,43 @@
+i have my mongodb database
+
+Document Name: Stations
++------------------+-----------------+------+-----+---------+----------------+
+| Field            | Type            | Null | Key | Default | Extra          |
++------------------+-----------------+------+-----+---------+----------------+
+| id               | bigint unsigned | NO   | PRI | NULL    | auto_increment |
+| user_id          | bigint          | NO   |     | NULL    |                |
+| name             | varchar(255)    | NO   |     | NULL    |                |
+| phone            | varchar(255)    | NO   |     | NULL    |                |
+| registration     | bigint          | NO   |     | NULL    |                |
+| google_maps_url  | longtext        | NO   |     | NULL    |                |
+| co_lon           | bigint          | NO   |     | NULL    |                |
+| co_lat           | bigint          | NO   |     | NULL    |                |
+| available_petrol | tinyint(1)      | YES  |     | NULL    |                |
+| available_diesel | tinyint(1)      | YES  |     | NULL    |                |
+| capacity_petrol  | smallint        | YES  |     | NULL    |                |
+| capacity_diesel  | smallint        | YES  |     | NULL    |                |
+| last_updates     | datetime        | YES  |     | NULL    |                |
+| is_pending       | tinyint(1)      | YES  |     | NULL    |                |
++------------------+-----------------+------+-----+---------+----------------+
+
+
+Users: - User Information
+        `getAllUsers()`
+        `getLastUser()`
+        `getUserByEmail(email)`
+        `getUserByID(id)`
+        `getUserByName(name)`
+        `addUser(name, email, password)`
+        `updateUser(name, email, password)`
+        `updateUserNewEmail(name, email, newEmail, password)`
+        `deleteByID(id)`
+
+write these functions for me (python)
+connect to mysql in localhost port 3306
+username: root
+password: TjvJrKbJDEah93C*
+
+create a table for this and wrtie python functions
+"id" key is primary key and email should be unique
+
+
