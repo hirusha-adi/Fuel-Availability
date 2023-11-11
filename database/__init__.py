@@ -1,1 +1,1 @@
-from . import mongo, settings
+from . import mysqlmgr, settings
