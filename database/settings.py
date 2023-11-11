@@ -90,7 +90,7 @@ def get_env(name: str, default: t.Optional[t.Union[str,int,bool]] = None) -> t.U
         else:
             return default
     else:
-        if (name == 'WEBSERVER_HOST') or (name == 'MONGO_IP'):
+        if (name == 'WEBSERVER_HOST') or (name == 'MYSQL_IP'):
             ipv4_regex = r"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
             if re.match(ipv4_regex, value):
                 return str(value)
@@ -140,9 +140,11 @@ def init():
         ADMIN_EMAIL: str  = get_env('ADMIN_EMAIL', None)
         ADMIN_PASSWORD: str  = get_env('ADMIN_PASSWORD', None)
         
-        MONGO_IP: str  = get_env('MONGO_IP', None)
-        MONGO_USERNAME: str  = get_env('MONGO_USERNAME', None)
-        MONGO_PASSWORD: str  = get_env('MONGO_PASSWORD', None)
+        MYSQL_IP: str  = get_env('MYSQL_IP', "localhost")
+        MYSQL_USERNAME: str  = get_env('MYSQL_USERNAME', None)
+        MYSQL_PASSWORD: str  = get_env('MYSQL_PASSWORD', None)
+        MYSQL_PORT: int  = get_env('MYSQL_PORT', 3306)
+        MYSQL_DATABASE: str  = get_env('MYSQL_DATABASE', "fuelapp")
         
         with open(FILENAME, 'w', encoding='utf-8') as file:
             tmp = {
@@ -161,10 +163,12 @@ def init():
                 "flaskSecret": FLASK_SECRET,
                 "JawgToken": JAWG_TOKEN,
                 "contactEmail": CONTACT_EMAIL,
-                "mongodb": {
-                    "ip": MONGO_IP,
-                    "username": MONGO_USERNAME,
-                    "password": MONGO_PASSWORD
+                "mysql": {
+                    "ip": MYSQL_IP,
+                    "port": MYSQL_PORT,
+                    "username": MYSQL_USERNAME,
+                    "password": MYSQL_PASSWORD,
+                    "database": MYSQL_DATABASE
                 }
             }
             json.dump(tmp, file, indent=4)
@@ -214,32 +218,50 @@ if not (os.path.isdir(uploadPath)):
 ALLOWED_EXTENSIONS: set = set(['pdf', 'png', 'jpg', 'jpeg'])
 
 
-class MongoDB:
-    mongodb = data["mongodb"]
+class MySQL:
+    mysql = data["mysql"]
     
-    ip: str = mongodb["ip"]
+    ip: str = mysql["ip"]
     
     def uip(new: str):
-        MongoDB.ip = new
-        data['mongodb']['ip'] = new
+        MySQL.ip = new
+        data['mysql']['ip'] = new
+        with open(FILENAME, "w") as sf:
+            json.dump(data, sf, indent=4)
+    
+    port: int = mysql["port"]
+    
+    def uport(new: str):
+        MySQL.port = new
+        data['mysql']['port'] = new
         with open(FILENAME, "w") as sf:
             json.dump(data, sf, indent=4)
         
-    username: str = mongodb["username"]
+    username: str = mysql["username"]
     
     def uusername(new: str):
-        MongoDB.username = new
-        data['mongodb']['username'] = new
+        MySQL.username = new
+        data['mysql']['username'] = new
         with open(FILENAME, "w") as sf:
             json.dump(data, sf, indent=4)
             
-    password: str = mongodb["password"]
+    password: str = mysql["password"]
     
     def upassword(new: str):
-        MongoDB.password = new
-        data['mongodb']['password'] = new
+        MySQL.password = new
+        data['mysql']['password'] = new
         with open(FILENAME, "w") as sf:
             json.dump(data, sf, indent=4)
+    
+    database: str = mysql["database"]
+    
+    def udatabase(new: str):
+        MySQL.database = new
+        data['mysql']['database'] = new
+        with open(FILENAME, "w") as sf:
+            json.dump(data, sf, indent=4)
+    
+    
     
 
 class WebServer:
