@@ -144,7 +144,7 @@ def initDataBase(connection):
     ALTER TABLE `Users` ADD UNIQUE `users_email_unique`(`email`)
     """,
     """
-    CREATE TABLE `Stations`(
+    CREATE TABLE `Stations` (
         `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
         `user_id` BIGINT NOT NULL,
         `name` VARCHAR(255) NOT NULL,
@@ -153,12 +153,13 @@ def initDataBase(connection):
         `google_maps_url` LONGTEXT NOT NULL,
         `co_lon` BIGINT NOT NULL,
         `co_lat` BIGINT NOT NULL,
-        `available_petrol` TINYINT(1) NOT NULL,
-        `available_diesel` TINYINT(1) NOT NULL,
-        `capacity_petrol` TINYINT(1) NULL,
-        `capacity_diesel` TINYINT(1) NULL,
-        `last_updates` DATETIME NULL
-    )
+        `available_petrol` BOOLEAN NOT NULL,
+        `available_diesel` BOOLEAN NOT NULL,
+        `capacity_petrol` SMALLINT NULL,
+        `capacity_diesel` SMALLINT NULL,
+        `last_updates` DATETIME NULL,
+        `is_pending` BOOLEAN
+    );
     """,
     """
     CREATE TABLE `Admins`(
@@ -330,34 +331,24 @@ class Users:
 
 class Stations:
     """
-    {
-        "_id": {
-            "$oid": ""
-        },
-        "id": 1,
-        "name": "Dhammika Filling Station",
-        "phone": "0719999999",
-        "email": "hirusha@hirusha.xyz",
-        "registration": "123",
-        "coordinates": [
-            7.494112,
-            80.3679604
-        ],
-        "city": "Kurunegala",
-        "availablitiy": {
-            "petrol": true,
-            "diesel": false
-        },
-        "amount": {
-            "petrol": "35",
-            "diesel": "70"
-        },
-        "capacity": {
-            "petrol": 123,
-            "diesel": 123
-        },
-        "lastupdated": ""
-    }
++------------------+-----------------+------+-----+---------+----------------+
+| Field            | Type            | Null | Key | Default | Extra          |
++------------------+-----------------+------+-----+---------+----------------+
+| id               | bigint unsigned | NO   | PRI | NULL    | auto_increment |
+| user_id          | bigint          | NO   |     | NULL    |                |
+| name             | varchar(255)    | NO   |     | NULL    |                |
+| phone            | varchar(255)    | NO   |     | NULL    |                |
+| registration     | bigint          | NO   |     | NULL    |                |
+| google_maps_url  | longtext        | NO   |     | NULL    |                |
+| co_lon           | bigint          | NO   |     | NULL    |                |
+| co_lat           | bigint          | NO   |     | NULL    |                |
+| available_petrol | tinyint(1)      | YES  |     | NULL    |                |
+| available_diesel | tinyint(1)      | YES  |     | NULL    |                |
+| capacity_petrol  | smallint        | YES  |     | NULL    |                |
+| capacity_diesel  | smallint        | YES  |     | NULL    |                |
+| last_updates     | datetime        | YES  |     | NULL    |                |
+| is_pending       | tinyint(1)      | YES  |     | NULL    |                |
++------------------+-----------------+------+-----+---------+----------------+
     """
 
     def getAllStations():
