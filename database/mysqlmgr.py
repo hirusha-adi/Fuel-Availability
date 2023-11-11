@@ -100,7 +100,7 @@ from datetime import datetime
 from bson import ObjectId
 from pymongo import MongoClient
 
-from database.settings import MongoDB
+from database.settings import MySQL
 
 client = MongoClient('mongodb://%s:%s@%s:27017/' % (
     urllib.parse.quote_plus(MongoDB.username),
@@ -108,10 +108,28 @@ client = MongoClient('mongodb://%s:%s@%s:27017/' % (
     MongoDB.ip
 ))
 
-users = client['fuel']['users']
-stations = client['fuel']['stations']
-pending = client['fuel']['pending']
+# users = client['fuel']['users']
+# stations = client['fuel']['stations']
+# pending = client['fuel']['pending']
 
+import mysql.connector
+
+def makeConnection():
+    try:
+        connection = mysql.connector.connect(
+            # host=MySQL.ip,
+            host="localhost",
+            user=MySQL.username,
+            password=MySQL.password,
+            port=3306,
+            database="fuelapp"
+        )
+        return connection
+    except mysql.connector.Error as error:
+        print("Error connecting to the database:", error)
+        return None
+
+client = makeConnection()
 
 class Users:
     """
