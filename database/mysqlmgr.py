@@ -122,179 +122,211 @@ def makeConnection():
 
 client = makeConnection()
 
+def initDataBase(connection):
+    if connection is not None:
+        ddl_list = [
+    """
+    CREATE TABLE `Server`(
+        `flask_secret` VARCHAR(255) NOT NULL,
+        `jawg_token` VARCHAR(255) NOT NULL,
+        `contact_email` VARCHAR(255) NOT NULL
+    )
+    """,
+    """
+    CREATE TABLE `Users`(
+        `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `name` VARCHAR(255) NOT NULL,
+        `email` VARCHAR(255) NOT NULL,
+        `password` VARCHAR(255) NOT NULL
+    )
+    """,
+    """
+    ALTER TABLE `Users` ADD UNIQUE `users_email_unique`(`email`)
+    """,
+    """
+    CREATE TABLE `Stations`(
+        `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `user_id` BIGINT NOT NULL,
+        `name` VARCHAR(255) NOT NULL,
+        `phone` VARCHAR(255) NOT NULL,
+        `registration` BIGINT NOT NULL,
+        `google_maps_url` LONGTEXT NOT NULL,
+        `co_lon` BIGINT NOT NULL,
+        `co_lat` BIGINT NOT NULL,
+        `available_petrol` TINYINT(1) NOT NULL,
+        `available_diesel` TINYINT(1) NOT NULL,
+        `capacity_petrol` TINYINT(1) NULL,
+        `capacity_diesel` TINYINT(1) NULL,
+        `last_updates` DATETIME NULL
+    )
+    """,
+    """
+    CREATE TABLE `Admins`(
+        `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `full_name` VARCHAR(255) NULL,
+        `username` VARCHAR(255) NULL,
+        `email` VARCHAR(255) NOT NULL,
+        `password` VARCHAR(255) NOT NULL
+    )
+    """,
+    """
+    ALTER TABLE `Stations` ADD CONSTRAINT `stations_user_id_foreign` FOREIGN KEY(`user_id`) REFERENCES `Users`(`id`)
+    """
+]
+        try:
+            cursor = connection.cursor()
+            for ddl in ddl_list:
+                try:
+                    cursor.execute(ddl)
+                    print("[+] DDL Executed:", ddl)
+                except Exception as e:
+                    print("[!!] Error executing DDL:", ddl)
+        except mysql.connector.Error as error:
+            print("Error executing DDL statements:", error)
+
 class Users:
     """
-    {
-        "_id": {
-            "$oid": ""
-        },
-        "id": 1,
-        "name": "",
-        "email": "",
-        "password": ""
-    }
++----------+-----------------+------+-----+---------+----------------+
+| Field    | Type            | Null | Key | Default | Extra          |
++----------+-----------------+------+-----+---------+----------------+
+| id       | bigint unsigned | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(255)    | NO   |     | NULL    |                |
+| email    | varchar(255)    | NO   | UNI | NULL    |                |
+| password | varchar(255)    | NO   |     | NULL    |                |
++----------+-----------------+------+-----+---------+----------------+
     """
 
-    def getAllUsers() -> list:
-        """
-        return a list of all users
-        """
-        temp = []
-        for user in users.find({}):
-            temp.append(user)
-        return temp
+    def getAllUsers(connection):
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                cursor.execute("SELECT * FROM Users")
+                users = cursor.fetchall()
+                cursor.close()
+                return users
+            except mysql.connector.Error as error:
+                print("Error fetching all users:", error)
+                return None
 
-    def getLastUser():
+    def getLastUser(connection):
+        """
+        return a dict with a user that was added lastly
+        """
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                cursor.execute("SELECT * FROM Users ORDER BY id DESC LIMIT 1")
+                user = cursor.fetchone()
+                cursor.close()
+                return user
+            except mysql.connector.Error as error:
+                print("Error fetching all users:", error)
+                return None
+
+    def getUserByEmail(connection, email: t.Union[str, bytes], all=False):
         """
         return a dict with a user
-
-        This is improvable and i dont know how to with pymongo
-            https://stackoverflow.com/questions/32076382/mongodb-how-to-get-max-value-from-collections
         """
-        temp = []
-        for user in Users.getAllUsers():
-            temp.append(user)
-        return temp[-1]
-
-    def getUserByEmail(email: t.Union[str, bytes], all=False):
-        """
-        return a dict with a user
-        """
-        temp = []
-        for user in users.find({'email': email}):
-            temp.append(user)
-        if all:
-            return temp
-        try:
-            return temp[0]
-        except:
-            return False
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                cursor.execute("SELECT * FROM Users WHERE email = %s", (email,))
+                user = cursor.fetchone()
+                cursor.close()
+                return user
+            except mysql.connector.Error as error:
+                print("Error fetching all users:", error)
+                return None
     
-    def getUserByPassword(password: t.Union[str, bytes], all=False):
+    def getUserByPassword(connection, password: t.Union[str, bytes], all=False):
         """
         return a dict with a user
         """
-        temp = []
-        for user in users.find({'password': password}):
-            temp.append(user)
-        if all:
-            return temp
-        try:
-            return temp[0]
-        except:
-            return False
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                cursor.execute("SELECT * FROM Users WHERE password = %s", (password,))
+                user = cursor.fetchone()
+                cursor.close()
+                return user
+            except mysql.connector.Error as error:
+                print("Error fetching all users:", error)
+                return None
 
-    def getUserByID(id: t.Union[int, str], all=False):
+    def getUserByID(connection, id: t.Union[int, str], all=False):
         """
         return a dict with a user
         """
-        temp = []
-        for user in users.find({'id': id}):
-            temp.append(user)
-        if all:
-            return temp
-        try:
-            return temp[0]
-        except:
-            return False
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                cursor.execute("SELECT * FROM Users WHERE id = %s", (id,))
+                user = cursor.fetchone()
+                cursor.close()
+                return user
+            except mysql.connector.Error as error:
+                print("Error fetching all users:", error)
+                return None
 
-    def getUserByName(name: t.Union[str, bytes], all=False):
+    def getUserByName(connection, name: t.Union[str, bytes], all=False):
         """
         return a list of users
         """
-        temp = []
-        for user in users.find(
-            {
-                "name": {
-                    "$regex": f'.*{name}*.',
-                    "$options": 'i'  # ignore case
-                }
-            }
-        ):
-            temp.append(user)
-        return temp
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                cursor.execute("SELECT * FROM Users WHERE name = %s", (name,))
+                user = cursor.fetchone()
+                cursor.close()
+                return user
+            except mysql.connector.Error as error:
+                print("Error fetching all users:", error)
+                return None
 
-    def addUser(name: t.Union[str, bytes], email: t.Union[str, bytes], password: t.Union[str, bytes]):
+    def addUser(connection, name: t.Union[str, bytes], email: t.Union[str, bytes], password: t.Union[str, bytes]):
         """
         add a new user if doesnt exist
         """
-        try:
-            temp = Users.getUserByEmail(email=email)
-            if email == temp['email']:
-                return
-            else:
-                try:
-                    users.insert_one(
-                        {
-                            'id': int(Users.getLastUser()['id']) + 1,
-                            'name': name,
-                            'email': email,
-                            'password': password
-                        }
-                    )
-                except IndexError:
-                    users.insert_one(
-                        {
-                            'id': 1,
-                            'name': name,
-                            'email': email,
-                            'password': password
-                        }
-                    )
-        except:
+        if connection is not None:
             try:
-                users.insert_one(
-                    {
-                        'id': int(Users.getLastUser()['id']) + 1,
-                        'name': name,
-                        'email': email,
-                        'password': password
-                    }
-                )
-            except IndexError:
-                users.insert_one(
-                    {
-                        'id': 1,
-                        'name': name,
-                        'email': email,
-                        'password': password
-                    }
-                )
+                cursor = connection.cursor()
+                add_user_query = "INSERT INTO Users (name, email, password) VALUES (%s, %s, %s)"
+                cursor.execute(add_user_query, (name, email, password))
+                cursor.close()
+            except mysql.connector.Error as error:
+                print("Error fetching all users:", error)
+        
 
-    def updateUser(name: t.Union[str, bytes], email: t.Union[str, bytes], password: t.Union[str, bytes]):
-        users.find_one_and_update(
-            {
-                "email": email
-            },
-            {
-                "$set": {
-                    'name': name,
-                    'email': email,
-                    'password': password
-                }
-            },
-            upsert=True
-        )
-        return True
+    def updateUser(connection, name: t.Union[str, bytes], email: t.Union[str, bytes], password: t.Union[str, bytes]):
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                update_user_query = "UPDATE Users SET name = %s, password = %s WHERE email = %s"
+                cursor.execute(update_user_query, (name, password, email))
+                cursor.close()
+                return True
+            except mysql.connector.Error as error:
+                print("Error fetching all users:", error)
     
-    def updateUserNewEmail(name: t.Union[str, bytes], email: t.Union[str, bytes], newEmail: t.Union[str, bytes], password: t.Union[str, bytes]):
-        users.find_one_and_update(
-            {
-                "email": email
-            },
-            {
-                "$set": {
-                    'name': name,
-                    'email': newEmail,
-                    'password': password
-                }
-            },
-            upsert=True
-        )
-        return True
+    def updateUserNewEmail(connection, name: t.Union[str, bytes], email: t.Union[str, bytes], newEmail: t.Union[str, bytes], password: t.Union[str, bytes]):
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                update_user_email_query = "UPDATE Users SET email = %s WHERE name = %s AND email = %s AND password = %s"
+                cursor.execute(update_user_email_query, (newEmail, name, email, password))
+                cursor.close()
+            except mysql.connector.Error as error:
+                print("Error fetching all users:", error)
 
-    def deleteByID(id: t.Union[int, str, bytes]):
-        users.delete_one({"id": int(id)})
+    def deleteByID(connection, id: t.Union[int, str, bytes]):
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                delete_user_query = "DELETE FROM Users WHERE id = %s"
+                cursor.execute(delete_user_query, (id,))
+                cursor.close()
+            except mysql.connector.Error as error:
+                print("Error fetching all users:", error)
 
 class Stations:
     """
