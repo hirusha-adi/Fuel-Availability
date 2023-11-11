@@ -97,16 +97,7 @@ import typing as t
 import urllib.parse
 from datetime import datetime
 
-from bson import ObjectId
-from pymongo import MongoClient
-
 from database.settings import MySQL
-
-client = MongoClient('mongodb://%s:%s@%s:27017/' % (
-    urllib.parse.quote_plus(MongoDB.username),
-    urllib.parse.quote_plus(MongoDB.password),
-    MongoDB.ip
-))
 
 # users = client['fuel']['users']
 # stations = client['fuel']['stations']
@@ -121,8 +112,8 @@ def makeConnection():
             host="localhost",
             user=MySQL.username,
             password=MySQL.password,
-            port=3306,
-            database="fuelapp"
+            port=MySQL.port,
+            database=MySQL.database
         )
         return connection
     except mysql.connector.Error as error:
